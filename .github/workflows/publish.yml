@@ -1,0 +1,53 @@
+# Publica @pedrolucaslopes/mixtape-ui no GitHub Packages quando uma tag `v*` chega ao repositório.
+#
+# O token é o GITHUB_TOKEN da própria execução, com `packages: write`: nenhum token pessoal fica
+# guardado em secret. Cada action vai fixada por commit: este job escreve no registro, e é nele que
+# uma action trocada faria mais estrago.
+name: Publish package
+
+on:
+  push:
+    tags: ['v*']
+
+permissions: {}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          registry-url: https://npm.pkg.github.com
+          scope: '@pedrolucaslopes'
+          cache: npm
+
+      - run: npm ci
+
+      # Tag e versão precisam bater: `git tag v0.2.0` sobre um package.json em 0.1.0 tentaria
+      # republicar a versão antiga.
+      - name: Conferir a tag contra a versão do pacote
+        run: |
+          VERSION="v$(node -p "require('./package.json').version")"
+          if [ "$VERSION" != "$GITHUB_REF_NAME" ]; then
+            echo "A tag $GITHUB_REF_NAME não bate com a versão $VERSION do package.json" >&2
+            exit 1
+          fi
+
+      - run: npm audit --omit=dev --audit-level=moderate
+      - run: npm run check:contrast
+      - run: npm run check:locales
+      - run: npm run build-storybook
+
+      # `prepublishOnly` confere traduções, contraste, tipos e testes, e compila antes de empacotar.
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

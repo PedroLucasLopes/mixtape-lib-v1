@@ -1,0 +1,139 @@
+{
+  "common": {
+    "newTab": "(abre em nova aba)",
+    "removeItem": "Remover {item}",
+    "showMore": "Ler mais",
+    "showLess": "Ler menos",
+    "seeAll": "Ver tudo",
+    "search": "Buscar",
+    "searchPlaceholder": "Álbuns, músicas, artistas…",
+    "clear": "Limpar",
+    "skipToContent": "Pular para o conteúdo",
+    "loading": "Carregando…",
+    "retry": "Tentar de novo",
+    "loadMore": "Carregar mais",
+    "noMore": "Isso é tudo por aqui",
+    "close": "Fechar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar"
+  },
+  "cover": {
+    "missing": "Capa de {title} indisponível"
+  },
+  "media": {
+    "credits": "Créditos da foto",
+    "photoBy": "Foto: {author}",
+    "license": "Licença: {license}",
+    "source": "Ver a fonte",
+    "listens": "{formatted} escuta | {formatted} escutas",
+    "disc": "Disco {number}",
+    "duration": "Duração",
+    "officialSite": "Site oficial",
+    "openIn": "Abrir no {service}"
+  },
+  "rating": {
+    "label": "{value} de 5 discos",
+    "none": "Sem nota",
+    "prompt": "Toque nos discos para dar sua nota",
+    "zero": "Nota zero",
+    "input": "Sua nota, de 0 a 5 discos",
+    "distribution": "Distribuição das notas",
+    "count": "{formatted} avaliação | {formatted} avaliações",
+    "tableRating": "Nota",
+    "tableCount": "Avaliações",
+    "showTable": "Ver como tabela",
+    "showChart": "Ver como gráfico",
+    "scale": {
+      "h0": "Inaudível",
+      "h1": "Péssimo",
+      "h2": "Ruim",
+      "h3": "Fraco",
+      "h4": "Mais ou menos",
+      "h5": "Ok",
+      "h6": "Bom",
+      "h7": "Muito bom",
+      "h8": "Ótimo",
+      "h9": "Excelente",
+      "h10": "Obra-prima"
+    }
+  },
+  "gamification": {
+    "progressTo": "Progresso até o {next}",
+    "remaining": "Falta {formatted} avaliação para o {next} | Faltam {formatted} avaliações para o {next}",
+    "maxTier": "Nível máximo alcançado!",
+    "locked": "Bloqueado",
+    "badgeNext": "{value} de {threshold} para {next}",
+    "earnedOn": "Conquistado em {date}"
+  },
+  "rank": {
+    "position": "{position}º lugar",
+    "participation": "Participação",
+    "notoriety": "Notoriedade",
+    "points": "ponto | pontos"
+  },
+  "reactions": {
+    "likeCount": "Gostei ({formatted})",
+    "dislikeCount": "Não gostei ({formatted})",
+    "comments": "{formatted} comentário | {formatted} comentários"
+  },
+  "review": {
+    "heading": "Avaliação de {'@'}{author} para {title}: {rating} de 5",
+    "edited": "editada",
+    "open": "Abrir avaliação"
+  },
+  "comment": {
+    "delete": "Excluir"
+  },
+  "user": {
+    "openMenu": "Abrir o menu de {name}",
+    "signOut": "Sair"
+  },
+  "theme": {
+    "label": "Tema",
+    "system": "Sistema",
+    "light": "Claro",
+    "dark": "Escuro"
+  },
+  "language": {
+    "label": "Idioma"
+  },
+  "carousel": {
+    "previous": "Anterior",
+    "next": "Próximo"
+  },
+  "error": {
+    "title": "Algo desafinou por aqui"
+  },
+  "toast": {
+    "dismiss": "Dispensar aviso"
+  },
+  "password": {
+    "show": "Mostrar senha",
+    "hide": "Esconder senha",
+    "strength": "Força: {level}",
+    "weak": "fraca",
+    "fair": "razoável",
+    "good": "boa",
+    "strong": "forte",
+    "rulePassed": "atendido",
+    "rulePending": "pendente"
+  },
+  "share": {
+    "link": "Link para compartilhar",
+    "copyLink": "Copiar link",
+    "linkCopied": "Link copiado!",
+    "nativeShare": "Mais opções de compartilhamento",
+    "qr": "QR Code",
+    "downloadPng": "Baixar PNG",
+    "downloadSvg": "Baixar SVG",
+    "instagramHint": "Link copiado. No Instagram, cole no story ou na bio; no celular, use o botão de compartilhar."
+  },
+  "consent": {
+    "policy": "Política de privacidade",
+    "accept": "Aceitar todos",
+    "reject": "Só os essenciais"
+  },
+  "ads": {
+    "label": "Publicidade"
+  }
+}

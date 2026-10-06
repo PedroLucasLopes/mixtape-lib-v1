@@ -1,0 +1,139 @@
+{
+  "common": {
+    "newTab": "(opens in a new tab)",
+    "removeItem": "Remove {item}",
+    "showMore": "Read more",
+    "showLess": "Show less",
+    "seeAll": "See all",
+    "search": "Search",
+    "searchPlaceholder": "Albums, songs, artists…",
+    "clear": "Clear",
+    "skipToContent": "Skip to content",
+    "loading": "Loading…",
+    "retry": "Try again",
+    "loadMore": "Load more",
+    "noMore": "That's all for now",
+    "close": "Close",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+  "cover": {
+    "missing": "Cover of {title} unavailable"
+  },
+  "media": {
+    "credits": "Photo credits",
+    "photoBy": "Photo: {author}",
+    "license": "License: {license}",
+    "source": "View source",
+    "listens": "{formatted} play | {formatted} plays",
+    "disc": "Disc {number}",
+    "duration": "Duration",
+    "officialSite": "Official site",
+    "openIn": "Open in {service}"
+  },
+  "rating": {
+    "label": "{value} out of 5 discs",
+    "none": "Not rated",
+    "prompt": "Tap the discs to rate",
+    "zero": "Zero rating",
+    "input": "Your rating, from 0 to 5 discs",
+    "distribution": "Rating distribution",
+    "count": "{formatted} rating | {formatted} ratings",
+    "tableRating": "Rating",
+    "tableCount": "Ratings",
+    "showTable": "Show as table",
+    "showChart": "Show as chart",
+    "scale": {
+      "h0": "Unlistenable",
+      "h1": "Awful",
+      "h2": "Bad",
+      "h3": "Weak",
+      "h4": "Meh",
+      "h5": "Okay",
+      "h6": "Good",
+      "h7": "Very good",
+      "h8": "Great",
+      "h9": "Excellent",
+      "h10": "Masterpiece"
+    }
+  },
+  "gamification": {
+    "progressTo": "Progress to {next}",
+    "remaining": "{formatted} more rating to reach {next} | {formatted} more ratings to reach {next}",
+    "maxTier": "Top tier reached!",
+    "locked": "Locked",
+    "badgeNext": "{value} of {threshold} to {next}",
+    "earnedOn": "Earned on {date}"
+  },
+  "rank": {
+    "position": "Rank {position}",
+    "participation": "Participation",
+    "notoriety": "Notoriety",
+    "points": "point | points"
+  },
+  "reactions": {
+    "likeCount": "Like ({formatted})",
+    "dislikeCount": "Dislike ({formatted})",
+    "comments": "{formatted} comment | {formatted} comments"
+  },
+  "review": {
+    "heading": "{'@'}{author}'s review of {title}: {rating} out of 5",
+    "edited": "edited",
+    "open": "Open review"
+  },
+  "comment": {
+    "delete": "Delete"
+  },
+  "user": {
+    "openMenu": "Open {name}'s menu",
+    "signOut": "Sign out"
+  },
+  "theme": {
+    "label": "Theme",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "language": {
+    "label": "Language"
+  },
+  "carousel": {
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "error": {
+    "title": "Something hit a wrong note"
+  },
+  "toast": {
+    "dismiss": "Dismiss"
+  },
+  "password": {
+    "show": "Show password",
+    "hide": "Hide password",
+    "strength": "Strength: {level}",
+    "weak": "weak",
+    "fair": "fair",
+    "good": "good",
+    "strong": "strong",
+    "rulePassed": "met",
+    "rulePending": "pending"
+  },
+  "share": {
+    "link": "Share link",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied!",
+    "nativeShare": "More sharing options",
+    "qr": "QR code",
+    "downloadPng": "Download PNG",
+    "downloadSvg": "Download SVG",
+    "instagramHint": "Link copied. On Instagram, paste it into a story or your bio; on your phone, use the share button."
+  },
+  "consent": {
+    "policy": "Privacy policy",
+    "accept": "Accept all",
+    "reject": "Essential only"
+  },
+  "ads": {
+    "label": "Advertisement"
+  }
+}
