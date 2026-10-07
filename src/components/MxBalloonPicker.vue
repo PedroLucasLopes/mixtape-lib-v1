@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, reactive } from 'vue';
 import { duotoneFor, hashString } from '../format';
 import { useMixtapeText } from '../i18n/useMixtapeText';
 import { duotones } from '../theme/tokens';
@@ -27,6 +27,8 @@ const { t } = useMixtapeText();
 
 const SIZES = ['sm', 'md', 'lg'] as const;
 
+const brokenImages = reactive(new Set<string>());
+
 const full = computed(() => props.max !== null && model.value.length >= props.max);
 
 const balloons = computed(() =>
@@ -35,7 +37,7 @@ const balloons = computed(() =>
     const colors = duotones[duotoneFor(option.value)];
     return {
       ...option,
-      images: (option.images ?? []).slice(0, 3),
+      images: (option.images ?? []).filter((image) => !brokenImages.has(image)).slice(0, 3),
       size: SIZES[seed % 3],
       style: {
         '--balloon-bg': colors.background,
@@ -106,6 +108,7 @@ function toggle(value: string): void {
                 height="48"
                 loading="lazy"
                 decoding="async"
+                @error="brokenImages.add(image)"
               />
             </span>
             <span class="mx-balloon__label">{{ balloon.label }}</span>

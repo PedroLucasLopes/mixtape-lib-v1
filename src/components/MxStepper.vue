@@ -252,6 +252,11 @@ watch(model, () => {
     clip: rect(0 0 0 0);
     white-space: nowrap;
   }
+
+  .mx-stepper__tab--active .mx-stepper__label {
+    max-width: none;
+    overflow: visible;
+  }
 }
 
 .mx-stepper-forward-enter-active,
