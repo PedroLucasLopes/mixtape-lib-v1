@@ -101,6 +101,12 @@ sobre cada blob da marca** (o pior caso do efeito líquido) e a tinta de cada du
 estilo Wrapped; **Figtree** para texto. As duas são OFL e auto-hospedadas pela aplicação (Fontsource):
 a CSP do front não libera Google Fonts. Escala fluida com `clamp()` em `typography.size`.
 
+**Espaçamento entre letras sai dos tokens**, nunca de número solto: `--mx-tracking-display` (-0,01em,
+títulos grandes), `--mx-tracking-title` (-0,005em, títulos de seção e diálogo) e `--mx-tracking-numeral`
+(-0,025em, números grandes). Na 0.4.2 eles subiram de -0,035 a -0,06em: com a largura condensada, as
+letras dos títulos encostavam ("Sua trilha sonora merece nota" ficava difícil de ler). A aplicação usa os
+mesmos tokens; só o logotipo tem espaçamento próprio.
+
 ---
 
 ## 🌊 Movimento: tudo anima, nada obriga

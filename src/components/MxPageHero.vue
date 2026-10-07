@@ -190,7 +190,7 @@ const words = computed(() => props.title.split(/(\s+)/).filter((part) => part.le
   font-size: var(--mx-hero-title);
   font-weight: 800;
   font-stretch: 78%;
-  letter-spacing: -0.045em;
+  letter-spacing: var(--mx-tracking-display);
   line-height: 0.88;
   overflow-wrap: anywhere;
   hyphens: auto;
@@ -210,7 +210,7 @@ const words = computed(() => props.title.split(/(\s+)/).filter((part) => part.le
   font-family: var(--mx-font-display);
   font-size: clamp(1.25rem, 2.4vw, 1.75rem);
   font-weight: 750;
-  letter-spacing: -0.015em;
+  letter-spacing: var(--mx-tracking-title);
   line-height: 1.15;
   animation: mx-rise var(--mx-duration-slow) var(--mx-ease-out) 380ms both;
 }

@@ -103,7 +103,7 @@ const titleId = useId();
   font-family: var(--mx-font-display);
   font-size: clamp(1.375rem, 2.6vw, 1.75rem);
   font-weight: 800;
-  letter-spacing: -0.025em;
+  letter-spacing: var(--mx-tracking-title);
   line-height: 1.1;
 }
 

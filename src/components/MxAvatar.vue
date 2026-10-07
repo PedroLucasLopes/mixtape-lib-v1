@@ -98,7 +98,7 @@ const showImage = computed(() => Boolean(props.src) && !failed.value);
   font-family: var(--mx-font-display);
   font-size: calc(var(--mx-avatar-size) * 0.38);
   font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--mx-tracking-title);
   line-height: 1;
 }
 </style>

@@ -171,7 +171,7 @@ const showImage = computed(() => Boolean(url.value) && !failed.value);
   font-size: clamp(1rem, 22cqi, 4rem);
   font-weight: 800;
   font-stretch: 80%;
-  letter-spacing: -0.04em;
+  letter-spacing: var(--mx-tracking-display);
   line-height: 0.9;
 }
 

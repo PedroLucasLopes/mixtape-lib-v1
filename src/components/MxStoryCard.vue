@@ -76,7 +76,7 @@ const colors = computed(() => duotones[props.duotone]);
   font-size: clamp(2.5rem, 6vw, 4.25rem);
   font-weight: 800;
   font-stretch: 76%;
-  letter-spacing: -0.05em;
+  letter-spacing: var(--mx-tracking-display);
   line-height: 0.9;
   overflow-wrap: anywhere;
 }

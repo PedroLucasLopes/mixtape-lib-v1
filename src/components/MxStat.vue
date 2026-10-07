@@ -102,7 +102,7 @@ const style = computed(() =>
   font-size: var(--mx-stat-value);
   font-weight: 800;
   font-stretch: 82%;
-  letter-spacing: -0.04em;
+  letter-spacing: var(--mx-tracking-numeral);
   line-height: 0.95;
   font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;

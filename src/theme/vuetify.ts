@@ -126,6 +126,7 @@ export const cssVariables = (colors: ThemeColors): Record<string, string> => ({
   ...Object.fromEntries(Object.entries(spacing).map(([key, value]) => [`--mx-space-${key}`, value])),
   ...Object.fromEntries(Object.entries(radius).map(([key, value]) => [`--mx-radius-${key}`, value])),
   ...Object.fromEntries(Object.entries(typography.size).map(([key, value]) => [`--mx-text-${kebab(key)}`, value])),
+  ...Object.fromEntries(Object.entries(typography.tracking).map(([key, value]) => [`--mx-tracking-${kebab(key)}`, value])),
 
   '--mx-font-display': typography.display,
   '--mx-font-body': typography.body,

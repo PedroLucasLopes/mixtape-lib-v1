@@ -128,7 +128,7 @@ const listenersText = computed(() =>
   font-size: clamp(3.5rem, 9vw, 5.5rem);
   font-weight: 800;
   font-stretch: 75%;
-  letter-spacing: -0.06em;
+  letter-spacing: var(--mx-tracking-numeral);
   line-height: 0.8;
   color: var(--mx-cta);
   -webkit-text-stroke: 3px var(--mx-background);

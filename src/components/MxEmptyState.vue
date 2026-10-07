@@ -55,7 +55,7 @@ const colors = computed(() => duotones[props.duotone]);
   font-family: var(--mx-font-display);
   font-size: clamp(1.25rem, 2.4vw, 1.625rem);
   font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--mx-tracking-title);
 }
 
 .mx-empty__description {

@@ -78,7 +78,7 @@ const headingId = useId();
   font-size: var(--mx-text-h2);
   font-weight: 800;
   font-stretch: 88%;
-  letter-spacing: -0.03em;
+  letter-spacing: var(--mx-tracking-title);
   line-height: 1.02;
 }
 

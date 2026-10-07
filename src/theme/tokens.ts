@@ -126,6 +126,11 @@ export const typography = {
     normal: 1.5,
     relaxed: 1.65,
   },
+  tracking: {
+    display: '-0.01em',
+    title: '-0.005em',
+    numeral: '-0.025em',
+  },
 } as const;
 
 export const breakpoints = {

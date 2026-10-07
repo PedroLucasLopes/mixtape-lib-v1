@@ -89,7 +89,7 @@ const colors = computed(() => duotones[props.duotone]);
   font-size: var(--mx-marquee-font);
   font-weight: 800;
   font-stretch: 80%;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--mx-tracking-display);
   line-height: 1;
   white-space: nowrap;
   text-transform: uppercase;
