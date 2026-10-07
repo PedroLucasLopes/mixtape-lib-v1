@@ -25,7 +25,7 @@ const descriptionId = useId();
 </script>
 
 <template>
-  <Transition name="mx-consent">
+  <Transition name="mx-consent" appear>
     <section
       v-if="open"
       class="mx-consent mx-glass"

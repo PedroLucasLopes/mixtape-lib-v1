@@ -22,6 +22,10 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./icons": {
+      "types": "./dist/icons/icons.generated.d.ts",
+      "import": "./dist/icons/icons.generated.js"
+    },
     "./styles": "./dist/styles/base.css"
   },
   "sideEffects": [

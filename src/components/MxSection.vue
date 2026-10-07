@@ -100,6 +100,12 @@ h3.mx-section__title {
   gap: 8px;
 }
 
+@media (min-width: 840px) and (hover: hover) {
+  .mx-section:has(> .mx-rail) > .mx-section__header > .mx-section__actions {
+    margin-inline-end: 88px;
+  }
+}
+
 .mx-section__more {
   display: inline-flex;
   align-items: center;

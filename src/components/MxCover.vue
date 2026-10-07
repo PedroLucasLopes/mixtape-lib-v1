@@ -136,7 +136,7 @@ const showImage = computed(() => Boolean(url.value) && !failed.value);
   overflow: hidden;
   border-radius: var(--mx-cover-radius);
   background: var(--mx-surface-variant);
-  box-shadow: 0 14px 34px -18px var(--mx-shadow);
+  box-shadow: var(--mx-cover-shadow, 0 14px 34px -18px var(--mx-shadow));
 }
 
 .mx-cover__image {

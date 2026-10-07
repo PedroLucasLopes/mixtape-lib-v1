@@ -40,7 +40,9 @@ npm run sync:brand-icons   # regenera os ícones de marca a partir do simple-ico
   largura: `standard.css`) e **Figtree Variable**, chama `bindVuetifyTheme()` no `App.vue`, liga a
   língua com `createMixtapeLocale` e fornece o componente de link com
   `app.provide(MIXTAPE_LINK_KEY, RouterLink)`. Não precisa de `@mdi/font`: `vuetifyOptions` já
-  registra os ícones em SVG, e a aplicação soma os dela com `icons: mixtapeIcons(SEUS_ICONES)`.
+  registra os ícones em SVG, e a aplicação soma os dela com `icons: mixtapeIcons(SEUS_ICONES)`. O
+  subconjunto daqui também sai em `@pedrolucaslopes/mixtape-ui/icons` (só JS, sem CSS), para o script
+  de ícones da aplicação gerar apenas os que faltam.
 - **Só o que a página usa.** O CSS base (`dist/styles/base.css`) vem com o import do pacote; o CSS de
   cada componente vem com o componente. Como o pacote declara `"sideEffects": ["*.css"]`, componente
   que a aplicação não usa sai do bundle com o CSS dele, e o que ela usa só numa página vai para o
@@ -123,7 +125,7 @@ a CSP do front não libera Google Fonts. Escala fluida com `clamp()` em `typogra
 
 | Regra | Por quê |
 |---|---|
-| Anime só `transform` e `opacity` | o compositor faz sozinho; `background-position`, `border-radius`, `width` e `filter` repintam a cada quadro |
+| Animação de entrada ou em laço só com `transform` e `opacity` | o compositor faz sozinho; `background-position`, `border-radius`, `width` e `filter` repintam a cada quadro. Transição curta de interação (cor no hover, indicador do segmentado) pode usar outras |
 | Blob é `radial-gradient`, não `filter: blur()` | cinco blobs de 60 px de desfoque animados repintavam a tela inteira; o gradiente dá a mesma borda macia de graça. No celular, três blobs |
 | `will-change` só durante a interação | o `v-tilt` liga com `--active`; deixar fixo prende uma camada de GPU por elemento |
 | Sombra em elemento que gira fica num pai parado | `drop-shadow` num vinil girando era recalculado a cada quadro; o `MxVinyl` gira só o disco e a sombra fica no invólucro |
@@ -153,11 +155,11 @@ vue-i18n da aplicação à mesma língua e mantém `<html lang>` em dia.
 |---|---|---|
 | Base | `MxLink`, `MxButton`, `MxIconButton`, `MxGlass`, `MxChip`, `MxBrandIcon`, `MxFlag` | link real (`<a>`) sempre, via o componente injetado (`MIXTAPE_LINK_KEY`); botão não muda de largura carregando e só mostra o giro depois de 220 ms; botão de ícone exige `label` |
 | Formas | `MxVinyl`, `MxBlobField`, `MxBlob`, `MxStarburst`, `MxMarquee` | blobs são decorativos (`aria-hidden`) e param com movimento reduzido; o letreiro lista os itens para leitor de tela uma vez só |
-| Mídia | `MxCover`, `MxAvatar`, `MxImageCredit`, `MxMosaic` | capa com `srcset` (250/500/1200), esqueleto até carregar, arte de reserva no duotone do item e vinil que desliza para fora no hover; foto de artista com crédito de autor e licença |
+| Mídia | `MxCover`, `MxAvatar`, `MxImageCredit`, `MxMosaic` | capa com `srcset` (250/500/1200), cor de superfície parada até carregar, arte de reserva no duotone do item, vinil que desliza para fora no hover e sombra ajustável por `--mx-cover-shadow` (no lugar de `filter: drop-shadow` num pai que anima); foto de artista com crédito de autor e licença |
 | Notas | `MxRating`, `MxRatingInput`, `MxRatingHistogram` | nota de 0 a 5 em **meio disco**; a entrada é um `slider` de verdade (setas, Home/End, PageUp/Down), com botão de **zero** separado (zero é nota válida) e rótulo por nota ("Obra-prima"); histograma com visão de tabela |
 | Gamificação | `MxStat`, `MxDiscTier`, `MxDiscProgress`, `MxBadge`, `MxPodium`, `MxRankRow`, `MxSplitBar`, `MxBarList` | o ícone de cada badge vem da aplicação (a biblioteca não conhece códigos de badge); badge bloqueado continua visível, tracejado, com o caminho até o primeiro nível |
 | Música | `MxItemCard`, `MxTrackList`, `MxReviewCard`, `MxReactionBar`, `MxCommentItem`, `MxStreamingLinks`, `MxTimeAgo`, `MxDescriptionList` | cartão inteiro clicável por **um** link (o do título), ações por cima; reação vira `aria-pressed`; texto longo recolhe com "Ler mais" |
-| Layout | `MxAppShell`, `MxTopBar`, `MxTabBar`, `MxUserMenu`, `MxFooter`, `MxSection`, `MxRail`, `MxGrid`, `MxPageHero`, `MxStoryCard`, `MxSegmented`, `MxSearchField`, `MxProgressBar` | barra de abas flutuante no celular que encolhe ao rolar para baixo (iOS); carrossel com rolagem por teclado e setas no desktop; segmentado é `radiogroup` com indicador em mola |
+| Layout | `MxAppShell`, `MxTopBar`, `MxTabBar`, `MxUserMenu`, `MxFooter`, `MxSection`, `MxRail`, `MxGrid`, `MxPageHero`, `MxStoryCard`, `MxSegmented`, `MxSearchField`, `MxProgressBar` | barra de abas flutuante no celular que encolhe ao rolar para baixo (iOS); carrossel com rolagem por teclado e setas no desktop (a `MxSection` que tem um `MxRail` direto reserva o canto das setas, ao lado do "Ver tudo"); segmentado é `radiogroup` com indicador em mola |
 | Feedback | `MxToastHost` + `toast`, `MxDialog`, `MxConfirmDialog`, `MxSkeleton`, `MxLoader`, `MxEmptyState`, `MxErrorState`, `MxLoadMore` | erro não some sozinho e vai para `role="alert"`; o resto para `role="status"`; diálogo vira folha inferior no celular; falha de confirmação aparece **dentro** do diálogo |
 | Formulário | `MxTextField`, `MxTextarea`, `MxPasswordField` | a senha é sempre do usuário: o campo mostra as regras (vindas da aplicação, iguais às da API) e um medidor de força; nunca sugere nem gera senha |
 | Compartilhar e anúncios | `MxShareSheet`, `MxQrCode`, `MxConsentBanner`, `MxAdFrame` | Instagram usa Web Share API (ou copia o link e explica); anúncio tem altura reservada (sem CLS) e rótulo "Publicidade" |
@@ -169,6 +171,14 @@ vue-i18n da aplicação à mesma língua e mantém `<html lang>` em dia.
 ⚠️ **Storybook 10.6 com Vite 8** (herdado da dotlog-ui): o `@storybook/vue3-vite` não injeta o plugin
 do Vue (o `main.ts` injeta à mão) e o `vite-plugin-vuetify` 2.1.3 quebra no `configResolved` (o
 `preview.ts` registra todo o Vuetify).
+
+⚠️ **Sem `vuetify/styles` completo, o `base.css` repõe as utilitárias que os componentes do Vuetify
+emitem sozinhos:** `rounded-lg`, `rounded-xl` e `rounded-pill` (dos `defaults` de `vuetifyOptions`) e
+`elevation-1` (o polegar do `VSlider`/`VRangeSlider`), com os valores do Vuetify. No Vuetify 4 elas
+moram na camada `vuetify-utilities`; aqui ficam fora de camada e sem `!important`, então ganham do
+CSS dos componentes do Vuetify (como antes) e perdem para o CSS com escopo dos `Mx*`, mais específico
+(como antes). Componente novo do Vuetify com `rounded`, `elevation` ou `border` pede conferir esta
+lista.
 
 ⚠️ **Ícones MDI não vêm do `@mdi/font` nem do `@mdi/js` em tempo de build.** O nome continua
 `mdi-album` no código; `npm run sync:icons` varre `src` (sem stories e mocks), pega o caminho SVG de
@@ -225,7 +235,7 @@ src/
 - Código e nomes em inglês, sem comentário no código; o que explica decisão mora aqui.
 - Texto de tela não nasce no componente: vai para os três JSON e sai por `useMixtapeText`.
 - Mexeu na paleta, rode `npm run check:contrast`; mexeu em tradução, `npm run check:locales`.
-- Toda animação tem contrapartida em `prefers-reduced-motion`, e anima só `transform` e `opacity`.
+- Toda animação tem contrapartida em `prefers-reduced-motion`; animação de entrada ou em laço anima só `transform` e `opacity`.
 - `backdrop-filter` só em superfície flutuante (ver Desempenho).
 - Usou um `mdi-*` novo, rode `npm run sync:icons` e versione o arquivo gerado.
 - Componente novo nasce com story, vista nos dois temas e nas três línguas.

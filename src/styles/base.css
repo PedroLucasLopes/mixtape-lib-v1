@@ -61,15 +61,22 @@
 }
 
 .rounded-lg {
-  border-radius: var(--mx-radius-md) !important;
+  border-radius: 8px;
 }
 
 .rounded-xl {
-  border-radius: var(--mx-radius-lg) !important;
+  border-radius: 24px;
 }
 
 .rounded-pill {
-  border-radius: var(--mx-radius-pill) !important;
+  border-radius: 9999px;
+}
+
+.elevation-1 {
+  --v-elevation-overlay: color-mix(in srgb, var(--v-elevation-overlay-color) 2%, transparent);
+  box-shadow:
+    0 1px 2px 0 rgba(var(--v-shadow-color), var(--v-shadow-key-opacity, 0.3)),
+    0 1px 3px 1px rgba(var(--v-shadow-color), var(--v-shadow-ambient-opacity, 0.15));
 }
 
 .mx-reveal {
