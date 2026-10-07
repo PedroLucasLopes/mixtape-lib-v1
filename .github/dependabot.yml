@@ -15,6 +15,14 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    ignore:
+      # O TypeScript 7 (compilador nativo) não exporta `typescript/lib/tsc`, de que o vue-tsc 3
+      # precisa: o major do TypeScript sobe junto com um vue-tsc que o suporte, à mão.
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
+      # Os tipos do Node acompanham o Node do CI e das imagens (24).
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     groups:
       producao:
         dependency-type: production
