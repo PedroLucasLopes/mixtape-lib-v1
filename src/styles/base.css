@@ -52,7 +52,6 @@
     inset 0 1px 0 var(--mx-glass-highlight),
     0 18px 48px -18px var(--mx-shadow);
   backdrop-filter: blur(var(--mx-blur-glass)) saturate(170%);
-  -webkit-backdrop-filter: blur(var(--mx-blur-glass)) saturate(170%);
 }
 
 .mx-focusable:focus-visible {

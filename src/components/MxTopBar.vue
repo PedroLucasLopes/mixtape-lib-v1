@@ -57,7 +57,6 @@ const { scrolled } = useScrollState(24);
     box-shadow var(--mx-duration-normal) var(--mx-ease-out),
     min-height var(--mx-spring-smooth-duration) var(--mx-spring-smooth);
   backdrop-filter: blur(var(--mx-blur-bar)) saturate(170%);
-  -webkit-backdrop-filter: blur(var(--mx-blur-bar)) saturate(170%);
 }
 
 .mx-top-bar--scrolled .mx-top-bar__surface {

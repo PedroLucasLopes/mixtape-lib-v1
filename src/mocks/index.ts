@@ -21,14 +21,14 @@ export function artistPhoto(seed: DuotoneName): string {
 }
 
 export const mockAlbums = [
-  { id: 'a1', title: 'Neon na Garagem', artist: 'Banda Lúmen', year: '2019', type: 'Álbum', cover: coverArt('violet', 'circle'), rating: 4.5, listens: 1_284_000, genres: ['indie rock', 'synth-pop'] },
-  { id: 'a2', title: 'Maré Alta', artist: 'Clara Sol', year: '2022', type: 'Álbum', cover: coverArt('pink', 'blob'), rating: 4, listens: 482_300, genres: ['mpb', 'bossa nova'] },
-  { id: 'a3', title: 'Ruído Branco', artist: 'Os Satélites', year: '2015', type: 'EP', cover: coverArt('navy', 'stripes'), rating: 3.5, listens: 96_120, genres: ['shoegaze', 'dream pop'] },
-  { id: 'a4', title: 'Cidade Acesa', artist: 'Duo Fluxo', year: '2024', type: 'Single', cover: coverArt('lime', 'grid'), rating: 5, listens: 3_904_000, genres: ['funk', 'electronic'] },
-  { id: 'a5', title: 'Fita Cassete', artist: 'Rádio Vinil', year: '2008', type: 'Coletânea', cover: null, rating: 2.5, listens: 18_400, genres: ['pop rock'] },
-  { id: 'a6', title: 'Horizonte Vertical', artist: 'Marina Prado', year: '2021', type: 'Álbum', cover: coverArt('forest', 'circle'), rating: 4, listens: 210_000, genres: ['jazz'] },
-  { id: 'a7', title: 'Concreto & Céu', artist: 'Coletivo Norte', year: '2017', type: 'Álbum', cover: coverArt('orange', 'blob'), rating: 3, listens: 640_200, genres: ['hip hop'] },
-  { id: 'a8', title: 'Dias de Sol', artist: 'Tom Rios', year: '2013', type: 'Álbum', cover: coverArt('burgundy', 'stripes'), rating: 4.5, listens: 75_800, genres: ['samba'] },
+  { id: 'a1', title: 'Neon na Garagem', artist: 'Banda Lúmen', year: '2019', type: 'Álbum', cover: coverArt('violet', 'circle'), rating: 4.5, listeners: 1_284_000, genres: ['indie rock', 'synth-pop'] },
+  { id: 'a2', title: 'Maré Alta', artist: 'Clara Sol', year: '2022', type: 'Álbum', cover: coverArt('pink', 'blob'), rating: 4, listeners: 482_300, genres: ['mpb', 'bossa nova'] },
+  { id: 'a3', title: 'Ruído Branco', artist: 'Os Satélites', year: '2015', type: 'EP', cover: coverArt('navy', 'stripes'), rating: 3.5, listeners: 96_120, genres: ['shoegaze', 'dream pop'] },
+  { id: 'a4', title: 'Cidade Acesa', artist: 'Duo Fluxo', year: '2024', type: 'Single', cover: coverArt('lime', 'grid'), rating: 5, listeners: 3_904_000, genres: ['funk', 'electronic'] },
+  { id: 'a5', title: 'Fita Cassete', artist: 'Rádio Vinil', year: '2008', type: 'Coletânea', cover: null, rating: 2.5, listeners: 18_400, genres: ['pop rock'] },
+  { id: 'a6', title: 'Horizonte Vertical', artist: 'Marina Prado', year: '2021', type: 'Álbum', cover: coverArt('forest', 'circle'), rating: 4, listeners: 210_000, genres: ['jazz'] },
+  { id: 'a7', title: 'Concreto & Céu', artist: 'Coletivo Norte', year: '2017', type: 'Álbum', cover: coverArt('orange', 'blob'), rating: 3, listeners: 640_200, genres: ['hip hop'] },
+  { id: 'a8', title: 'Dias de Sol', artist: 'Tom Rios', year: '2013', type: 'Álbum', cover: coverArt('burgundy', 'stripes'), rating: 4.5, listeners: 75_800, genres: ['samba'] },
 ];
 
 export const mockTracks = [

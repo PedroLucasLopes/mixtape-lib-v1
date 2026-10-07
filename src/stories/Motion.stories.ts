@@ -58,8 +58,8 @@ export const ContagemEMolas: Story = {
     },
     template: `
       <div style="display:grid;gap:24px;justify-items:start">
-        <MxStat :value="value" label="Escutas" size="xl" duotone="lime" />
-        <MxButton label="Somar escutas" icon="mdi-plus" @click="bump" />
+        <MxStat :value="value" label="Ouvintes" size="xl" duotone="lime" />
+        <MxButton label="Somar ouvintes" icon="mdi-plus" @click="bump" />
         <p style="margin:0;color:var(--mx-on-surface-muted)">Os botões usam mola com leve overshoot (CSS linear()) no hover e no clique.</p>
       </div>
     `,

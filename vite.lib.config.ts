@@ -36,6 +36,31 @@ function restoreCssImports(): Plugin {
   };
 }
 
+const PREFIXED_ONLY = /-webkit-backdrop-filter:/;
+const STANDARD = /(^|[^-])backdrop-filter:/;
+
+/**
+ * O Lightning CSS trata `backdrop-filter` e `-webkit-backdrop-filter` como a mesma propriedade e fica
+ * com a última: escrever as duas (padrão antes) deixava só a prefixada, que o Chrome ignora. O código
+ * escreve só a padrão (o prefixo sai sozinho); este plugin falha o build se a regressão voltar.
+ */
+function assertStandardBackdrop(): Plugin {
+  return {
+    name: 'mixtape-assert-standard-backdrop',
+    apply: 'build',
+    enforce: 'post',
+    generateBundle(_options, bundle) {
+      for (const asset of Object.values(bundle)) {
+        if (asset.type !== 'asset' || !asset.fileName.endsWith('.css')) continue;
+        const css = typeof asset.source === 'string' ? asset.source : new TextDecoder().decode(asset.source);
+        if (PREFIXED_ONLY.test(css) && !STANDARD.test(css)) {
+          this.error(`${asset.fileName}: -webkit-backdrop-filter sem backdrop-filter (o Chrome fica sem desfoque)`);
+        }
+      }
+    },
+  };
+}
+
 /**
  * Build da biblioteca: é o que o `npm publish` empacota.
  *
@@ -49,7 +74,7 @@ function restoreCssImports(): Plugin {
  * Vuetify usado; o CSS do Vuetify fica com a aplicação.
  */
 export default defineConfig({
-  plugins: [Vue(), Vuetify({ autoImport: true, styles: 'none' }), restoreCssImports()],
+  plugins: [Vue(), Vuetify({ autoImport: true, styles: 'none' }), restoreCssImports(), assertStandardBackdrop()],
   build: {
     lib: {
       entry: fileURLToPath(new URL('src/index.ts', import.meta.url)),

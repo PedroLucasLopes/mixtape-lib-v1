@@ -138,9 +138,13 @@ const themes: Array<{ mode: ThemeMode; icon: string }> = [
 
 .mx-user-menu {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 14px;
   width: min(320px, calc(100vw - 24px));
+  min-height: 0;
   padding: 16px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   color: var(--mx-on-surface);
   border-radius: var(--mx-radius-lg);
 }

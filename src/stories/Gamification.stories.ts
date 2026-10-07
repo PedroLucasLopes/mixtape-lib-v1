@@ -78,7 +78,7 @@ export const Numeros: Story = {
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px">
           <MxStat :value="320" label="Avaliações" duotone="lime" />
           <MxStat :value="4.2" label="Nota média" format="rating" duotone="violet" />
-          <MxStat :value="1284000" label="Escutas no mundo" format="compact" duotone="pink" />
+          <MxStat :value="1284000" label="Ouvintes no mundo" format="compact" duotone="pink" />
           <MxStat :value="12" label="Faixas" hint="53 minutos de música" />
         </div>
         <div style="max-width:560px">

@@ -155,7 +155,6 @@ onBeforeUnmount(() => {
     inset 0 1px 0 var(--mx-glass-highlight),
     0 24px 50px -20px var(--mx-shadow);
   backdrop-filter: blur(var(--mx-blur-glass)) saturate(180%);
-  -webkit-backdrop-filter: blur(var(--mx-blur-glass)) saturate(180%);
 }
 
 .mx-toast--success { --mx-toast-accent: var(--mx-success); }

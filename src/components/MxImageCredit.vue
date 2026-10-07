@@ -46,7 +46,6 @@ const { t } = useMixtapeText();
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 }
 
 .mx-image-credit:focus-visible {

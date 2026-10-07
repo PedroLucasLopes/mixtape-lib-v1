@@ -25,7 +25,7 @@
     "photoBy": "Foto: {author}",
     "license": "Licencia: {license}",
     "source": "Ver la fuente",
-    "listens": "{formatted} escucha | {formatted} escuchas",
+    "listeners": "{formatted} oyente | {formatted} oyentes",
     "disc": "Disco {number}",
     "duration": "Duración",
     "officialSite": "Sitio oficial",
@@ -96,6 +96,13 @@
   },
   "language": {
     "label": "Idioma"
+  },
+  "stepper": {
+    "status": "Paso {current} de {total}: {label}"
+  },
+  "balloons": {
+    "counter": "Ninguno elegido (hasta {max}) | {count} de {max} elegido | {count} de {max} elegidos",
+    "selected": "Ninguno elegido | {count} elegido | {count} elegidos"
   },
   "carousel": {
     "previous": "Anterior",

@@ -76,7 +76,6 @@ const tintColor = computed(() => {
 
 .mx-glass-surface--blur {
   backdrop-filter: blur(var(--mx-blur-glass)) saturate(175%);
-  -webkit-backdrop-filter: blur(var(--mx-blur-glass)) saturate(175%);
 }
 
 .mx-glass-surface--strong {

@@ -43,7 +43,16 @@ const showImage = computed(() => Boolean(props.src) && !failed.value);
     :aria-hidden="decorative ? 'true' : undefined"
   >
     <span class="mx-avatar__inner" :style="{ background: palette.background, color: palette.ink }">
-      <img v-if="showImage" class="mx-avatar__image" :src="src ?? undefined" alt="" loading="lazy" decoding="async" @error="failed = true" />
+      <img
+        v-if="showImage"
+        class="mx-avatar__image"
+        :src="src ?? undefined"
+        alt=""
+        loading="lazy"
+        decoding="async"
+        referrerpolicy="no-referrer"
+        @error="failed = true"
+      />
       <span v-else class="mx-avatar__initials" aria-hidden="true">{{ initials(name) }}</span>
     </span>
   </span>

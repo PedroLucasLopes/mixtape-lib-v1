@@ -78,7 +78,6 @@ const half = computed(() => Math.ceil(props.items.length / 2));
     inset 0 1px 0 var(--mx-glass-highlight),
     0 20px 50px -18px var(--mx-shadow);
   backdrop-filter: blur(var(--mx-blur-bar)) saturate(180%);
-  -webkit-backdrop-filter: blur(var(--mx-blur-bar)) saturate(180%);
   transition:
     width var(--mx-spring-smooth-duration) var(--mx-spring-smooth),
     padding var(--mx-spring-smooth-duration) var(--mx-spring-smooth);

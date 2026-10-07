@@ -73,7 +73,6 @@ const titleId = useId();
     inset 0 1px 0 var(--mx-glass-highlight),
     0 40px 90px -30px var(--mx-shadow);
   backdrop-filter: blur(var(--mx-blur-glass)) saturate(180%);
-  -webkit-backdrop-filter: blur(var(--mx-blur-glass)) saturate(180%);
 }
 
 .mx-dialog--sheet {

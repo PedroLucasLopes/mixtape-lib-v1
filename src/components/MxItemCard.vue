@@ -21,7 +21,7 @@ const props = withDefaults(
     seed?: string;
     to?: LinkTarget;
     rating?: number | null;
-    listens?: number | null;
+    listeners?: number | null;
     position?: number | null;
     badge?: string | null;
     layout?: 'tile' | 'row' | 'chart';
@@ -36,7 +36,7 @@ const props = withDefaults(
     cover: null,
     sources: null,
     rating: null,
-    listens: null,
+    listeners: null,
     position: null,
     badge: null,
     layout: 'tile',
@@ -48,8 +48,10 @@ const props = withDefaults(
 const { t, locale } = useMixtapeText();
 
 const heading = computed(() => `h${props.headingLevel}`);
-const listensText = computed(() =>
-  props.listens === null ? null : t('media.listens', { count: props.listens, formatted: formatCompactNumber(props.listens, locale.value) }),
+const listenersText = computed(() =>
+  props.listeners === null
+    ? null
+    : t('media.listeners', { count: props.listeners, formatted: formatCompactNumber(props.listeners, locale.value) }),
 );
 </script>
 
@@ -80,12 +82,12 @@ const listensText = computed(() =>
         <template v-else>{{ title }}</template>
       </component>
       <p v-if="subtitle" class="mx-item-card__subtitle">{{ subtitle }}</p>
-      <p v-if="meta || listensText || rating !== null" class="mx-item-card__meta">
+      <p v-if="meta || listenersText || rating !== null" class="mx-item-card__meta">
         <MxRating v-if="rating !== null" :value="rating" size="xs" show-value />
         <span v-if="meta">{{ meta }}</span>
-        <span v-if="listensText" class="mx-item-card__listens">
+        <span v-if="listenersText" class="mx-item-card__listeners">
           <VIcon icon="mdi-headphones" size="14" aria-hidden="true" />
-          {{ listensText }}
+          {{ listenersText }}
         </span>
       </p>
     </div>
@@ -223,7 +225,7 @@ const listensText = computed(() =>
   color: var(--mx-on-surface-muted);
 }
 
-.mx-item-card__listens {
+.mx-item-card__listeners {
   display: inline-flex;
   align-items: center;
   gap: 3px;

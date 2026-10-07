@@ -1,6 +1,7 @@
 import { prefersReducedMotion } from './reducedMotion';
 
 interface ViewTransitionLike {
+  ready: Promise<void>;
   finished: Promise<void>;
   updateCallbackDone: Promise<void>;
 }
@@ -18,7 +19,10 @@ export function startViewTransition(update: () => Promise<void> | void): Promise
   if (!doc?.startViewTransition || prefersReducedMotion()) {
     return Promise.resolve(update()).then(() => undefined);
   }
-  return doc.startViewTransition(update).updateCallbackDone;
+  const transition = doc.startViewTransition(update);
+  transition.ready.catch(() => undefined);
+  transition.finished.catch(() => undefined);
+  return transition.updateCallbackDone;
 }
 
 export function viewTransitionName(kind: string, id: string | null | undefined): string | undefined {

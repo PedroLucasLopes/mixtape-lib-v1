@@ -63,7 +63,10 @@ componente do Vuetify usado; o CSS do Vuetify fica com a aplicação. As declara
 `vue-tsc -p tsconfig.build.json`.
 
 **Versão:** correção é `patch`; prop, evento, variante ou export novo é `minor`; mudar ou remover o
-que existe é `major`.
+que existe é `major`. **Enquanto a versão começar com `0.`**, o `^` do npm já trata a `minor` como
+incompatível (`^0.3.0` não aceita `0.4.0`): mudança que quebra sobe a `minor`, e o resto sobe a
+`patch`. A 0.4.0 renomeou `listens` para `listeners` no `MxItemCard` (e a chave `media.listens`
+para `media.listeners`).
 
 ---
 
@@ -158,10 +161,10 @@ vue-i18n da aplicação à mesma língua e mantém `<html lang>` em dia.
 | Mídia | `MxCover`, `MxAvatar`, `MxImageCredit`, `MxMosaic` | capa com `srcset` (250/500/1200), cor de superfície parada até carregar, arte de reserva no duotone do item, vinil que desliza para fora no hover e sombra ajustável por `--mx-cover-shadow` (no lugar de `filter: drop-shadow` num pai que anima); foto de artista com crédito de autor e licença |
 | Notas | `MxRating`, `MxRatingInput`, `MxRatingHistogram` | nota de 0 a 5 em **meio disco**; a entrada é um `slider` de verdade (setas, Home/End, PageUp/Down), com botão de **zero** separado (zero é nota válida) e rótulo por nota ("Obra-prima"); histograma com visão de tabela |
 | Gamificação | `MxStat`, `MxDiscTier`, `MxDiscProgress`, `MxBadge`, `MxPodium`, `MxRankRow`, `MxSplitBar`, `MxBarList` | o ícone de cada badge vem da aplicação (a biblioteca não conhece códigos de badge); badge bloqueado continua visível, tracejado, com o caminho até o primeiro nível |
-| Música | `MxItemCard`, `MxTrackList`, `MxReviewCard`, `MxReactionBar`, `MxCommentItem`, `MxStreamingLinks`, `MxTimeAgo`, `MxDescriptionList` | cartão inteiro clicável por **um** link (o do título), ações por cima; reação vira `aria-pressed`; texto longo recolhe com "Ler mais" |
-| Layout | `MxAppShell`, `MxTopBar`, `MxTabBar`, `MxUserMenu`, `MxFooter`, `MxSection`, `MxRail`, `MxGrid`, `MxPageHero`, `MxStoryCard`, `MxSegmented`, `MxSearchField`, `MxProgressBar` | barra de abas flutuante no celular que encolhe ao rolar para baixo (iOS); carrossel com rolagem por teclado e setas no desktop (a `MxSection` que tem um `MxRail` direto reserva o canto das setas, ao lado do "Ver tudo"); segmentado é `radiogroup` com indicador em mola |
+| Música | `MxItemCard`, `MxTrackList`, `MxReviewCard`, `MxReactionBar`, `MxCommentItem`, `MxStreamingLinks`, `MxTimeAgo`, `MxDescriptionList` | cartão inteiro clicável por **um** link (o do título), ações por cima; reação vira `aria-pressed`; texto longo recolhe com "Ler mais"; o número do cartão é de **ouvintes** (`listeners`: pessoas distintas no ListenBrainz), não de execuções |
+| Layout | `MxAppShell`, `MxTopBar`, `MxTabBar`, `MxUserMenu`, `MxFooter`, `MxSection`, `MxRail`, `MxGrid`, `MxPageHero`, `MxStoryCard`, `MxSegmented`, `MxSearchField`, `MxProgressBar` | barra de abas flutuante no celular que encolhe ao rolar para baixo (iOS); carrossel com rolagem por teclado e setas no desktop (a `MxSection` que tem um `MxRail` direto reserva o canto das setas, ao lado do "Ver tudo"); segmentado é `radiogroup` com indicador em mola; o menu do usuário cabe na tela (`min(320px, 100vw - 24px)`, coluna `minmax(0, 1fr)`) e rola por dentro quando a altura não dá |
 | Feedback | `MxToastHost` + `toast`, `MxDialog`, `MxConfirmDialog`, `MxSkeleton`, `MxLoader`, `MxEmptyState`, `MxErrorState`, `MxLoadMore` | erro não some sozinho e vai para `role="alert"`; o resto para `role="status"`; diálogo vira folha inferior no celular; falha de confirmação aparece **dentro** do diálogo |
-| Formulário | `MxTextField`, `MxTextarea`, `MxPasswordField` | a senha é sempre do usuário: o campo mostra as regras (vindas da aplicação, iguais às da API) e um medidor de força; nunca sugere nem gera senha |
+| Formulário | `MxTextField`, `MxTextarea`, `MxPasswordField`, `MxStepper`, `MxBalloonPicker` | a senha é sempre do usuário: o campo mostra as regras (vindas da aplicação, iguais às da API) e um medidor de força; nunca sugere nem gera senha. O `MxStepper` é um conjunto de **abas** (WAI-ARIA: setas, Home/End) com um painel por etapa em slot nomeado pela `key`; etapa adiante de `reachable` fica `aria-disabled`, a já feita ganha check, a troca é anunciada ("Etapa 2 de 4: …") e, quando o avanço vem de um botão do painel, o foco vai para o painel novo (o botão sumiu). O `MxBalloonPicker` é um grupo de botões `aria-pressed` em forma de balão, com até 3 capas dentro; cor (duotone) e tamanho saem do hash do valor, então cada estilo tem sempre o mesmo balão; com `max`, os outros ficam `aria-disabled` e o contador é `aria-live` |
 | Compartilhar e anúncios | `MxShareSheet`, `MxQrCode`, `MxConsentBanner`, `MxAdFrame` | Instagram usa Web Share API (ou copia o link e explica); anúncio tem altura reservada (sem CLS) e rótulo "Publicidade" |
 
 ---
@@ -186,6 +189,23 @@ cada nome no `@mdi/js` e grava só os usados em `src/icons/icons.generated.ts`; 
 usam vão para `.storybook/story-icons.generated.ts`. O `MxSvgIcon` (em `icons/iconSet.ts`) desenha o
 `<svg>` com a classe `v-icon__svg`, então tamanho e cor seguem o `VIcon`. Ícone fora do subconjunto
 some sem erro na tela: por isso o `check:icons` roda no CI e no `prepublishOnly`.
+
+⚠️ **Escreva só `backdrop-filter`, sem a linha `-webkit-backdrop-filter`.** O LightningCSS do Vite 8
+junta as duas declarações e deixa **só a prefixada**, que o Chrome ignora: o vidro ficou sem
+desfoque. Sem a linha manual, ele mesmo gera as duas. O plugin `assertStandardBackdrop` do
+`vite.lib.config.ts` falha o build se algum CSS tiver a prefixada sem a padrão.
+
+⚠️ **Raiz em fragmento trava `<Transition mode="out-in">`.** Componente cuja raiz é um `<slot>`
+sozinho (ou vários irmãos) nunca termina a saída no Vue 3.5, e a tela fica em branco até recarregar.
+O painel do `MxStepper` é um `div` com `key`; páginas que trocam por `Transition` precisam do mesmo
+invólucro. Pelo mesmo motivo o `startViewTransition` daqui silencia `ready` e `finished`: transição
+pulada rejeita as duas, e a rejeição solta virava erro no console.
+
+⚠️ **Animação em laço de `transform` ganha de qualquer `transform` do mesmo elemento.** O balão
+flutua no `.mx-balloon__float`, cresce no `__body` (com origem embaixo, para o barbante não
+descolar) e sobe no hover com `translate`, propriedade separada que soma com a animação. O campo
+usa `align-items: flex-start`: esticado pela linha do flex, o grid interno repartia a sobra e o
+barbante se afastava do nó.
 
 ⚠️ **Ícones de marca não vêm do pacote `simple-icons` em tempo de build.** Importar dele levava o
 arquivo inteiro (3.400 ícones) para o source map: 6 MB. `npm run sync:brand-icons` grava só os 21

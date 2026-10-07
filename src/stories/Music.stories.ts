@@ -47,12 +47,12 @@ export const Cartoes: Story = {
         <MxGrid min="180px" label="Álbuns">
           <li v-for="(album, index) in albums" :key="album.id">
             <MxItemCard :title="album.title" :subtitle="album.artist" :meta="album.year + ' · ' + album.type" :cover="album.cover" :seed="album.id"
-              to="#" :rating="album.rating" :listens="album.listens" :badge="index === 3 ? 'Em alta' : null" />
+              to="#" :rating="album.rating" :listeners="album.listeners" :badge="index === 3 ? 'Em alta' : null" />
           </li>
         </MxGrid>
         <MxGrid min="200px" label="Parada">
           <li v-for="(album, index) in albums.slice(0, 4)" :key="album.id">
-            <MxItemCard layout="chart" :position="index + 1" :title="album.title" :subtitle="album.artist" :cover="album.cover" :seed="album.id" to="#" :listens="album.listens" />
+            <MxItemCard layout="chart" :position="index + 1" :title="album.title" :subtitle="album.artist" :cover="album.cover" :seed="album.id" to="#" :listeners="album.listeners" />
           </li>
         </MxGrid>
         <ul style="list-style:none;margin:0;padding:0;display:grid;gap:4px;max-width:560px">
@@ -62,7 +62,7 @@ export const Cartoes: Story = {
         </ul>
         <MxGrid min="150px" label="Artistas">
           <li v-for="name in ['blue','pink','green']" :key="name">
-            <MxItemCard kind="artist" title="Banda Lúmen" subtitle="Grupo · Brasil" :cover="null" :seed="name" to="#" :listens="1284000" />
+            <MxItemCard kind="artist" title="Banda Lúmen" subtitle="Grupo · Brasil" :cover="null" :seed="name" to="#" :listeners="1284000" />
           </li>
         </MxGrid>
       </div>

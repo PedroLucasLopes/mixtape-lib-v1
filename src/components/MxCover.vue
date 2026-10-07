@@ -32,7 +32,7 @@ const props = withDefaults(
     title: '',
     alt: '',
     size: '100%',
-    sizes: '(max-width: 600px) 50vw, 280px',
+    sizes: '(max-width: 600px) 45vw, 220px',
     radius: 'md',
     vinyl: false,
     priority: false,

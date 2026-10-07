@@ -22,7 +22,7 @@ export const Escala: Story = {
           Avalie álbuns e músicas de 0 a 5 discos, escreva resenhas, monte playlists e suba no ranking com os amigos.
           O texto corrido usa Figtree, geométrica e amigável como a do Spotify Wrapped.
         </p>
-        <p class="mx-tabular" style="font-size:2rem;font-weight:800;margin:0">1.284.000 escutas · 4,5 · 6:23</p>
+        <p class="mx-tabular" style="font-size:2rem;font-weight:800;margin:0">1.284.000 ouvintes · 4,5 · 6:23</p>
       </div>
     `,
   }),

@@ -38,7 +38,7 @@ export const HeroDeAlbum: Story = {
         <template #stats>
           <MxStat :value="4.3" label="Média" format="rating" size="md" />
           <MxStat :value="142" label="Avaliações" size="md" />
-          <MxStat :value="1284000" label="Escutas" format="compact" size="md" />
+          <MxStat :value="1284000" label="Ouvintes" format="compact" size="md" />
         </template>
         <template #actions>
           <MxButton variant="ink" label="Avaliar" icon="mdi-album" size="lg" />
@@ -73,7 +73,7 @@ export const CartoesDeHistoria: Story = {
         <MxStoryCard label="Faixas" value="12" sentence="Do primeiro acorde ao último eco." duotone="pink" :tilt="-2" icon="mdi-music-note" />
         <MxStoryCard label="Duração" value="53 min" sentence="Cabe certinho num trajeto de ônibus." duotone="green" :tilt="1.5" icon="mdi-timer-outline" />
         <MxStoryCard label="Edições" value="39" sentence="Lançado em CD, vinil e digital." duotone="navy" :tilt="-1" icon="mdi-album" />
-        <MxStoryCard label="Escutas" value="1,2 mi" sentence="Registradas no ListenBrainz." duotone="orange" :tilt="2" icon="mdi-headphones" />
+        <MxStoryCard label="Ouvintes" value="1,2 mi" sentence="No ListenBrainz." duotone="orange" :tilt="2" icon="mdi-headphones" />
       </div>
     `,
   }),
