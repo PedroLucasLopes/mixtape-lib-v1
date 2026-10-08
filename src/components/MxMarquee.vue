@@ -20,6 +20,7 @@ const colors = computed(() => duotones[props.duotone]);
 
 <template>
   <div
+    data-testid="mx-marquee"
     class="mx-marquee"
     :class="[`mx-marquee--${size}`, { 'mx-marquee--reverse': reverse }]"
     :style="{

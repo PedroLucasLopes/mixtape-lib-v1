@@ -7,7 +7,7 @@ withDefaults(defineProps<{ min?: string; gap?: string; tag?: string; label?: str
 </script>
 
 <template>
-  <component :is="tag" class="mx-grid" :style="{ '--mx-grid-min': min, '--mx-grid-gap': gap }" :aria-label="label">
+  <component :is="tag" data-testid="mx-grid" class="mx-grid" :style="{ '--mx-grid-min': min, '--mx-grid-gap': gap }" :aria-label="label">
     <slot />
   </component>
 </template>

@@ -11,7 +11,7 @@ withDefaults(
 </script>
 
 <template>
-  <span v-if="shape === 'text' && lines > 1" class="mx-skeleton-lines" aria-hidden="true">
+  <span v-if="shape === 'text' && lines > 1" data-testid="mx-skeleton" class="mx-skeleton-lines" aria-hidden="true">
     <span
       v-for="line in lines"
       :key="line"
@@ -21,6 +21,7 @@ withDefaults(
   </span>
   <span
     v-else
+    data-testid="mx-skeleton"
     class="mx-skeleton"
     :class="`mx-skeleton--${shape}`"
     :style="{ width, height: shape === 'circle' || shape === 'square' ? undefined : height }"

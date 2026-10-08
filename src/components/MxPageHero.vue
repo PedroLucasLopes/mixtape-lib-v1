@@ -30,6 +30,7 @@ const words = computed(() => props.title.split(/(\s+)/).filter((part) => part.le
 
 <template>
   <section
+    data-testid="mx-page-hero"
     class="mx-hero"
     :class="[`mx-hero--${layout}`, `mx-hero--${scale}`, { 'mx-hero--compact': compact }]"
     :style="{ '--mx-hero-bg': colors.background, '--mx-hero-ink': colors.ink, '--mx-hero-accent': colors.accent }"

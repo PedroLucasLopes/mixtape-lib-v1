@@ -53,9 +53,10 @@ const entries = computed(() =>
 </script>
 
 <template>
-  <ul v-if="entries.length" class="mx-streaming" :class="{ 'mx-streaming--compact': compact }">
+  <ul v-if="entries.length" data-testid="mx-streaming-links" class="mx-streaming" :class="{ 'mx-streaming--compact': compact }">
     <li v-for="(entry, index) in entries" :key="entry.name" class="mx-streaming__item" :style="{ animationDelay: `${index * 50}ms` }">
       <a
+        :data-testid="`mx-streaming-links-${entry.name}`"
         class="mx-streaming__link"
         :href="entry.url"
         target="_blank"

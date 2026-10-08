@@ -22,8 +22,8 @@ const { t } = useMixtapeText();
 </script>
 
 <template>
-  <div class="mx-app-shell mx-root">
-    <a class="mx-app-shell__skip" :href="`#${mainId}`">{{ t('common.skipToContent') }}</a>
+  <div data-testid="mx-app-shell" class="mx-app-shell mx-root">
+    <a data-testid="mx-app-shell-skip" class="mx-app-shell__skip" :href="`#${mainId}`">{{ t('common.skipToContent') }}</a>
     <MxProgressBar :active="loading" />
     <MxBlobField v-if="blobs" fixed :count="5" intensity="subtle" seed="mixtape-shell" />
 
@@ -34,11 +34,11 @@ const { t } = useMixtapeText();
       <template #actions><slot name="actions" /></template>
     </MxTopBar>
 
-    <main :id="mainId" class="mx-app-shell__main" tabindex="-1">
+    <main :id="mainId" data-testid="mx-app-shell-main" class="mx-app-shell__main" tabindex="-1">
       <slot />
     </main>
 
-    <footer v-if="$slots.footer" class="mx-app-shell__footer">
+    <footer v-if="$slots.footer" data-testid="mx-app-shell-footer" class="mx-app-shell__footer">
       <slot name="footer" />
     </footer>
 

@@ -8,7 +8,7 @@ const { t } = useMixtapeText();
 </script>
 
 <template>
-  <div class="mx-loader" :class="{ 'mx-loader--inline': inline }" role="status">
+  <div data-testid="mx-loader" class="mx-loader" :class="{ 'mx-loader--inline': inline }" role="status">
     <MxVinyl :size="size" spinning :speed="1.2" />
     <span :class="inline ? 'mx-sr-only' : 'mx-loader__label'">{{ label ?? t('common.loading') }}</span>
   </div>

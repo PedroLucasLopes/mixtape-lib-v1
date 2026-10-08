@@ -3,11 +3,14 @@ import { computed } from 'vue';
 import { useMixtapeText } from '../i18n/useMixtapeText';
 import { isExternalHref, type LinkTarget, useLinkComponent } from '../links/links';
 
-const props = defineProps<{
-  to?: LinkTarget;
-  href?: string;
-  external?: boolean;
-}>();
+const props = withDefaults(
+  defineProps<{
+    to?: LinkTarget;
+    href?: string;
+    external?: boolean;
+  }>(),
+  { external: undefined },
+);
 
 const { t } = useMixtapeText();
 const link = useLinkComponent();
@@ -18,11 +21,12 @@ const useRouter = computed(() => props.to !== undefined && link !== null && !isE
 </script>
 
 <template>
-  <component :is="link" v-if="useRouter" :to="to">
+  <component :is="link" v-if="useRouter" data-testid="mx-link" :to="to">
     <slot />
   </component>
   <a
     v-else
+    data-testid="mx-link"
     :href="target"
     :target="isExternal ? '_blank' : undefined"
     :rel="isExternal ? 'noopener noreferrer' : undefined"

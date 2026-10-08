@@ -39,7 +39,7 @@ const path = computed(() => {
 </script>
 
 <template>
-  <span class="mx-starburst" :style="{ width: dimension, height: dimension, color: ink }">
+  <span data-testid="mx-starburst" class="mx-starburst" :style="{ width: dimension, height: dimension, color: ink }">
     <svg class="mx-starburst__shape" :class="{ 'mx-starburst__shape--spin': spin }" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
       <path
         :d="path"

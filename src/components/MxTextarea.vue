@@ -22,6 +22,7 @@ withDefaults(
 <template>
   <VTextarea
     v-model="model"
+    data-testid="mx-textarea"
     class="mx-textarea"
     :label="label"
     :hint="hint"

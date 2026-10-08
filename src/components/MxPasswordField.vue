@@ -46,9 +46,10 @@ const level = computed(() => LEVELS[strength.value] ?? 'weak');
 </script>
 
 <template>
-  <div class="mx-password">
+  <div data-testid="mx-password-field" class="mx-password">
     <VTextField
       v-model="model"
+      data-testid="mx-password-field-input"
       class="mx-password__field"
       :label="label"
       :type="visible ? 'text' : 'password'"
@@ -63,6 +64,7 @@ const level = computed(() => LEVELS[strength.value] ?? 'weak');
       <template #append-inner>
         <button
           type="button"
+          data-testid="mx-password-field-toggle"
           class="mx-password__toggle"
           :aria-label="visible ? t('password.hide') : t('password.show')"
           :aria-pressed="visible"
@@ -73,13 +75,13 @@ const level = computed(() => LEVELS[strength.value] ?? 'weak');
       </template>
     </VTextField>
 
-    <div v-if="showStrength && model" class="mx-password__strength" :class="`mx-password__strength--${level}`">
+    <div v-if="showStrength && model" data-testid="mx-password-field-strength" class="mx-password__strength" :class="`mx-password__strength--${level}`">
       <span v-for="index in 4" :key="index" class="mx-password__bar" :class="{ 'mx-password__bar--on': index <= strength }" />
       <span class="mx-password__level" aria-live="polite">{{ t('password.strength', { level: t(`password.${level}`) }) }}</span>
     </div>
 
-    <ul v-if="rules.length" :id="rulesId" class="mx-password__rules">
-      <li v-for="rule in rules" :key="rule.key" class="mx-password__rule" :class="{ 'mx-password__rule--passed': rule.passed }">
+    <ul v-if="rules.length" :id="rulesId" data-testid="mx-password-field-rules" class="mx-password__rules">
+      <li v-for="rule in rules" :key="rule.key" :data-testid="`mx-password-field-rule-${rule.key}`" class="mx-password__rule" :class="{ 'mx-password__rule--passed': rule.passed }">
         <VIcon :icon="rule.passed ? 'mdi-check-circle' : 'mdi-circle-outline'" size="18" aria-hidden="true" />
         <span>{{ rule.label }}</span>
         <span class="mx-sr-only">{{ rule.passed ? t('password.rulePassed') : t('password.rulePending') }}</span>

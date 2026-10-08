@@ -17,5 +17,5 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["src/**/*.ts", "src/**/*.vue", ".storybook/**/*.ts", "vite.lib.config.ts", "vitest.config.ts"]
+  "include": ["src/**/*.ts", "src/**/*.vue", "tests/**/*.ts", ".storybook/**/*.ts", "vite.lib.config.ts", "vitest.config.ts"]
 }

@@ -125,6 +125,12 @@
     "previous": "Página anterior",
     "next": "Página siguiente"
   },
+  "rotator": {
+    "pause": "Pausar el cambio automático",
+    "play": "Reanudar el cambio automático",
+    "slide": "{index} de {total}",
+    "goTo": "Mostrar el elemento {index}"
+  },
   "error": {
     "title": "Algo desafinó por aquí"
   },

@@ -39,6 +39,7 @@ const shown = computed(() => !props.animated || inView.value);
 <template>
   <span
     ref="root"
+    data-testid="mx-rating"
     class="mx-rating"
     :class="[`mx-rating--${size}`, `mx-rating--${tone}`, { 'mx-rating--shown': shown, 'mx-rating--empty': value === null || value === undefined }]"
     role="img"

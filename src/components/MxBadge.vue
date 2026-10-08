@@ -42,6 +42,7 @@ const gradientId = `mx-badge-${useId()}`;
 <template>
   <article
     ref="root"
+    data-testid="mx-badge"
     class="mx-badge"
     :class="[`mx-badge--${size}`, { 'mx-badge--locked': locked, 'mx-badge--shown': inView }]"
   >

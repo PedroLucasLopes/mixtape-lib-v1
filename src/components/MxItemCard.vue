@@ -56,7 +56,7 @@ const listenersText = computed(() =>
 </script>
 
 <template>
-  <article class="mx-item-card" :class="[`mx-item-card--${layout}`, `mx-item-card--${kind}`]">
+  <article data-testid="mx-item-card" class="mx-item-card" :class="[`mx-item-card--${layout}`, `mx-item-card--${kind}`]">
     <div v-tilt="layout === 'tile' ? { max: 7, glare: true } : false" class="mx-item-card__media">
       <span v-if="position !== null && layout !== 'row'" class="mx-item-card__position" aria-hidden="true">{{ position }}</span>
       <MxCover
@@ -75,7 +75,7 @@ const listenersText = computed(() =>
     </div>
     <div class="mx-item-card__body">
       <component :is="heading" class="mx-item-card__title">
-        <MxLink v-if="to !== undefined" :to="to" class="mx-item-card__link">
+        <MxLink v-if="to !== undefined" :to="to" data-testid="mx-item-card-link" class="mx-item-card__link">
           <span v-if="position !== null && layout === 'row'" class="mx-item-card__inline-position">{{ position }}</span>
           {{ title }}
         </MxLink>
@@ -91,7 +91,7 @@ const listenersText = computed(() =>
         </span>
       </p>
     </div>
-    <div v-if="$slots.actions" class="mx-item-card__actions">
+    <div v-if="$slots.actions" data-testid="mx-item-card-actions" class="mx-item-card__actions">
       <slot name="actions" />
     </div>
   </article>

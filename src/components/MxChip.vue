@@ -40,12 +40,13 @@ const classes = computed(() => [
 </script>
 
 <template>
-  <MxLink v-if="to !== undefined || href !== undefined" :class="classes" :style="style" :to="to" :href="href">
+  <MxLink v-if="to !== undefined || href !== undefined" data-testid="mx-chip" :class="classes" :style="style" :to="to" :href="href">
     <VIcon v-if="icon" :icon="icon" class="mx-chip__icon" aria-hidden="true" />
     <span class="mx-chip__label">{{ label }}</span>
   </MxLink>
   <button
     v-else-if="selectable"
+    data-testid="mx-chip"
     type="button"
     :class="classes"
     :style="style"
@@ -56,10 +57,10 @@ const classes = computed(() => [
     <VIcon v-else-if="icon" :icon="icon" class="mx-chip__icon" aria-hidden="true" />
     <span class="mx-chip__label">{{ label }}</span>
   </button>
-  <span v-else :class="classes" :style="style">
+  <span v-else data-testid="mx-chip" :class="classes" :style="style">
     <VIcon v-if="icon" :icon="icon" class="mx-chip__icon" aria-hidden="true" />
     <span class="mx-chip__label">{{ label }}</span>
-    <button v-if="removable" type="button" class="mx-chip__remove" :aria-label="t('common.removeItem', { item: label })" @click="emit('remove')">
+    <button v-if="removable" type="button" data-testid="mx-chip-remove" class="mx-chip__remove" :aria-label="t('common.removeItem', { item: label })" @click="emit('remove')">
       <VIcon icon="mdi-close" aria-hidden="true" />
     </button>
   </span>

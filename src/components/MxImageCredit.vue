@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useMixtapeText } from '../i18n/useMixtapeText';
 
+defineOptions({ inheritAttrs: false });
+
 defineProps<{
   author?: string | null;
   license?: string | null;
@@ -14,17 +16,23 @@ const { t } = useMixtapeText();
 <template>
   <VMenu location="top end" :close-on-content-click="false">
     <template #activator="{ props: activator }">
-      <button v-bind="activator" type="button" class="mx-image-credit" :aria-label="t('media.credits')">
+      <button
+        data-testid="mx-image-credit"
+        v-bind="{ ...activator, ...$attrs }"
+        type="button"
+        class="mx-image-credit"
+        :aria-label="t('media.credits')"
+      >
         <VIcon icon="mdi-copyright" aria-hidden="true" />
       </button>
     </template>
-    <div class="mx-image-credit__card mx-glass">
+    <div data-testid="mx-image-credit-card" class="mx-image-credit__card mx-glass">
       <p v-if="author" class="mx-image-credit__line">{{ t('media.photoBy', { author }) }}</p>
       <p v-if="license" class="mx-image-credit__line">
-        <a v-if="licenseUrl" :href="licenseUrl" target="_blank" rel="noopener noreferrer">{{ t('media.license', { license }) }}</a>
+        <a v-if="licenseUrl" data-testid="mx-image-credit-license" :href="licenseUrl" target="_blank" rel="noopener noreferrer">{{ t('media.license', { license }) }}</a>
         <span v-else>{{ t('media.license', { license }) }}</span>
       </p>
-      <a class="mx-image-credit__source" :href="sourceUrl" target="_blank" rel="noopener noreferrer">
+      <a data-testid="mx-image-credit-source" class="mx-image-credit__source" :href="sourceUrl" target="_blank" rel="noopener noreferrer">
         {{ t('media.source') }}
         <VIcon icon="mdi-arrow-top-right" size="16" aria-hidden="true" />
       </a>

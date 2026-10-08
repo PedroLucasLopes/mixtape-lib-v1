@@ -23,37 +23,37 @@ const titleId = useId();
 </script>
 
 <template>
-  <VBottomSheet v-if="sheetOnMobile && smAndDown" v-model="open" :persistent="persistent" :aria-labelledby="titleId" scrollable>
+  <VBottomSheet v-if="sheetOnMobile && smAndDown" v-model="open" data-testid="mx-dialog" :persistent="persistent" :aria-labelledby="titleId" scrollable>
     <div class="mx-dialog mx-dialog--sheet">
       <span class="mx-dialog__grabber" aria-hidden="true" />
       <header class="mx-dialog__header">
         <div>
-          <h2 :id="titleId" class="mx-dialog__title">{{ title }}</h2>
+          <h2 :id="titleId" data-testid="mx-dialog-title" class="mx-dialog__title">{{ title }}</h2>
           <p v-if="description" class="mx-dialog__description">{{ description }}</p>
         </div>
-        <MxIconButton v-if="!persistent" icon="mdi-close" :label="t('common.close')" variant="ghost" size="sm" :tooltip="false" @click="open = false" />
+        <MxIconButton v-if="!persistent" data-testid="mx-dialog-close" icon="mdi-close" :label="t('common.close')" variant="ghost" size="sm" :tooltip="false" @click="open = false" />
       </header>
-      <div class="mx-dialog__body">
+      <div data-testid="mx-dialog-body" class="mx-dialog__body">
         <slot />
       </div>
-      <footer v-if="$slots.actions" class="mx-dialog__actions">
+      <footer v-if="$slots.actions" data-testid="mx-dialog-actions" class="mx-dialog__actions">
         <slot name="actions" />
       </footer>
     </div>
   </VBottomSheet>
-  <VDialog v-else v-model="open" :max-width="width" :persistent="persistent" :aria-labelledby="titleId" scrollable>
+  <VDialog v-else v-model="open" data-testid="mx-dialog" :max-width="width" :persistent="persistent" :aria-labelledby="titleId" scrollable>
     <div class="mx-dialog">
       <header class="mx-dialog__header">
         <div>
-          <h2 :id="titleId" class="mx-dialog__title">{{ title }}</h2>
+          <h2 :id="titleId" data-testid="mx-dialog-title" class="mx-dialog__title">{{ title }}</h2>
           <p v-if="description" class="mx-dialog__description">{{ description }}</p>
         </div>
-        <MxIconButton v-if="!persistent" icon="mdi-close" :label="t('common.close')" variant="ghost" size="sm" :tooltip="false" @click="open = false" />
+        <MxIconButton v-if="!persistent" data-testid="mx-dialog-close" icon="mdi-close" :label="t('common.close')" variant="ghost" size="sm" :tooltip="false" @click="open = false" />
       </header>
-      <div class="mx-dialog__body">
+      <div data-testid="mx-dialog-body" class="mx-dialog__body">
         <slot />
       </div>
-      <footer v-if="$slots.actions" class="mx-dialog__actions">
+      <footer v-if="$slots.actions" data-testid="mx-dialog-actions" class="mx-dialog__actions">
         <slot name="actions" />
       </footer>
     </div>

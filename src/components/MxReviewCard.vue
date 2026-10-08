@@ -80,6 +80,7 @@ const ratingText = computed(() => formatRatingValue(props.rating, locale.value))
 
 <template>
   <article
+    data-testid="mx-review-card"
     class="mx-review"
     :class="[`mx-review--${variant}`, { 'mx-review--highlight': highlight }]"
     :aria-labelledby="headingId"
@@ -89,7 +90,7 @@ const ratingText = computed(() => formatRatingValue(props.rating, locale.value))
     </h3>
 
     <header class="mx-review__header">
-      <component :is="author.to ? MxLink : 'span'" :to="author.to" class="mx-review__author">
+      <component :is="author.to ? MxLink : 'span'" :to="author.to" data-testid="mx-review-card-author" class="mx-review__author">
         <MxAvatar :name="author.name" :src="author.avatarUrl" :seed="author.username" :tier="author.tier" :size="variant === 'compact' ? 32 : 40" decorative />
         <span class="mx-review__identity">
           <span class="mx-review__name">{{ author.name }}</span>
@@ -103,7 +104,7 @@ const ratingText = computed(() => formatRatingValue(props.rating, locale.value))
     </header>
 
     <div v-if="group || visibility !== 'public'" class="mx-review__tags">
-      <component :is="group?.to ? MxLink : 'span'" v-if="group" :to="group?.to" class="mx-review__tag mx-review__tag--group">
+      <component :is="group?.to ? MxLink : 'span'" v-if="group" :to="group?.to" data-testid="mx-review-card-group" class="mx-review__tag mx-review__tag--group">
         <VIcon icon="mdi-account-group" size="16" aria-hidden="true" />
         {{ t('groupReview.tag', { group: group.name }) }}
       </component>
@@ -114,7 +115,7 @@ const ratingText = computed(() => formatRatingValue(props.rating, locale.value))
     </div>
 
     <div class="mx-review__subject">
-      <component :is="item.to && showItem ? MxLink : 'div'" v-if="showItem" :to="item.to" class="mx-review__item">
+      <component :is="item.to && showItem ? MxLink : 'div'" v-if="showItem" :to="item.to" data-testid="mx-review-card-item" class="mx-review__item">
         <MxCover
           :src="item.cover"
           :title="item.title"
@@ -131,18 +132,19 @@ const ratingText = computed(() => formatRatingValue(props.rating, locale.value))
           </span>
         </span>
       </component>
-      <MxRating :value="rating" :size="variant === 'full' ? 'lg' : 'md'" show-value class="mx-review__rating" />
+      <MxRating data-testid="mx-review-card-rating" :value="rating" :size="variant === 'full' ? 'lg' : 'md'" show-value class="mx-review__rating" />
     </div>
 
     <div v-if="body" class="mx-review__body-wrap">
-      <p class="mx-review__body" :class="{ 'mx-review__body--clamped': clampable && !expanded }">{{ body }}</p>
-      <button v-if="clampable" type="button" class="mx-review__more" :aria-expanded="expanded" @click="expanded = !expanded">
+      <p data-testid="mx-review-card-body" class="mx-review__body" :class="{ 'mx-review__body--clamped': clampable && !expanded }">{{ body }}</p>
+      <button v-if="clampable" type="button" data-testid="mx-review-card-more" class="mx-review__more" :aria-expanded="expanded" @click="expanded = !expanded">
         {{ expanded ? t('common.showLess') : t('common.showMore') }}
       </button>
     </div>
 
     <footer class="mx-review__footer">
       <MxLikeButton
+        data-testid="mx-review-card-like"
         :count="likes"
         :liked="liked"
         :interactive="canLike"
@@ -151,7 +153,7 @@ const ratingText = computed(() => formatRatingValue(props.rating, locale.value))
         @toggle="emit('like', $event)"
       />
       <span class="mx-review__actions">
-        <MxLink v-if="to && variant !== 'full'" :to="to" class="mx-review__open">
+        <MxLink v-if="to && variant !== 'full'" :to="to" data-testid="mx-review-card-open" class="mx-review__open">
           {{ t('review.open') }}
           <VIcon icon="mdi-arrow-right" size="16" aria-hidden="true" />
         </MxLink>

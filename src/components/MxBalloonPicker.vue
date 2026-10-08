@@ -66,7 +66,7 @@ function toggle(value: string): void {
 </script>
 
 <template>
-  <div class="mx-balloons">
+  <div data-testid="mx-balloon-picker" class="mx-balloons">
     <div v-if="loading" class="mx-balloons__field" aria-hidden="true">
       <span
         v-for="index in skeletonCount"
@@ -87,6 +87,7 @@ function toggle(value: string): void {
         v-for="balloon in balloons"
         :key="balloon.value"
         type="button"
+        data-testid="mx-balloon-picker-option"
         class="mx-balloon"
         :class="[`mx-balloon--${balloon.size}`, { 'mx-balloon--selected': selected(balloon.value), 'mx-balloon--blocked': full && !selected(balloon.value) }]"
         :style="balloon.style"
@@ -121,7 +122,7 @@ function toggle(value: string): void {
       </button>
     </div>
 
-    <p v-if="!loading" class="mx-balloons__status" aria-live="polite">
+    <p v-if="!loading" data-testid="mx-balloon-picker-status" class="mx-balloons__status" aria-live="polite">
       {{ max !== null ? t('balloons.counter', { count: model.length, max }) : t('balloons.selected', { count: model.length }) }}
     </p>
   </div>

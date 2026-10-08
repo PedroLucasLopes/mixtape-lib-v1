@@ -19,6 +19,7 @@ const colors = computed(() => duotones[props.duotone]);
 
 <template>
   <article
+    data-testid="mx-story-card"
     class="mx-story-card"
     :style="{
       '--mx-story-bg': colors.background,

@@ -30,6 +30,7 @@ const emit = defineEmits<{ blur: [] }>();
 <template>
   <VTextField
     v-model="model"
+    data-testid="mx-text-field"
     class="mx-text-field"
     :label="label"
     :type="type"

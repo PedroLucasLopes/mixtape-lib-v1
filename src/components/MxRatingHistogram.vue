@@ -37,7 +37,7 @@ const averagePosition = computed(() => (props.average === null ? null : (props.a
 </script>
 
 <template>
-  <figure ref="root" class="mx-histogram" :class="{ 'mx-histogram--shown': inView, 'mx-histogram--compact': compact }">
+  <figure ref="root" data-testid="mx-rating-histogram" class="mx-histogram" :class="{ 'mx-histogram--shown': inView, 'mx-histogram--compact': compact }">
     <figcaption class="mx-histogram__caption">
       <span class="mx-histogram__title">{{ title ?? t('rating.distribution') }}</span>
       <span class="mx-histogram__summary">
@@ -46,7 +46,7 @@ const averagePosition = computed(() => (props.average === null ? null : (props.a
       </span>
     </figcaption>
 
-    <div v-if="!asTable" class="mx-histogram__chart" aria-hidden="true">
+    <div v-if="!asTable" data-testid="mx-rating-histogram-chart" class="mx-histogram__chart" aria-hidden="true">
       <div class="mx-histogram__bars">
         <span
           v-for="(bucket, index) in buckets"
@@ -63,7 +63,7 @@ const averagePosition = computed(() => (props.average === null ? null : (props.a
       </div>
     </div>
 
-    <table v-else class="mx-histogram__table">
+    <table v-else data-testid="mx-rating-histogram-table" class="mx-histogram__table">
       <thead>
         <tr>
           <th scope="col">{{ t('rating.tableRating') }}</th>
@@ -86,7 +86,7 @@ const averagePosition = computed(() => (props.average === null ? null : (props.a
       </tr>
     </table>
 
-    <button type="button" class="mx-histogram__toggle" @click="asTable = !asTable">
+    <button type="button" data-testid="mx-rating-histogram-toggle" class="mx-histogram__toggle" @click="asTable = !asTable">
       <VIcon :icon="asTable ? 'mdi-chart-bar' : 'mdi-table'" size="16" aria-hidden="true" />
       {{ asTable ? t('rating.showChart') : t('rating.showTable') }}
     </button>

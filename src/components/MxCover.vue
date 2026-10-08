@@ -70,6 +70,7 @@ const showImage = computed(() => Boolean(url.value) && !failed.value);
 
 <template>
   <span
+    data-testid="mx-cover"
     class="mx-cover"
     :class="[`mx-cover--${radius}`, `mx-cover--${shape}`, { 'mx-cover--vinyl': vinyl, 'mx-cover--loaded': loaded || priority }]"
     :style="{ width: dimension }"

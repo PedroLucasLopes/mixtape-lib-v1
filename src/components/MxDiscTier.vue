@@ -20,7 +20,7 @@ const labelColor = computed(() => metals[metal.value][0]);
 </script>
 
 <template>
-  <span class="mx-disc-tier" :class="[`mx-disc-tier--${metal}`, { 'mx-disc-tier--spinning': spinning }]">
+  <span data-testid="mx-disc-tier" class="mx-disc-tier" :class="[`mx-disc-tier--${metal}`, { 'mx-disc-tier--spinning': spinning }]">
     <span class="mx-disc-tier__record">
       <MxVinyl :size="size" :finish="metal" :label-color="labelColor" :spinning="spinning" :speed="3.2" />
     </span>

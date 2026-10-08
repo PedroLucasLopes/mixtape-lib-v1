@@ -25,7 +25,7 @@ onBeforeUnmount(() => clearTimeout(timer));
 </script>
 
 <template>
-  <div class="mx-progress-bar" :class="{ 'mx-progress-bar--visible': visible }" role="progressbar" :aria-hidden="!visible" aria-busy="true">
+  <div data-testid="mx-progress-bar" class="mx-progress-bar" :class="{ 'mx-progress-bar--visible': visible }" role="progressbar" :aria-hidden="!visible" aria-busy="true">
     <span class="mx-progress-bar__fill" />
   </div>
 </template>

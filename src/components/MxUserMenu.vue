@@ -14,6 +14,8 @@ export interface UserMenuItem {
   to: LinkTarget;
 }
 
+defineOptions({ inheritAttrs: false });
+
 withDefaults(
   defineProps<{
     name: string;
@@ -44,7 +46,8 @@ const themes: Array<{ mode: ThemeMode; icon: string }> = [
   <VMenu location="bottom end" :close-on-content-click="false" transition="scale-transition">
     <template #activator="{ props: activator, isActive }">
       <button
-        v-bind="activator"
+        data-testid="mx-user-menu"
+        v-bind="{ ...activator, ...$attrs }"
         type="button"
         class="mx-user-menu__trigger"
         :aria-label="t('user.openMenu', { name })"
@@ -54,7 +57,7 @@ const themes: Array<{ mode: ThemeMode; icon: string }> = [
       </button>
     </template>
 
-    <div class="mx-user-menu mx-glass">
+    <div data-testid="mx-user-menu-panel" class="mx-user-menu mx-glass">
       <div class="mx-user-menu__header">
         <MxAvatar :name="name" :src="avatarUrl" :seed="username" :tier="tier" :size="52" decorative />
         <div class="mx-user-menu__identity">
@@ -64,7 +67,7 @@ const themes: Array<{ mode: ThemeMode; icon: string }> = [
       </div>
 
       <nav v-if="items.length" class="mx-user-menu__nav">
-        <MxLink v-for="item in items" :key="item.key" :to="item.to" class="mx-user-menu__item">
+        <MxLink v-for="item in items" :key="item.key" :data-testid="`mx-user-menu-item-${item.key}`" :to="item.to" class="mx-user-menu__item">
           <VIcon :icon="item.icon" size="20" aria-hidden="true" />
           {{ item.label }}
         </MxLink>
@@ -77,6 +80,7 @@ const themes: Array<{ mode: ThemeMode; icon: string }> = [
             v-for="option in themes"
             :key="option.mode"
             type="button"
+            :data-testid="`mx-user-menu-theme-${option.mode}`"
             class="mx-user-menu__theme"
             :class="{ 'mx-user-menu__theme--active': option.mode === themeMode }"
             :aria-pressed="option.mode === themeMode"
@@ -95,6 +99,7 @@ const themes: Array<{ mode: ThemeMode; icon: string }> = [
             v-for="language in languages"
             :key="language.code"
             type="button"
+            :data-testid="`mx-user-menu-language-${language.code}`"
             class="mx-user-menu__language"
             :class="{ 'mx-user-menu__language--active': language.code === locale }"
             :aria-pressed="language.code === locale"
@@ -107,7 +112,7 @@ const themes: Array<{ mode: ThemeMode; icon: string }> = [
         </div>
       </fieldset>
 
-      <button type="button" class="mx-user-menu__sign-out" :disabled="signingOut" @click="emit('signOut')">
+      <button type="button" data-testid="mx-user-menu-sign-out" class="mx-user-menu__sign-out" :disabled="signingOut" @click="emit('signOut')">
         <VIcon icon="mdi-logout" size="20" aria-hidden="true" />
         {{ t('user.signOut') }}
       </button>

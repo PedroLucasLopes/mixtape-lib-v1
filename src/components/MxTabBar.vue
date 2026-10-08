@@ -21,10 +21,10 @@ const half = computed(() => Math.ceil(props.items.length / 2));
 </script>
 
 <template>
-  <nav class="mx-tab-bar" :class="{ 'mx-tab-bar--compact': compact }" :aria-label="label">
+  <nav data-testid="mx-tab-bar" class="mx-tab-bar" :class="{ 'mx-tab-bar--compact': compact }" :aria-label="label">
     <ul class="mx-tab-bar__list">
       <li v-for="item in items.slice(0, half)" :key="item.key">
-        <MxLink :to="item.to" class="mx-tab-bar__item" :class="{ 'mx-tab-bar__item--active': item.key === active }" :aria-current="item.key === active ? 'page' : undefined">
+        <MxLink :to="item.to" :data-testid="`mx-tab-bar-item-${item.key}`" class="mx-tab-bar__item" :class="{ 'mx-tab-bar__item--active': item.key === active }" :aria-current="item.key === active ? 'page' : undefined">
           <VIcon :icon="item.key === active ? (item.activeIcon ?? item.icon) : item.icon" aria-hidden="true" />
           <span class="mx-tab-bar__label">{{ item.label }}</span>
         </MxLink>
@@ -33,7 +33,7 @@ const half = computed(() => Math.ceil(props.items.length / 2));
         <slot name="action" />
       </li>
       <li v-for="item in items.slice(half)" :key="item.key">
-        <MxLink :to="item.to" class="mx-tab-bar__item" :class="{ 'mx-tab-bar__item--active': item.key === active }" :aria-current="item.key === active ? 'page' : undefined">
+        <MxLink :to="item.to" :data-testid="`mx-tab-bar-item-${item.key}`" class="mx-tab-bar__item" :class="{ 'mx-tab-bar__item--active': item.key === active }" :aria-current="item.key === active ? 'page' : undefined">
           <VIcon :icon="item.key === active ? (item.activeIcon ?? item.icon) : item.icon" aria-hidden="true" />
           <span class="mx-tab-bar__label">{{ item.label }}</span>
         </MxLink>

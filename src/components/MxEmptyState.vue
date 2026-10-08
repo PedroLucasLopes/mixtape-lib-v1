@@ -19,13 +19,13 @@ const colors = computed(() => duotones[props.duotone]);
 </script>
 
 <template>
-  <section class="mx-empty" :class="{ 'mx-empty--compact': compact }">
+  <section data-testid="mx-empty-state" class="mx-empty" :class="{ 'mx-empty--compact': compact }">
     <MxStarburst shape="flower" :points="8" :color="colors.background" :ink="colors.ink" :size="compact ? 72 : 104" class="mx-empty__art">
       <VIcon :icon="icon" :size="compact ? 28 : 40" aria-hidden="true" />
     </MxStarburst>
-    <component :is="`h${headingLevel}`" class="mx-empty__title">{{ title }}</component>
+    <component :is="`h${headingLevel}`" data-testid="mx-empty-state-title" class="mx-empty__title">{{ title }}</component>
     <p v-if="description" class="mx-empty__description">{{ description }}</p>
-    <div v-if="$slots.default" class="mx-empty__actions">
+    <div v-if="$slots.default" data-testid="mx-empty-state-actions" class="mx-empty__actions">
       <slot />
     </div>
   </section>

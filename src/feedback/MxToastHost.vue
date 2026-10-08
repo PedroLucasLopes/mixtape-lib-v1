@@ -66,12 +66,13 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="mx-toast-host">
+  <div data-testid="mx-toast-host" class="mx-toast-host">
     <div role="alert" aria-live="assertive" class="mx-toast-host__region">
       <TransitionGroup name="mx-toast">
         <div
           v-for="toast in errors"
           :key="toast.id"
+          data-testid="mx-toast-host-error"
           class="mx-toast mx-toast--error"
           @mouseenter="pause(toast as Toast)"
           @mouseleave="resume(toast as Toast)"
@@ -79,9 +80,9 @@ onBeforeUnmount(() => {
           @focusout="resume(toast as Toast)"
         >
           <VIcon :icon="toast.icon ?? ICONS[toast.kind]" class="mx-toast__icon" aria-hidden="true" />
-          <span class="mx-toast__message">{{ toast.message }}</span>
-          <button v-if="toast.action" type="button" class="mx-toast__action" @click="runAction(toast as Toast)">{{ toast.action.label }}</button>
-          <button type="button" class="mx-toast__close" :aria-label="t('toast.dismiss')" @click="dismiss(toast.id)">
+          <span data-testid="mx-toast-host-message" class="mx-toast__message">{{ toast.message }}</span>
+          <button v-if="toast.action" type="button" data-testid="mx-toast-host-action" class="mx-toast__action" @click="runAction(toast as Toast)">{{ toast.action.label }}</button>
+          <button type="button" data-testid="mx-toast-host-close" class="mx-toast__close" :aria-label="t('toast.dismiss')" @click="dismiss(toast.id)">
             <VIcon icon="mdi-close" size="18" aria-hidden="true" />
           </button>
         </div>
@@ -92,6 +93,7 @@ onBeforeUnmount(() => {
         <div
           v-for="toast in others"
           :key="toast.id"
+          :data-testid="`mx-toast-host-${toast.kind}`"
           class="mx-toast"
           :class="`mx-toast--${toast.kind}`"
           @mouseenter="pause(toast as Toast)"
@@ -100,9 +102,9 @@ onBeforeUnmount(() => {
           @focusout="resume(toast as Toast)"
         >
           <VIcon :icon="toast.icon ?? ICONS[toast.kind]" class="mx-toast__icon" aria-hidden="true" />
-          <span class="mx-toast__message">{{ toast.message }}</span>
-          <button v-if="toast.action" type="button" class="mx-toast__action" @click="runAction(toast as Toast)">{{ toast.action.label }}</button>
-          <button type="button" class="mx-toast__close" :aria-label="t('toast.dismiss')" @click="dismiss(toast.id)">
+          <span data-testid="mx-toast-host-message" class="mx-toast__message">{{ toast.message }}</span>
+          <button v-if="toast.action" type="button" data-testid="mx-toast-host-action" class="mx-toast__action" @click="runAction(toast as Toast)">{{ toast.action.label }}</button>
+          <button type="button" data-testid="mx-toast-host-close" class="mx-toast__close" :aria-label="t('toast.dismiss')" @click="dismiss(toast.id)">
             <VIcon icon="mdi-close" size="18" aria-hidden="true" />
           </button>
         </div>

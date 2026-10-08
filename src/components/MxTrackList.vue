@@ -38,7 +38,7 @@ const discs = computed(() => {
 </script>
 
 <template>
-  <div class="mx-track-list">
+  <div data-testid="mx-track-list" class="mx-track-list">
     <section v-for="group in discs" :key="group.disc" class="mx-track-list__disc">
       <h3 v-if="discs.length > 1" class="mx-track-list__disc-title">
         <VIcon icon="mdi-album" size="18" aria-hidden="true" />
@@ -49,6 +49,7 @@ const discs = computed(() => {
           v-for="(track, index) in group.tracks"
           :key="track.id + track.number"
           v-reveal="{ delay: Math.min(index, 12) * 35, variant: 'left' }"
+          data-testid="mx-track-list-track"
           class="mx-track-list__track"
           :class="{ 'mx-track-list__track--highlight': track.id === highlightId }"
         >
@@ -57,8 +58,8 @@ const discs = computed(() => {
             <span class="mx-track-list__eq"><i /><i /><i /></span>
           </span>
           <span class="mx-track-list__info">
-            <MxLink v-if="track.to !== undefined" :to="track.to" class="mx-track-list__title">{{ track.title }}</MxLink>
-            <span v-else class="mx-track-list__title">{{ track.title }}</span>
+            <MxLink v-if="track.to !== undefined" :to="track.to" data-testid="mx-track-list-title" class="mx-track-list__title">{{ track.title }}</MxLink>
+            <span v-else data-testid="mx-track-list-title" class="mx-track-list__title">{{ track.title }}</span>
             <span v-if="track.artistCredit && track.artistCredit !== albumArtist" class="mx-track-list__artist">{{ track.artistCredit }}</span>
           </span>
           <span v-if="track.durationMs" class="mx-track-list__duration">

@@ -66,7 +66,7 @@ onBeforeUnmount(() => observer?.disconnect());
 </script>
 
 <template>
-  <div class="mx-segmented" :class="[`mx-segmented--${size}`, { 'mx-segmented--block': block }]" role="radiogroup" :aria-label="label">
+  <div data-testid="mx-segmented" class="mx-segmented" :class="[`mx-segmented--${size}`, { 'mx-segmented--block': block }]" role="radiogroup" :aria-label="label">
     <span
       class="mx-segmented__indicator"
       :class="{ 'mx-segmented__indicator--ready': indicator.ready }"
@@ -79,6 +79,7 @@ onBeforeUnmount(() => observer?.disconnect());
       :ref="(element) => setButton(element, index)"
       type="button"
       role="radio"
+      :data-testid="`mx-segmented-option-${String(option.value)}`"
       class="mx-segmented__option"
       :class="{ 'mx-segmented__option--active': option.value === model }"
       :aria-checked="option.value === model"

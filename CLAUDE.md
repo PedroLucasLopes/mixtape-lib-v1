@@ -12,7 +12,9 @@ npm run build-storybook
 npm run check:contrast     # a paleta inteira contra a WCAG (temas, vidro sobre blobs e duotones)
 npm run check:locales      # pt-BR (referência), en e es, e cada chave usada no código
 npm run type-check
-npm test                   # formatação e mensagens (vitest)
+npm test                   # unidade (formatação) e componentes (jsdom); um só: npm test -- -t MxRotator
+npm run test:components    # só os componentes: contrato de cada um e comportamento dos interativos
+npm run check:testids      # todo componente com data-testid na raiz e nas partes interativas
 npm run build              # dist/: um arquivo por módulo, o CSS de cada componente e as declarações
 npm run sync:icons         # regenera o subconjunto de ícones MDI (SVG) usado pelos componentes
 npm run check:icons        # falha se algum `mdi-*` do código não estiver no subconjunto
@@ -72,6 +74,11 @@ trocou o `MxReactionBar` (gostei/não gostei) pelo `MxLikeButton` (coração), t
 `dislikes`, `comments`, `reaction`, `canReact` e `reactionPending` do `MxReviewCard` por `liked`, `canLike`,
 `likePending` e o evento `like`, e criou o `MxGroupReviewCard` (review da galera). Na mesma versão, o conjunto
 de ícones passou a aceitar `IconShape` (caminho com a própria `viewBox`) ao lado dos caminhos do MDI.
+A 0.6.0 criou o `MxRotator`, fez o `MxBlobField` cobrir qualquer largura, pôs `data-testid` em tudo (com o
+`check:testids` e os testes de componente) e mudou onde três componentes põem o que recebem de fora:
+`MxIconButton`, `MxImageCredit` e `MxUserMenu` repassam classe, estilo e `data-testid` ao botão (antes iam
+para o conteúdo teleportado do menu ou do tooltip). Também passou a abrir link externo do `MxLink` em
+nova aba, com `rel="noopener noreferrer"`, mesmo sem `external` (antes, só com ele).
 
 ---
 
@@ -168,15 +175,56 @@ vue-i18n da aplicação à mesma língua e mantém `<html lang>` em dia.
 | Grupo | Componentes | Decisões |
 |---|---|---|
 | Base | `MxLink`, `MxButton`, `MxIconButton`, `MxGlass`, `MxChip`, `MxBrandIcon`, `MxFlag` | link real (`<a>`) sempre, via o componente injetado (`MIXTAPE_LINK_KEY`); botão não muda de largura carregando e só mostra o giro depois de 220 ms; botão de ícone exige `label` |
-| Formas | `MxVinyl`, `MxBlobField`, `MxBlob`, `MxStarburst`, `MxMarquee` | blobs são decorativos (`aria-hidden`) e param com movimento reduzido; o letreiro lista os itens para leitor de tela uma vez só |
+| Formas | `MxVinyl`, `MxBlobField`, `MxBlob`, `MxStarburst`, `MxMarquee` | blobs são decorativos (`aria-hidden`) e param com movimento reduzido; o `MxBlobField` cobre o campo inteiro em qualquer largura (grade estratificada pela semente, posição e diâmetro em % do campo, nada em px; até 600 px, um arranjo próprio de três) e o `MxBlob` aceita tamanho relativo (`clamp(…, 42%, …)`) com `aspect-ratio: 1`; o letreiro lista os itens para leitor de tela uma vez só |
 | Mídia | `MxCover`, `MxAvatar`, `MxImageCredit`, `MxMosaic` | capa com `srcset` (250/500/1200), cor de superfície parada até carregar, arte de reserva no duotone do item, vinil que desliza para fora no hover e sombra ajustável por `--mx-cover-shadow` (no lugar de `filter: drop-shadow` num pai que anima); foto de artista com crédito de autor e licença |
 | Notas | `MxRating`, `MxRatingInput`, `MxRatingHistogram` | nota de 0 a 5 em **meio disco**; a entrada é um `slider` de verdade (setas, Home/End, PageUp/Down), com botão de **zero** separado (zero é nota válida) e rótulo por nota ("Obra-prima"); histograma com visão de tabela |
 | Gamificação | `MxStat`, `MxDiscTier`, `MxDiscProgress`, `MxBadge`, `MxPodium`, `MxRankRow`, `MxSplitBar`, `MxBarList` | o ícone de cada badge vem da aplicação (a biblioteca não conhece códigos de badge); badge bloqueado continua visível, tracejado, com o caminho até o primeiro nível |
 | Música | `MxItemCard`, `MxTrackList`, `MxReviewCard`, `MxGroupReviewCard`, `MxLikeButton`, `MxStreamingLinks`, `MxTimeAgo`, `MxDescriptionList` | cartão inteiro clicável por **um** link (o do título), ações por cima; texto longo recolhe com "Ler mais"; o número do cartão é de **ouvintes** (`listeners`: pessoas distintas no ListenBrainz), não de execuções. A curtida é um coração com `aria-pressed` (rosa do `secondary` quando curtido): não existe "não gostei" nem comentário em avaliação alheia. O `MxReviewCard` mostra o selo da review da galera (`group`) e um cadeado quando a avaliação não é pública (`visibility`: só a galera ou só o autor). O `MxGroupReviewCard` junta a parte de cada membro num balão (nota, texto, coração), com a média da galera e o progresso ("3 de 5 já deram a nota"), e avisa quando ninguém avaliou ainda |
-| Layout | `MxAppShell`, `MxTopBar`, `MxTabBar`, `MxUserMenu`, `MxFooter`, `MxSection`, `MxRail`, `MxGrid`, `MxPagedGrid`, `MxPageHero`, `MxStoryCard`, `MxSegmented`, `MxSearchField`, `MxProgressBar` | barra de abas flutuante no celular que encolhe ao rolar para baixo (iOS); carrossel com rolagem por teclado e setas no desktop (a `MxSection` que tem um `MxRail` direto reserva o canto das setas, ao lado do "Ver tudo"); segmentado é `radiogroup` com indicador em mola; o menu do usuário cabe na tela (`min(320px, 100vw - 24px)`, coluna `minmax(0, 1fr)`) e rola por dentro quando a altura não dá. O `MxPagedGrid` é a lista longa sem rolagem infinita: `rows` fileiras (2), colunas pela largura (`minItemWidth`, via `ResizeObserver`), páginas lado a lado com `scroll-snap` (desliza no toque e no trackpad) e números de página com reticências, setas e `aria-current`; mudou a largura, continua no mesmo primeiro item; trocou a lista (filtro), volta para a página 1 |
+| Layout | `MxAppShell`, `MxTopBar`, `MxTabBar`, `MxUserMenu`, `MxFooter`, `MxSection`, `MxRail`, `MxGrid`, `MxPagedGrid`, `MxRotator`, `MxPageHero`, `MxStoryCard`, `MxSegmented`, `MxSearchField`, `MxProgressBar` | barra de abas flutuante no celular que encolhe ao rolar para baixo (iOS); carrossel com rolagem por teclado e setas no desktop (a `MxSection` que tem um `MxRail` direto reserva o canto das setas, ao lado do "Ver tudo"); segmentado é `radiogroup` com indicador em mola; o menu do usuário cabe na tela (`min(320px, 100vw - 24px)`, coluna `minmax(0, 1fr)`) e rola por dentro quando a altura não dá. O `MxPagedGrid` é a lista longa sem rolagem infinita: `rows` fileiras (2), colunas pela largura (`minItemWidth`, via `ResizeObserver`), páginas lado a lado com `scroll-snap` (desliza no toque e no trackpad) e números de página com reticências, setas e `aria-current`; mudou a largura, continua no mesmo primeiro item; trocou a lista (filtro), volta para a página 1. O `MxRotator` mostra um item por vez numa caixa só (carrossel WAI-ARIA, troca em fade a cada `interval`, 10 s por padrão): pausa com o ponteiro em cima, com foco dentro, pelo botão, fora da tela e com a aba escondida; com movimento reduzido nasce pausado; os itens fora de cena ficam `inert` e os pontos levam direto a cada um |
 | Feedback | `MxToastHost` + `toast`, `MxDialog`, `MxConfirmDialog`, `MxSkeleton`, `MxLoader`, `MxEmptyState`, `MxErrorState`, `MxLoadMore` | erro não some sozinho e vai para `role="alert"`; o resto para `role="status"`; diálogo vira folha inferior no celular; falha de confirmação aparece **dentro** do diálogo |
 | Formulário | `MxTextField`, `MxTextarea`, `MxPasswordField`, `MxStepper`, `MxBalloonPicker` | a senha é sempre do usuário: o campo mostra as regras (vindas da aplicação, iguais às da API) e um medidor de força; nunca sugere nem gera senha. O `MxStepper` é um conjunto de **abas** (WAI-ARIA: setas, Home/End) com um painel por etapa em slot nomeado pela `key`; etapa adiante de `reachable` fica `aria-disabled`, a já feita ganha check, a troca é anunciada ("Etapa 2 de 4: …") e, quando o avanço vem de um botão do painel, o foco vai para o painel novo (o botão sumiu). O `MxBalloonPicker` é um grupo de botões `aria-pressed` em forma de balão, com até 3 capas dentro; cor (duotone) e tamanho saem do hash do valor, então cada estilo tem sempre o mesmo balão; com `max`, os outros ficam `aria-disabled` e o contador é `aria-live`; capa que não carrega sai do balão (nada de quadrado vazio). No celular, só a etapa ativa mostra o nome, sem cortar |
 | Compartilhar e anúncios | `MxShareSheet`, `MxQrCode`, `MxConsentBanner`, `MxAdFrame` | Instagram usa Web Share API (ou copia o link e explica); anúncio tem altura reservada (sem CLS) e rótulo "Publicidade" |
+
+---
+
+## 🧪 `data-testid` e testes de componente
+
+Todo componente tem `data-testid` para o front (e os testes daqui) acharem cada peça sem depender de
+classe, texto traduzido ou estrutura. O `check:testids` (CI e `prepublishOnly`) lê o template de cada
+`.vue` com o compilador do Vue e recusa o que sair do padrão.
+
+| Onde | Padrão | Exemplo |
+|---|---|---|
+| Raiz | `mx-<nome em kebab, sem o Mx>` | `MxRatingInput` → `mx-rating-input` |
+| Parte | `<raiz>-<parte>` | `mx-rating-input-zero`, `mx-dialog-close` |
+| Item com chave estável | `<raiz>-<parte>-<chave>` (`:data-testid` com template literal) | `mx-segmented-option-week`, `mx-stepper-tab-profile`, `mx-tab-bar-item-charts` |
+
+- **Toda parte interativa tem id**: `button`, `a`, campo, `MxLink`/`MxButton`/`MxIconButton` dentro de
+  outro componente, `<component :is>` que pode virar link, elemento com `@click` ou `role` de controle.
+- **O id de quem usa ganha.** O atributo que chega de fora entra por último (fallthrough do Vue), então
+  `<MxButton data-testid="page-login-submit">` troca o `mx-button` daquele botão. Componente cuja raiz
+  é `VMenu` ou `VTooltip` (`MxIconButton`, `MxImageCredit`, `MxUserMenu`) usa `inheritAttrs: false` e
+  repassa `$attrs` ao gatilho, com o `data-testid` próprio **antes** do `v-bind` (a ordem decide quem
+  ganha). Sem isso, classe e id iam parar no conteúdo teleportado do menu, que nem existe fechado.
+- **Diálogos:** o `data-testid` do `MxDialog` (e de quem o usa) fica no `.v-overlay`, que só existe
+  aberto e mora no `body`; dentro dele, `mx-dialog-title`, `mx-dialog-body`, `mx-dialog-close`.
+
+**Testes** (`tests/`, fora do `src`: não entram no pacote, no `sync:icons` nem no `check:locales`):
+
+| Arquivo | O que garante |
+|---|---|
+| `components/contract.test.ts` | cada `.vue` de `src/components` e `src/feedback`, montado sozinho com a fixture de `tests/fixtures.ts`: renderiza o próprio id, repassa o id recebido para **um** elemento e não solta aviso nenhum do Vue ou do Vuetify (prop obrigatória faltando, atributo que não chega à raiz). Componente novo sem fixture falha aqui |
+| `components/actions`, `forms`, `feedback`, `music`, `layout` | comportamento dos interativos pelos ids: teclado do `MxRatingInput`, `MxSegmented` e `MxStepper`; limite do `MxBalloonPicker`; troca automática, pausa, pontos e movimento reduzido do `MxRotator`; páginas do `MxPagedGrid`; avisos do `MxToastHost`; diálogo de confirmação; menu do usuário; cópia de link do `MxShareSheet`; blobs determinísticos pela semente |
+
+- Ambiente: Vitest com dois projetos (`unit` em Node, `components` em jsdom), `@vue/test-utils` e o
+  Vuetify inteiro registrado como no Storybook, em pt-BR. `tests/setup.ts` supre o que o jsdom não tem
+  (`ResizeObserver`, `matchMedia`, `visualViewport`, `scrollTo`); `tests/media.ts` liga
+  `prefers-reduced-motion` por teste; `tests/console.ts` junta avisos para o contrato.
+- **jsdom 29**, não 30: o 30 pede Node 22.22+, e a máquina de desenvolvimento roda 22.14.
+- O `@vue/test-utils` troca `Transition` e `TransitionGroup` por versões instantâneas: o teste vê a
+  entrada e a saída na hora.
+- Montou e já vai clicar? Espere `flushPromises()` antes: o `MxRotator` agenda a troca no `onMounted`
+  e o watcher só assume no primeiro ciclo (nenhuma pessoa clica antes disso, o teste sim).
 
 ---
 
@@ -230,6 +278,11 @@ nele; mantenha assim.
 ⚠️ **Separador de linha (U+2028) escrito como ` ` dentro de regex** virou o caractere de verdade
 ao ser gravado e quebrou o parser. Monte esses caracteres com `String.fromCharCode`.
 
+⚠️ **Prop booleana ausente chega como `false`, não `undefined`.** O `MxLink` decidia "externo" com
+`external ?? isExternalHref(...)`, e o `??` nunca chegava na detecção: link `https://` abria na mesma
+aba e sem `rel="noopener noreferrer"`. Boolean que precisa do "não informado" leva `undefined` no
+`withDefaults` (`MxLink.external`, `MxIconButton.pressed`). O teste de contrato achou esse.
+
 ⚠️ **Ordem de `ref` em `v-for` não é garantida.** O `MxSegmented` usa ref por função com índice
 para medir o indicador.
 
@@ -243,7 +296,8 @@ para medir o indicador.
 ```bash
 .github/workflows/      # ci.yml (PR e main) e publish.yml (tag v*)
 .storybook/             # main.ts (plugin do Vue à mão), preview.ts (tema, língua, Vuetify inteiro)
-scripts/                # check-contrast, check-locales, sync-icons, sync-brand-icons
+scripts/                # check-contrast, check-locales, check-testids, sync-icons, sync-brand-icons
+tests/                  # setup do jsdom, fixtures de cada componente e os testes de componente
 vite.lib.config.ts      # build do pacote (um arquivo por módulo, CSS por componente)
 src/
 ├─ icons/               # iconSet.ts (MxSvgIcon, mixtapeIcons) e o subconjunto gerado do @mdi/js
@@ -269,7 +323,9 @@ src/
 - Toda animação tem contrapartida em `prefers-reduced-motion`; animação de entrada ou em laço anima só `transform` e `opacity`.
 - `backdrop-filter` só em superfície flutuante (ver Desempenho).
 - Usou um `mdi-*` novo, rode `npm run sync:icons` e versione o arquivo gerado.
-- Componente novo nasce com story, vista nos dois temas e nas três línguas.
+- Componente novo nasce com story, vista nos dois temas e nas três línguas, com `data-testid` na raiz
+  e nas partes interativas (`npm run check:testids`) e com fixture em `tests/fixtures.ts`; se tem
+  comportamento (teclado, limite, tempo), ganha teste em `tests/components/`.
 - Story usa dado de `src/mocks/` (fictício e plausível), nunca dado real nem Lorem ipsum.
 - Export novo entra em `src/index.ts`; o que não está lá não é contrato. Mudou API pública, sobe a
   versão pela regra acima.

@@ -34,6 +34,29 @@ export const VidroSobreBlobs: Story = {
   }),
 };
 
+export const BlobsEmQualquerTela: Story = {
+  name: 'Blobs em qualquer proporção',
+  render: () => ({
+    components: { MxBlobField, MxBlob },
+    template: `
+      <div style="display:grid;gap:16px">
+        <div style="display:grid;grid-template-columns:2.4fr 1fr;gap:16px;align-items:start">
+          <div style="position:relative;aspect-ratio:21/9;border-radius:28px;overflow:hidden;background:var(--mx-background)">
+            <MxBlobField :count="5" intensity="vivid" seed="proporcao" />
+          </div>
+          <div style="position:relative;aspect-ratio:9/19;border-radius:28px;overflow:hidden;background:var(--mx-background)">
+            <MxBlobField :count="5" intensity="vivid" seed="proporcao" />
+          </div>
+        </div>
+        <div style="position:relative;isolation:isolate;display:grid;align-items:end;min-height:240px;padding:24px;border-radius:28px;overflow:hidden;background:var(--mx-surface)">
+          <MxBlob size="clamp(160px, 40%, 420px)" color="var(--mx-secondary)" style="position:absolute;top:-30%;right:-6%;z-index:-1" />
+          <p style="margin:0;font-weight:800">Blob com 40% da largura do bloco (entre 160 e 420 px)</p>
+        </div>
+      </div>
+    `,
+  }),
+};
+
 export const Formas: Story = {
   render: () => ({
     components: { MxStarburst, MxBlob, MxVinyl },

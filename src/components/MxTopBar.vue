@@ -7,7 +7,7 @@ const { scrolled } = useScrollState(24);
 </script>
 
 <template>
-  <header class="mx-top-bar" :class="{ 'mx-top-bar--scrolled': scrolled }">
+  <header data-testid="mx-top-bar" class="mx-top-bar" :class="{ 'mx-top-bar--scrolled': scrolled }">
     <div class="mx-top-bar__surface">
       <div class="mx-top-bar__brand">
         <slot name="brand" />

@@ -56,7 +56,7 @@ const summary = computed(() =>
 </script>
 
 <template>
-  <article class="mx-galera" :class="`mx-galera--${variant}`" :aria-labelledby="headingId">
+  <article data-testid="mx-group-review-card" class="mx-galera" :class="`mx-galera--${variant}`" :aria-labelledby="headingId">
     <h3 :id="headingId" class="mx-sr-only">{{ t('groupReview.heading', { group: group.name, title: item.title }) }}</h3>
 
     <header class="mx-galera__header">
@@ -64,7 +64,7 @@ const summary = computed(() =>
         <VIcon icon="mdi-account-group" size="18" aria-hidden="true" />
         {{ t('groupReview.flag') }}
       </span>
-      <component :is="group.to ? MxLink : 'span'" :to="group.to" class="mx-galera__group">{{ group.name }}</component>
+      <component :is="group.to ? MxLink : 'span'" :to="group.to" data-testid="mx-group-review-card-group" class="mx-galera__group">{{ group.name }}</component>
       <span v-if="visibility === 'group'" class="mx-galera__lock">
         <VIcon icon="mdi-lock-outline" size="14" aria-hidden="true" />
         {{ t('review.visibility.group') }}
@@ -72,7 +72,7 @@ const summary = computed(() =>
     </header>
 
     <div class="mx-galera__subject">
-      <component :is="item.to ? MxLink : 'div'" :to="item.to" class="mx-galera__item">
+      <component :is="item.to ? MxLink : 'div'" :to="item.to" data-testid="mx-group-review-card-item" class="mx-galera__item">
         <MxCover
           :src="item.cover"
           :title="item.title"
@@ -100,6 +100,7 @@ const summary = computed(() =>
       <li
         v-for="(entry, index) in entries"
         :key="entry.id"
+        data-testid="mx-group-review-card-entry"
         class="mx-galera__entry"
         :class="{ 'mx-galera__entry--highlight': entry.id === highlightId }"
         :style="{ '--mx-entry-index': index }"
@@ -107,7 +108,7 @@ const summary = computed(() =>
         <MxAvatar :name="entry.author.name" :src="entry.author.avatarUrl" :seed="entry.author.username" :tier="entry.author.tier" :size="36" decorative />
         <div class="mx-galera__bubble">
           <div class="mx-galera__entry-header">
-            <component :is="entry.author.to ? MxLink : 'span'" :to="entry.author.to" class="mx-galera__author">
+            <component :is="entry.author.to ? MxLink : 'span'" data-testid="mx-group-review-card-author" :to="entry.author.to" class="mx-galera__author">
               {{ entry.author.name }}
               <span class="mx-galera__username">@{{ entry.author.username }}</span>
             </component>
@@ -116,6 +117,7 @@ const summary = computed(() =>
           <p v-if="entry.body" class="mx-galera__body" :class="{ 'mx-galera__body--clamped': !full }">{{ entry.body }}</p>
           <div class="mx-galera__entry-footer">
             <MxLikeButton
+              data-testid="mx-group-review-card-like"
               :count="entry.likes"
               :liked="entry.liked"
               :interactive="entry.canLike"
@@ -125,20 +127,20 @@ const summary = computed(() =>
             />
             <span class="mx-galera__entry-meta">
               <MxTimeAgo :date="entry.createdAt" />
-              <MxLink v-if="entry.to" :to="entry.to" class="mx-galera__entry-link">{{ t('review.open') }}</MxLink>
+              <MxLink v-if="entry.to" :to="entry.to" data-testid="mx-group-review-card-entry-link" class="mx-galera__entry-link">{{ t('review.open') }}</MxLink>
             </span>
           </div>
         </div>
       </li>
     </ol>
 
-    <p v-else class="mx-galera__empty">
+    <p v-else data-testid="mx-group-review-card-empty" class="mx-galera__empty">
       <slot name="empty">{{ t('groupReview.empty') }}</slot>
     </p>
 
     <footer v-if="(to && !full) || $slots.actions" class="mx-galera__footer">
       <span class="mx-galera__actions"><slot name="actions" /></span>
-      <MxLink v-if="to && !full" :to="to" class="mx-galera__open">
+      <MxLink v-if="to && !full" :to="to" data-testid="mx-group-review-card-open" class="mx-galera__open">
         {{ t('groupReview.open') }}
         <VIcon icon="mdi-arrow-right" size="16" aria-hidden="true" />
       </MxLink>

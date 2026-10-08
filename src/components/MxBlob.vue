@@ -16,9 +16,10 @@ const dimension = computed(() => (typeof props.size === 'number' ? `${props.size
 
 <template>
   <span
+    data-testid="mx-blob"
     class="mx-blob"
     :class="{ 'mx-blob--animated': animated }"
-    :style="{ width: dimension, height: dimension, background: color, animationDuration: `${duration}s` }"
+    :style="{ width: dimension, background: color, animationDuration: `${duration}s` }"
     aria-hidden="true"
   />
 </template>
@@ -27,6 +28,7 @@ const dimension = computed(() => (typeof props.size === 'number' ? `${props.size
 .mx-blob {
   display: block;
   flex-shrink: 0;
+  aspect-ratio: 1;
   border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
   pointer-events: none;
 }

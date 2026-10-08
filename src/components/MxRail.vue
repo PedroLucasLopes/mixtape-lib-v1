@@ -41,13 +41,14 @@ onBeforeUnmount(() => observer?.disconnect());
 </script>
 
 <template>
-  <div class="mx-rail" :style="{ '--mx-rail-item': itemWidth, '--mx-rail-gap': gap }">
+  <div data-testid="mx-rail" class="mx-rail" :style="{ '--mx-rail-item': itemWidth, '--mx-rail-gap': gap }">
     <div class="mx-rail__controls">
-      <MxIconButton icon="mdi-chevron-left" :label="t('carousel.previous')" size="sm" :disabled="!canPrevious" @click="scroll(-1)" />
-      <MxIconButton icon="mdi-chevron-right" :label="t('carousel.next')" size="sm" :disabled="!canNext" @click="scroll(1)" />
+      <MxIconButton data-testid="mx-rail-previous" icon="mdi-chevron-left" :label="t('carousel.previous')" size="sm" :disabled="!canPrevious" @click="scroll(-1)" />
+      <MxIconButton data-testid="mx-rail-next" icon="mdi-chevron-right" :label="t('carousel.next')" size="sm" :disabled="!canNext" @click="scroll(1)" />
     </div>
     <ul
       ref="track"
+      data-testid="mx-rail-track"
       class="mx-rail__track"
       :class="{ 'mx-rail__track--start': !canPrevious, 'mx-rail__track--end': !canNext }"
       :aria-label="label"

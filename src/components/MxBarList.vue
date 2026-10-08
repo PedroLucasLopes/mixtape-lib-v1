@@ -35,10 +35,11 @@ const display = (value: number) => (props.compact ? formatCompactNumber(value, l
 </script>
 
 <template>
-  <ol ref="root" class="mx-bar-list" :class="{ 'mx-bar-list--shown': inView, 'mx-bar-list--numbered': numbered }" :aria-label="label">
+  <ol ref="root" data-testid="mx-bar-list" class="mx-bar-list" :class="{ 'mx-bar-list--shown': inView, 'mx-bar-list--numbered': numbered }" :aria-label="label">
     <li
       v-for="(item, index) in items"
       :key="item.key"
+      data-testid="mx-bar-list-item"
       class="mx-bar-list__item"
       :style="{
         '--mx-bar-share': `${(item.value / max) * 100}%`,
@@ -49,7 +50,7 @@ const display = (value: number) => (props.compact ? formatCompactNumber(value, l
       <span v-if="numbered" class="mx-bar-list__rank" aria-hidden="true">{{ index + 1 }}</span>
       <div class="mx-bar-list__body">
         <div class="mx-bar-list__line">
-          <component :is="item.to ? MxLink : 'span'" :to="item.to" class="mx-bar-list__label">{{ item.label }}</component>
+          <component :is="item.to ? MxLink : 'span'" data-testid="mx-bar-list-label" :to="item.to" class="mx-bar-list__label">{{ item.label }}</component>
           <span class="mx-bar-list__value">{{ display(item.value) }}</span>
         </div>
         <span v-if="item.sublabel" class="mx-bar-list__sublabel">{{ item.sublabel }}</span>

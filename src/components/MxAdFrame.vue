@@ -13,7 +13,7 @@ const { t } = useMixtapeText();
 </script>
 
 <template>
-  <aside class="mx-ad-frame" :class="`mx-ad-frame--${variant}`" :aria-label="label ?? t('ads.label')">
+  <aside data-testid="mx-ad-frame" class="mx-ad-frame" :class="`mx-ad-frame--${variant}`" :aria-label="label ?? t('ads.label')">
     <span class="mx-ad-frame__label" aria-hidden="true">{{ label ?? t('ads.label') }}</span>
     <div class="mx-ad-frame__slot">
       <slot />

@@ -71,7 +71,7 @@ watch(model, () => {
 </script>
 
 <template>
-  <div class="mx-stepper">
+  <div data-testid="mx-stepper" class="mx-stepper">
     <div class="mx-stepper__rail" :style="{ '--mx-stepper-count': steps.length }">
       <div class="mx-stepper__track" aria-hidden="true">
         <span class="mx-stepper__fill" :style="{ transform: `scaleX(${progress})` }" />
@@ -84,6 +84,7 @@ watch(model, () => {
           :ref="(element) => setTab(element, index)"
           type="button"
           role="tab"
+          :data-testid="`mx-stepper-tab-${step.key}`"
           class="mx-stepper__tab"
           :class="{
             'mx-stepper__tab--active': index === model,
@@ -113,6 +114,7 @@ watch(model, () => {
         :id="`${id}-panel-${current.key}`"
         :key="current.key"
         ref="panel"
+        data-testid="mx-stepper-panel"
         class="mx-stepper__panel"
         role="tabpanel"
         tabindex="-1"

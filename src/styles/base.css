@@ -159,6 +159,13 @@
   75% { transform: translate3d(3%, 5%, 0) rotate(210deg) scale(1.06, 0.97); }
 }
 
+@keyframes mx-blob-float {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1, 1); }
+  25% { transform: translate3d(4%, -5%, 0) scale(1.06, 0.95); }
+  50% { transform: translate3d(-4%, 4%, 0) scale(0.96, 1.05); }
+  75% { transform: translate3d(3%, 4%, 0) scale(1.04, 0.98); }
+}
+
 @keyframes mx-marquee {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-50%, 0, 0); }

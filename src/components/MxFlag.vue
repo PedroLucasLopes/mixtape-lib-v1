@@ -10,6 +10,7 @@ const height = computed(() => Math.round((props.size * 2) / 3));
 <template>
   <svg
     v-if="code === 'BR'"
+    data-testid="mx-flag"
     class="mx-flag"
     viewBox="0 0 30 20"
     :width="size"
@@ -24,6 +25,7 @@ const height = computed(() => Math.round((props.size * 2) / 3));
   </svg>
   <svg
     v-else-if="code === 'US'"
+    data-testid="mx-flag"
     class="mx-flag"
     viewBox="0 0 30 20"
     :width="size"
@@ -41,6 +43,7 @@ const height = computed(() => Math.round((props.size * 2) / 3));
   </svg>
   <svg
     v-else-if="code === 'ES'"
+    data-testid="mx-flag"
     class="mx-flag"
     viewBox="0 0 30 20"
     :width="size"
@@ -51,7 +54,7 @@ const height = computed(() => Math.round((props.size * 2) / 3));
     <rect width="30" height="20" fill="#AA151B" />
     <rect y="5" width="30" height="10" fill="#F1BF00" />
   </svg>
-  <span v-else class="mx-flag mx-flag--code" aria-hidden="true">{{ code }}</span>
+  <span v-else data-testid="mx-flag" class="mx-flag mx-flag--code" aria-hidden="true">{{ code }}</span>
 </template>
 
 <style scoped>

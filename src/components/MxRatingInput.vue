@@ -91,10 +91,11 @@ const onKeydown = (event: KeyboardEvent) => {
 </script>
 
 <template>
-  <div class="mx-rating-input" :class="{ 'mx-rating-input--disabled': disabled }" :style="{ '--mx-rating-input-size': `${size}px` }">
+  <div data-testid="mx-rating-input" class="mx-rating-input" :class="{ 'mx-rating-input--disabled': disabled }" :style="{ '--mx-rating-input-size': `${size}px` }">
     <div class="mx-rating-input__row">
       <button
         type="button"
+        data-testid="mx-rating-input-zero"
         class="mx-rating-input__zero"
         :class="{ 'mx-rating-input__zero--active': model === 0 }"
         :aria-pressed="model === 0"
@@ -105,6 +106,7 @@ const onKeydown = (event: KeyboardEvent) => {
         0
       </button>
       <div
+        data-testid="mx-rating-input-slider"
         class="mx-rating-input__discs"
         role="slider"
         :tabindex="disabled ? -1 : 0"
@@ -120,6 +122,7 @@ const onKeydown = (event: KeyboardEvent) => {
         <span
           v-for="index in [0, 1, 2, 3, 4]"
           :key="index"
+          data-testid="mx-rating-input-disc"
           class="mx-rating-input__disc"
           :class="{ 'mx-rating-input__disc--on': fillFor(index) > 0 }"
           @pointermove="hover = valueAt($event, index)"
@@ -148,7 +151,7 @@ const onKeydown = (event: KeyboardEvent) => {
         </span>
       </div>
     </div>
-    <p v-if="describe" class="mx-rating-input__description" aria-live="polite">
+    <p v-if="describe" data-testid="mx-rating-input-description" class="mx-rating-input__description" aria-live="polite">
       <strong v-if="shown !== null" class="mx-rating-input__number">{{ formatRatingValue(shown, locale) }}</strong>
       {{ description }}
     </p>

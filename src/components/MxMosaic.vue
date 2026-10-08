@@ -19,7 +19,7 @@ const dimension = computed(() => (typeof props.size === 'number' ? `${props.size
 </script>
 
 <template>
-  <span class="mx-mosaic" :class="`mx-mosaic--${tiles.length >= 4 ? 4 : tiles.length >= 1 ? 1 : 0}`" :style="{ width: dimension }" aria-hidden="true">
+  <span data-testid="mx-mosaic" class="mx-mosaic" :class="`mx-mosaic--${tiles.length >= 4 ? 4 : tiles.length >= 1 ? 1 : 0}`" :style="{ width: dimension }" aria-hidden="true">
     <template v-if="tiles.length >= 4">
       <img v-for="cover in tiles" :key="cover" class="mx-mosaic__tile" :src="cover" alt="" loading="lazy" decoding="async" />
     </template>

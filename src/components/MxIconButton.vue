@@ -2,6 +2,8 @@
 import type { LinkTarget } from '../links/links';
 import MxLink from './MxLink.vue';
 
+defineOptions({ inheritAttrs: false });
+
 withDefaults(
   defineProps<{
     icon: string;
@@ -25,7 +27,8 @@ const emit = defineEmits<{ click: [event: MouseEvent] }>();
     <template #activator="{ props: activator }">
       <MxLink
         v-if="to !== undefined || href !== undefined"
-        v-bind="activator"
+        data-testid="mx-icon-button"
+        v-bind="{ ...activator, ...$attrs }"
         class="mx-icon-button"
         :class="[`mx-icon-button--${variant}`, `mx-icon-button--${size}`]"
         :to="to"
@@ -36,7 +39,8 @@ const emit = defineEmits<{ click: [event: MouseEvent] }>();
       </MxLink>
       <button
         v-else
-        v-bind="activator"
+        data-testid="mx-icon-button"
+        v-bind="{ ...activator, ...$attrs }"
         type="button"
         class="mx-icon-button"
         :class="[`mx-icon-button--${variant}`, `mx-icon-button--${size}`, { 'mx-icon-button--pressed': pressed }]"

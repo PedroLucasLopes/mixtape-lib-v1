@@ -37,15 +37,16 @@ const metal = (position: number) => metals[MEDALS[position] ?? 'bronze'];
 </script>
 
 <template>
-  <ol ref="root" class="mx-podium" :class="{ 'mx-podium--shown': inView }" :aria-label="label">
+  <ol ref="root" data-testid="mx-podium" class="mx-podium" :class="{ 'mx-podium--shown': inView }" :aria-label="label">
     <li
       v-for="entry in ordered"
       :key="entry.key"
+      :data-testid="`mx-podium-place-${entry.position}`"
       class="mx-podium__place"
       :class="`mx-podium__place--${entry.position}`"
       :style="{ '--mx-podium-metal-light': metal(entry.position)[2], '--mx-podium-metal': metal(entry.position)[1], '--mx-podium-metal-dark': metal(entry.position)[0] }"
     >
-      <component :is="entry.to ? MxLink : 'div'" :to="entry.to" class="mx-podium__person">
+      <component :is="entry.to ? MxLink : 'div'" data-testid="mx-podium-person" :to="entry.to" class="mx-podium__person">
         <span class="mx-podium__avatar">
           <MxAvatar :name="entry.name" :src="entry.avatarUrl" :seed="entry.seed" :tier="entry.tier" :size="entry.position === 1 ? 84 : 66" decorative />
           <span class="mx-podium__medal" aria-hidden="true">{{ entry.position }}</span>

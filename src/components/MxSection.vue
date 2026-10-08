@@ -23,16 +23,16 @@ const headingId = useId();
 </script>
 
 <template>
-  <section class="mx-section" :aria-labelledby="headingId">
+  <section data-testid="mx-section" class="mx-section" :aria-labelledby="headingId">
     <header v-reveal="reveal ? { variant: 'up' } : false" class="mx-section__header">
       <div class="mx-section__titles">
         <p v-if="eyebrow" class="mx-section__eyebrow">{{ eyebrow }}</p>
-        <component :is="`h${headingLevel}`" :id="headingId" class="mx-section__title">{{ title }}</component>
+        <component :is="`h${headingLevel}`" :id="headingId" data-testid="mx-section-title" class="mx-section__title">{{ title }}</component>
         <p v-if="description" class="mx-section__description">{{ description }}</p>
       </div>
       <div v-if="$slots.actions || moreTo !== undefined" class="mx-section__actions">
         <slot name="actions" />
-        <MxLink v-if="moreTo !== undefined" :to="moreTo" class="mx-section__more">
+        <MxLink v-if="moreTo !== undefined" :to="moreTo" data-testid="mx-section-more" class="mx-section__more">
           {{ moreLabel ?? t('common.seeAll') }}
           <VIcon icon="mdi-arrow-right" size="18" aria-hidden="true" />
         </MxLink>

@@ -51,7 +51,7 @@ const style = computed(() =>
 </script>
 
 <template>
-  <div ref="root" class="mx-stat" :class="[`mx-stat--${size}`, { 'mx-stat--duotone': duotone }]" :style="style">
+  <div ref="root" data-testid="mx-stat" class="mx-stat" :class="[`mx-stat--${size}`, { 'mx-stat--duotone': duotone }]" :style="style">
     <span class="mx-stat__label">
       <VIcon v-if="icon" :icon="icon" size="18" aria-hidden="true" />
       {{ label }}

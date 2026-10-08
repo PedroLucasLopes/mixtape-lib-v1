@@ -10,12 +10,12 @@ withDefaults(defineProps<{ items: readonly DescriptionItem[]; columns?: 1 | 2 | 
 </script>
 
 <template>
-  <dl class="mx-description-list" :class="`mx-description-list--${columns}`">
+  <dl data-testid="mx-description-list" class="mx-description-list" :class="`mx-description-list--${columns}`">
     <template v-for="item in items" :key="item.term">
-      <div v-if="item.value !== null && item.value !== undefined && item.value !== ''" class="mx-description-list__item">
+      <div v-if="item.value !== null && item.value !== undefined && item.value !== ''" data-testid="mx-description-list-item" class="mx-description-list__item">
         <dt class="mx-description-list__term">{{ item.term }}</dt>
         <dd class="mx-description-list__value" :class="{ 'mx-description-list__value--mono': item.mono }">
-          <a v-if="item.href" :href="item.href" target="_blank" rel="noopener noreferrer">{{ item.value }}</a>
+          <a v-if="item.href" data-testid="mx-description-list-link" :href="item.href" target="_blank" rel="noopener noreferrer">{{ item.value }}</a>
           <template v-else>{{ item.value }}</template>
         </dd>
       </div>

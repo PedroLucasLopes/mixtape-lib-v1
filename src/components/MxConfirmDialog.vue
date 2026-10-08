@@ -24,15 +24,16 @@ const { t } = useMixtapeText();
 </script>
 
 <template>
-  <MxDialog v-model="open" :title="title" :width="440" :persistent="loading">
-    <p class="mx-confirm__message">{{ message }}</p>
-    <p v-if="error" class="mx-confirm__error" role="alert">
+  <MxDialog v-model="open" data-testid="mx-confirm-dialog" :title="title" :width="440" :persistent="loading">
+    <p data-testid="mx-confirm-dialog-message" class="mx-confirm__message">{{ message }}</p>
+    <p v-if="error" data-testid="mx-confirm-dialog-error" class="mx-confirm__error" role="alert">
       <VIcon icon="mdi-alert-circle" size="18" aria-hidden="true" />
       {{ error }}
     </p>
     <template #actions>
-      <MxButton variant="ghost" :label="cancelLabel ?? t('common.cancel')" :disabled="loading" @click="open = false" />
+      <MxButton data-testid="mx-confirm-dialog-cancel" variant="ghost" :label="cancelLabel ?? t('common.cancel')" :disabled="loading" @click="open = false" />
       <MxButton
+        data-testid="mx-confirm-dialog-confirm"
         :variant="destructive ? 'danger' : 'cta'"
         :label="confirmLabel ?? t('common.confirm')"
         :loading="loading"

@@ -17,7 +17,7 @@ defineProps<{ columns: readonly FooterColumn[]; label: string }>();
 </script>
 
 <template>
-  <div class="mx-footer">
+  <div data-testid="mx-footer" class="mx-footer">
     <div class="mx-footer__inner">
       <div class="mx-footer__brand">
         <slot name="brand" />
@@ -27,7 +27,7 @@ defineProps<{ columns: readonly FooterColumn[]; label: string }>();
           <p class="mx-footer__title">{{ column.title }}</p>
           <ul class="mx-footer__links">
             <li v-for="link in column.links" :key="link.label">
-              <MxLink :to="link.to" :href="link.href" class="mx-footer__link">{{ link.label }}</MxLink>
+              <MxLink :to="link.to" :href="link.href" data-testid="mx-footer-link" class="mx-footer__link">{{ link.label }}</MxLink>
             </li>
           </ul>
         </div>

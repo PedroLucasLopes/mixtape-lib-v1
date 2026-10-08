@@ -17,17 +17,17 @@ const { t } = useMixtapeText();
 </script>
 
 <template>
-  <figure class="mx-qr">
+  <figure data-testid="mx-qr-code" class="mx-qr">
     <div class="mx-qr__stage">
       <MxStarburst class="mx-qr__burst" shape="sun" :points="24" color="var(--mx-cta)" :size="size + 90" spin />
-      <img class="mx-qr__image" :src="png" :alt="alt" :width="size" :height="size" loading="lazy" decoding="async" />
+      <img data-testid="mx-qr-code-image" class="mx-qr__image" :src="png" :alt="alt" :width="size" :height="size" loading="lazy" decoding="async" />
     </div>
     <figcaption class="mx-qr__actions">
-      <a class="mx-qr__download" :href="png" :download="`${downloadName}.png`">
+      <a data-testid="mx-qr-code-download-png" class="mx-qr__download" :href="png" :download="`${downloadName}.png`">
         <VIcon icon="mdi-download" size="18" aria-hidden="true" />
         {{ t('share.downloadPng') }}
       </a>
-      <a v-if="svg" class="mx-qr__download" :href="svg" :download="`${downloadName}.svg`">
+      <a v-if="svg" data-testid="mx-qr-code-download-svg" class="mx-qr__download" :href="svg" :download="`${downloadName}.svg`">
         <VIcon icon="mdi-vector-square" size="18" aria-hidden="true" />
         {{ t('share.downloadSvg') }}
       </a>

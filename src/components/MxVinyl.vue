@@ -22,6 +22,7 @@ const grooves = [44, 41, 38, 35, 32, 29, 26];
 
 <template>
   <span
+    data-testid="mx-vinyl"
     class="mx-vinyl"
     :class="{ 'mx-vinyl--spinning': spinning }"
     :style="{ width: dimension, height: dimension, '--mx-vinyl-speed': `${speed}s` }"

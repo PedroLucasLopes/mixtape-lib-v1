@@ -43,6 +43,7 @@ const toggle = () => {
 <template>
   <component
     :is="interactive ? 'button' : 'span'"
+    data-testid="mx-like-button"
     :type="interactive ? 'button' : undefined"
     class="mx-like"
     :class="[`mx-like--${size}`, { 'mx-like--active': liked, 'mx-like--pop': popping }]"

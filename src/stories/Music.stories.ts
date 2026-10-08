@@ -12,6 +12,7 @@ import MxPagedGrid from '../components/MxPagedGrid.vue';
 import MxRating from '../components/MxRating.vue';
 import MxRatingHistogram from '../components/MxRatingHistogram.vue';
 import MxReviewCard from '../components/MxReviewCard.vue';
+import MxRotator from '../components/MxRotator.vue';
 import MxTrackList from '../components/MxTrackList.vue';
 import {
   artistPhoto,
@@ -168,6 +169,27 @@ export const Avaliacoes: Story = {
           <MxLikeButton :count="likes" :liked="liked" @toggle="like" />
           <MxLikeButton :count="1280" liked :interactive="false" size="sm" />
         </div>
+      </div>
+    `,
+  }),
+};
+
+export const AvaliacoesQueTrocam: Story = {
+  name: 'Avaliações que trocam sozinhas',
+  render: () => ({
+    components: { MxRotator: MxRotator as unknown as Component, MxReviewCard },
+    setup: () => ({
+      reviews: mockGroupReviewEntries.map((entry) => ({ ...entry, author: { ...mockUsers[entry.user], to: '#' } })),
+      item: { id: 'a1', kind: 'album', title: 'Neon na Garagem' },
+    }),
+    template: `
+      <div style="display:grid;gap:12px;max-width:420px">
+        <p style="margin:0;opacity:.75">Uma por vez, trocando a cada 4 s (10 s no padrão). Para no hover, no foco e no botão; com movimento reduzido, começa parada.</p>
+        <MxRotator :items="reviews" label="Outras avaliações de Neon na Garagem" :interval="4000">
+          <template #default="{ item: review }">
+            <MxReviewCard variant="item" :rating="review.rating" :body="review.body" :created-at="review.createdAt" :likes="review.likes" :author="review.author" :item="item" to="#" />
+          </template>
+        </MxRotator>
       </div>
     `,
   }),

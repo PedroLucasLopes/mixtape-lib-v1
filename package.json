@@ -1,6 +1,6 @@
 {
   "name": "@pedrolucaslopes/mixtape-ui",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "type": "module",
   "description": "Componentes Vue e Vuetify, tema, movimento e Storybook do Mixtape.",
   "license": "UNLICENSED",
@@ -40,12 +40,14 @@
     "build": "vite build --config vite.lib.config.ts && vue-tsc -p tsconfig.build.json",
     "type-check": "vue-tsc --noEmit",
     "test": "vitest run",
+    "test:components": "vitest run --project components",
+    "check:testids": "node scripts/check-testids.mjs --scope=src/components,mx-,Mx* --scope=src/feedback,mx-,Mx*",
     "check:contrast": "node scripts/check-contrast.mjs",
     "sync:brand-icons": "node scripts/sync-brand-icons.mjs",
     "sync:icons": "node scripts/sync-icons.mjs",
     "check:icons": "node scripts/sync-icons.mjs --check",
     "check:locales": "node scripts/check-locales.mjs src/i18n/locales --reference=pt-BR.json --sources=src",
-    "prepublishOnly": "npm run check:icons && npm run check:locales && npm run check:contrast && npm run type-check && npm run test && npm run build"
+    "prepublishOnly": "npm run check:icons && npm run check:locales && npm run check:testids && npm run check:contrast && npm run type-check && npm run test && npm run build"
   },
   "peerDependencies": {
     "vue": "^3.5.0",
@@ -66,6 +68,8 @@
     "@storybook/vue3-vite": "^10.6.1",
     "@types/node": "^24.12.0",
     "@vitejs/plugin-vue": "^6.0.9",
+    "@vue/test-utils": "^2.5.1",
+    "jsdom": "^29.1.1",
     "simple-icons": "^16.34.0",
     "storybook": "^10.6.1",
     "typescript": "~6.0.3",

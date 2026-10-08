@@ -23,7 +23,7 @@ const parts = computed(() =>
 </script>
 
 <template>
-  <div class="mx-split-bar">
+  <div data-testid="mx-split-bar" class="mx-split-bar">
     <div class="mx-split-bar__track" :style="{ height: `${height}px` }" aria-hidden="true">
       <span v-for="part in parts" :key="part.label" class="mx-split-bar__part" :style="{ width: `${part.share}%`, background: part.color }" />
     </div>

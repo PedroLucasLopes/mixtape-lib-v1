@@ -35,7 +35,7 @@ const percent = computed(() => Math.round(Math.max(0, Math.min(1, props.progress
 </script>
 
 <template>
-  <div ref="root" class="mx-disc-progress" :class="{ 'mx-disc-progress--shown': inView, 'mx-disc-progress--compact': compact }">
+  <div ref="root" data-testid="mx-disc-progress" class="mx-disc-progress" :class="{ 'mx-disc-progress--shown': inView, 'mx-disc-progress--compact': compact }">
     <MxDiscTier :tier="tier" :label="label" :size="compact ? 40 : 64" spinning />
     <div class="mx-disc-progress__body">
       <div

@@ -35,6 +35,7 @@ const showImage = computed(() => Boolean(props.src) && !failed.value);
 
 <template>
   <span
+    data-testid="mx-avatar"
     class="mx-avatar"
     :class="{ 'mx-avatar--ring': ring }"
     :style="{ '--mx-avatar-size': `${size}px`, '--mx-avatar-ring': ring ?? 'none' }"

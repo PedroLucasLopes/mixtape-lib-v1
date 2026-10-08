@@ -12,7 +12,7 @@ const text = computed(() => (props.absolute ? formatDate(props.date, locale.valu
 </script>
 
 <template>
-  <time class="mx-time-ago" :datetime="date" :title="full">{{ text }}</time>
+  <time data-testid="mx-time-ago" class="mx-time-ago" :datetime="date" :title="full">{{ text }}</time>
 </template>
 
 <style scoped>

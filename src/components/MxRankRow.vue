@@ -36,12 +36,12 @@ const medalGradient = computed(() => {
 </script>
 
 <template>
-  <li class="mx-rank-row" :class="{ 'mx-rank-row--highlight': highlight, 'mx-rank-row--podium': medal }">
+  <li data-testid="mx-rank-row" class="mx-rank-row" :class="{ 'mx-rank-row--highlight': highlight, 'mx-rank-row--podium': medal }">
     <span class="mx-rank-row__position" :style="medalGradient ? { background: medalGradient } : undefined">
       <span class="mx-sr-only">{{ t('rank.position', { position }) }}</span>
       <span aria-hidden="true">{{ position }}</span>
     </span>
-    <component :is="to ? MxLink : 'div'" :to="to" class="mx-rank-row__person">
+    <component :is="to ? MxLink : 'div'" :to="to" data-testid="mx-rank-row-person" class="mx-rank-row__person">
       <MxAvatar :name="name" :src="avatarUrl" :seed="username" :tier="tier" :size="44" decorative />
       <span class="mx-rank-row__identity">
         <span class="mx-rank-row__name">{{ name }}</span>

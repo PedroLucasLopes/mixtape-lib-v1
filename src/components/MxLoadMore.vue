@@ -43,9 +43,9 @@ onBeforeUnmount(() => observer?.disconnect());
 </script>
 
 <template>
-  <div ref="sentinel" class="mx-load-more">
-    <MxButton v-if="hasMore" variant="glass" icon="mdi-plus" :loading="loading" :label="label ?? t('common.loadMore')" @click="request" />
-    <p v-else class="mx-load-more__done">{{ doneLabel ?? t('common.noMore') }}</p>
+  <div ref="sentinel" data-testid="mx-load-more" class="mx-load-more">
+    <MxButton v-if="hasMore" data-testid="mx-load-more-button" variant="glass" icon="mdi-plus" :loading="loading" :label="label ?? t('common.loadMore')" @click="request" />
+    <p v-else data-testid="mx-load-more-done" class="mx-load-more__done">{{ doneLabel ?? t('common.noMore') }}</p>
   </div>
 </template>
 

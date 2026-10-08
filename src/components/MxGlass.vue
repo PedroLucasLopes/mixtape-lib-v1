@@ -24,6 +24,7 @@ const tintColor = computed(() => {
 <template>
   <component
     :is="tag"
+    data-testid="mx-glass"
     class="mx-glass-surface"
     :class="[
       `mx-glass-surface--${variant}`,

@@ -36,13 +36,14 @@ defineExpose({ focus: () => input.value?.focus() });
 </script>
 
 <template>
-  <form class="mx-search" :class="`mx-search--${size}`" role="search" @submit.prevent="submit">
+  <form data-testid="mx-search-field" class="mx-search" :class="`mx-search--${size}`" role="search" @submit.prevent="submit">
     <label class="mx-sr-only" :for="inputId">{{ label ?? t('common.search') }}</label>
     <VIcon class="mx-search__icon" icon="mdi-magnify" aria-hidden="true" />
     <input
       :id="inputId"
       ref="input"
       v-model="model"
+      data-testid="mx-search-field-input"
       class="mx-search__input"
       type="search"
       inputmode="search"
@@ -53,10 +54,10 @@ defineExpose({ focus: () => input.value?.focus() });
       :autofocus="autofocus"
       @keydown.esc="clear"
     />
-    <button v-if="model" type="button" class="mx-search__clear" :aria-label="t('common.clear')" @click="clear">
+    <button v-if="model" type="button" data-testid="mx-search-field-clear" class="mx-search__clear" :aria-label="t('common.clear')" @click="clear">
       <VIcon icon="mdi-close" aria-hidden="true" />
     </button>
-    <button type="submit" class="mx-search__submit" :aria-label="t('common.search')" :aria-busy="loading || undefined">
+    <button type="submit" data-testid="mx-search-field-submit" class="mx-search__submit" :aria-label="t('common.search')" :aria-busy="loading || undefined">
       <span v-if="loading" class="mx-search__spinner" aria-hidden="true" />
       <VIcon v-else icon="mdi-arrow-right" aria-hidden="true" />
     </button>

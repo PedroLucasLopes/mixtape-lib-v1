@@ -53,6 +53,9 @@ jobs:
       # Ícone fora do subconjunto gerado some da tela sem erro.
       - run: npm run check:icons
 
+      # Componente ou parte interativa sem data-testid deixa os testes de interface do front sem alvo.
+      - run: npm run check:testids
+
       # A paleta é contrato: versão que quebra contraste não sai.
       - run: npm run check:contrast
 

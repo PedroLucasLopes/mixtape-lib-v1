@@ -20,7 +20,7 @@ const { t } = useMixtapeText();
 </script>
 
 <template>
-  <div role="alert">
+  <div data-testid="mx-error-state" role="alert">
     <MxEmptyState
       :title="title ?? t('error.title')"
       :description="description"
@@ -28,7 +28,7 @@ const { t } = useMixtapeText();
       duotone="pink"
       :compact="compact"
     >
-      <MxButton variant="glass" icon="mdi-refresh" :loading="retrying" :label="retryLabel ?? t('common.retry')" @click="emit('retry')" />
+      <MxButton data-testid="mx-error-state-retry" variant="glass" icon="mdi-refresh" :loading="retrying" :label="retryLabel ?? t('common.retry')" @click="emit('retry')" />
       <slot />
     </MxEmptyState>
   </div>

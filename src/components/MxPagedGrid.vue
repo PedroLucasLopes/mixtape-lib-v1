@@ -97,28 +97,30 @@ onBeforeUnmount(() => observer?.disconnect());
 </script>
 
 <template>
-  <div ref="root" class="mx-paged-grid" :style="{ '--mx-paged-columns': columns, '--mx-paged-gap': `${gap}px` }">
-    <div ref="track" class="mx-paged-grid__track" role="group" :aria-label="label" @scroll.passive="onScroll">
+  <div ref="root" data-testid="mx-paged-grid" class="mx-paged-grid" :style="{ '--mx-paged-columns': columns, '--mx-paged-gap': `${gap}px` }">
+    <div ref="track" data-testid="mx-paged-grid-track" class="mx-paged-grid__track" role="group" :aria-label="label" @scroll.passive="onScroll">
       <ul
         v-for="page in pages"
         :key="page.index"
+        data-testid="mx-paged-grid-page"
         class="mx-paged-grid__page"
         :aria-label="t('pager.page', { page: page.index + 1, total })"
       >
-        <li v-for="entry in page.entries" :key="entry.item.id" class="mx-paged-grid__item">
+        <li v-for="entry in page.entries" :key="entry.item.id" data-testid="mx-paged-grid-item" class="mx-paged-grid__item">
           <slot :item="entry.item" :index="entry.index" />
         </li>
       </ul>
     </div>
 
-    <nav v-if="total > 1" class="mx-paged-grid__pager" :aria-label="t('pager.label', { label })">
-      <MxIconButton icon="mdi-chevron-left" :label="t('pager.previous')" size="sm" :disabled="current === 0" @click="goTo(current - 1)" />
+    <nav v-if="total > 1" data-testid="mx-paged-grid-pager" class="mx-paged-grid__pager" :aria-label="t('pager.label', { label })">
+      <MxIconButton data-testid="mx-paged-grid-previous" icon="mdi-chevron-left" :label="t('pager.previous')" size="sm" :disabled="current === 0" @click="goTo(current - 1)" />
       <ol class="mx-paged-grid__numbers">
         <li v-for="(page, position) in numbers" :key="page ?? `gap-${position}`">
           <span v-if="page === null" class="mx-paged-grid__gap" aria-hidden="true">…</span>
           <button
             v-else
             type="button"
+            data-testid="mx-paged-grid-number"
             class="mx-paged-grid__number"
             :class="{ 'mx-paged-grid__number--current': page === current }"
             :aria-current="page === current ? 'page' : undefined"
@@ -130,6 +132,7 @@ onBeforeUnmount(() => observer?.disconnect());
         </li>
       </ol>
       <MxIconButton
+        data-testid="mx-paged-grid-next"
         icon="mdi-chevron-right"
         :label="t('pager.next')"
         size="sm"

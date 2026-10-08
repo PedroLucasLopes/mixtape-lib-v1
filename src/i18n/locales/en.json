@@ -125,6 +125,12 @@
     "previous": "Previous page",
     "next": "Next page"
   },
+  "rotator": {
+    "pause": "Pause auto-rotation",
+    "play": "Resume auto-rotation",
+    "slide": "{index} of {total}",
+    "goTo": "Show item {index}"
+  },
   "error": {
     "title": "Something hit a wrong note"
   },

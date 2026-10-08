@@ -71,6 +71,7 @@ const onClick = (event: MouseEvent) => {
 <template>
   <MxLink
     v-if="isLink"
+    data-testid="mx-button"
     :class="classes"
     :to="to"
     :href="href"
@@ -85,6 +86,7 @@ const onClick = (event: MouseEvent) => {
   </MxLink>
   <button
     v-else
+    data-testid="mx-button"
     :class="classes"
     :type="type"
     :disabled="disabled"
@@ -98,7 +100,7 @@ const onClick = (event: MouseEvent) => {
       <VIcon v-if="appendIcon" :icon="appendIcon" class="mx-button__icon mx-button__icon--append" />
     </span>
     <Transition name="mx-button-spinner">
-      <span v-if="showSpinner" class="mx-button__spinner" aria-hidden="true">
+      <span v-if="showSpinner" data-testid="mx-button-spinner" class="mx-button__spinner" aria-hidden="true">
         <span class="mx-button__disc" />
       </span>
     </Transition>

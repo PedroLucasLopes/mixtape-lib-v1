@@ -28,6 +28,7 @@ const descriptionId = useId();
   <Transition name="mx-consent" appear>
     <section
       v-if="open"
+      data-testid="mx-consent-banner"
       class="mx-consent mx-glass"
       role="region"
       :aria-labelledby="titleId"
@@ -40,12 +41,12 @@ const descriptionId = useId();
         <h2 :id="titleId" class="mx-consent__title">{{ title }}</h2>
         <p :id="descriptionId" class="mx-consent__description">
           {{ description }}
-          <MxLink v-if="policyTo !== undefined" :to="policyTo" class="mx-consent__policy">{{ t('consent.policy') }}</MxLink>
+          <MxLink v-if="policyTo !== undefined" :to="policyTo" data-testid="mx-consent-banner-policy" class="mx-consent__policy">{{ t('consent.policy') }}</MxLink>
         </p>
       </div>
       <div class="mx-consent__actions">
-        <MxButton variant="outline" size="sm" :label="rejectLabel ?? t('consent.reject')" @click="emit('reject')" />
-        <MxButton variant="cta" size="sm" :label="acceptLabel ?? t('consent.accept')" @click="emit('accept')" />
+        <MxButton data-testid="mx-consent-banner-reject" variant="outline" size="sm" :label="rejectLabel ?? t('consent.reject')" @click="emit('reject')" />
+        <MxButton data-testid="mx-consent-banner-accept" variant="cta" size="sm" :label="acceptLabel ?? t('consent.accept')" @click="emit('accept')" />
       </div>
     </section>
   </Transition>

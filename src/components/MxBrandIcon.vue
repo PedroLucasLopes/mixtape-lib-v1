@@ -20,6 +20,7 @@ const fill = computed(() => (props.colored && brand.value.color ? brand.value.co
 <template>
   <svg
     v-if="brand.path"
+    data-testid="mx-brand-icon"
     class="mx-brand-icon"
     viewBox="0 0 24 24"
     :width="dimension"
@@ -31,7 +32,7 @@ const fill = computed(() => (props.colored && brand.value.color ? brand.value.co
   >
     <path :d="brand.path" :fill="fill" />
   </svg>
-  <VIcon v-else :icon="brand.fallbackIcon" :size="dimension" :aria-label="title" :aria-hidden="title ? undefined : 'true'" />
+  <VIcon v-else data-testid="mx-brand-icon" :icon="brand.fallbackIcon" :size="dimension" :aria-label="title" :aria-hidden="title ? undefined : 'true'" />
 </template>
 
 <style scoped>

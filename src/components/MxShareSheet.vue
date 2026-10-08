@@ -99,9 +99,9 @@ const nativeShare = async (network = 'native') => {
 </script>
 
 <template>
-  <MxDialog v-model="open" :title="title" :width="520">
+  <MxDialog v-model="open" data-testid="mx-share-sheet" :title="title" :width="520">
     <div class="mx-share">
-      <div v-if="loading || !payload" class="mx-share__loading" role="status">
+      <div v-if="loading || !payload" data-testid="mx-share-sheet-loading" class="mx-share__loading" role="status">
         <span class="mx-share__spinner" aria-hidden="true" />
         <span class="mx-sr-only">{{ t('common.loading') }}</span>
       </div>
@@ -111,6 +111,7 @@ const nativeShare = async (network = 'native') => {
           <li v-for="(target, index) in targets" :key="target.network" :style="{ animationDelay: `${index * 45}ms` }">
             <a
               v-if="target.method === 'LINK' && target.url"
+              :data-testid="`mx-share-sheet-target-${target.network}`"
               class="mx-share__target"
               :href="target.url"
               target="_blank"
@@ -124,7 +125,7 @@ const nativeShare = async (network = 'native') => {
               <span class="mx-share__label">{{ target.label }}</span>
               <span class="mx-sr-only">{{ t('common.newTab') }}</span>
             </a>
-            <button v-else type="button" class="mx-share__target" @click="nativeShare(target.network)">
+            <button v-else type="button" :data-testid="`mx-share-sheet-target-${target.network}`" class="mx-share__target" @click="nativeShare(target.network)">
               <span class="mx-share__bubble mx-share__bubble--gradient">
                 <MxBrandIcon v-if="target.brand" :name="target.brand" :size="26" />
                 <VIcon v-else icon="mdi-share-variant" aria-hidden="true" />
@@ -135,8 +136,8 @@ const nativeShare = async (network = 'native') => {
         </ul>
 
         <div class="mx-share__link">
-          <input class="mx-share__url" :value="payload.url" readonly :aria-label="t('share.link')" @focus="($event.target as HTMLInputElement).select()" />
-          <button type="button" class="mx-share__copy" :class="{ 'mx-share__copy--done': copied }" @click="copyLink">
+          <input data-testid="mx-share-sheet-url" class="mx-share__url" :value="payload.url" readonly :aria-label="t('share.link')" @focus="($event.target as HTMLInputElement).select()" />
+          <button type="button" data-testid="mx-share-sheet-copy" class="mx-share__copy" :class="{ 'mx-share__copy--done': copied }" @click="copyLink">
             <VIcon :icon="copied ? 'mdi-check-bold' : 'mdi-content-copy'" size="18" aria-hidden="true" />
             {{ copied ? t('share.linkCopied') : t('share.copyLink') }}
           </button>
@@ -144,12 +145,12 @@ const nativeShare = async (network = 'native') => {
         <p class="mx-sr-only" aria-live="polite">{{ copied ? t('share.linkCopied') : '' }}</p>
         <p v-if="hint" class="mx-share__hint" role="status">{{ hint }}</p>
 
-        <button v-if="canNativeShare" type="button" class="mx-share__more" @click="nativeShare()">
+        <button v-if="canNativeShare" type="button" data-testid="mx-share-sheet-more" class="mx-share__more" @click="nativeShare()">
           <VIcon icon="mdi-export-variant" size="18" aria-hidden="true" />
           {{ t('share.nativeShare') }}
         </button>
 
-        <div v-if="qr" class="mx-share__qr">
+        <div v-if="qr" data-testid="mx-share-sheet-qr" class="mx-share__qr">
           <p class="mx-share__qr-title">{{ t('share.qr') }}</p>
           <MxQrCode :png="qr.png" :svg="qr.svg" :alt="qr.alt" :download-name="qr.downloadName" :size="168" />
         </div>
