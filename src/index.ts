@@ -43,7 +43,7 @@ export {
   type ThemeMode,
 } from './theme/useTheme';
 
-export { createIconSet, MIXTAPE_ICON_SET, mixtapeIcons, type IconPaths } from './icons/iconSet';
+export { createIconSet, MIXTAPE_ICON_SET, mixtapeIcons, type IconPaths, type IconShape } from './icons/iconSet';
 export { MIXTAPE_ICON_PATHS } from './icons/icons.generated';
 
 export { createMixtapeLocale } from './i18n/createMixtapeLocale';
@@ -125,9 +125,9 @@ export { default as MxTimeAgo } from './components/MxTimeAgo.vue';
 export { default as MxDescriptionList } from './components/MxDescriptionList.vue';
 export { default as MxItemCard } from './components/MxItemCard.vue';
 export { default as MxTrackList } from './components/MxTrackList.vue';
-export { default as MxReactionBar } from './components/MxReactionBar.vue';
+export { default as MxLikeButton } from './components/MxLikeButton.vue';
 export { default as MxReviewCard } from './components/MxReviewCard.vue';
-export { default as MxCommentItem } from './components/MxCommentItem.vue';
+export { default as MxGroupReviewCard } from './components/MxGroupReviewCard.vue';
 export { default as MxStreamingLinks } from './components/MxStreamingLinks.vue';
 export { default as MxSection } from './components/MxSection.vue';
 export { default as MxRail } from './components/MxRail.vue';
@@ -174,8 +174,8 @@ export type { BarListItem } from './components/MxBarList.vue';
 export type { DescriptionItem } from './components/MxDescriptionList.vue';
 export type { ItemKind } from './components/MxItemCard.vue';
 export type { TrackListEntry } from './components/MxTrackList.vue';
-export type { Reaction } from './components/MxReactionBar.vue';
-export type { ReviewAuthor, ReviewSubject } from './components/MxReviewCard.vue';
+export type { ReviewAuthor, ReviewGroupTag, ReviewSubject, ReviewVisibility } from './components/MxReviewCard.vue';
+export type { GroupReviewEntry } from './components/MxGroupReviewCard.vue';
 export type { SegmentedOption } from './components/MxSegmented.vue';
 export type { StepperStep } from './components/MxStepper.vue';
 export type { BalloonOption } from './components/MxBalloonPicker.vue';

@@ -6,8 +6,8 @@ import type { LinkTarget } from '../links/links';
 import MxAvatar from './MxAvatar.vue';
 import MxCover from './MxCover.vue';
 import MxLink from './MxLink.vue';
+import MxLikeButton from './MxLikeButton.vue';
 import MxRating from './MxRating.vue';
-import MxReactionBar, { type Reaction } from './MxReactionBar.vue';
 import MxTimeAgo from './MxTimeAgo.vue';
 
 export interface ReviewAuthor {
@@ -18,6 +18,13 @@ export interface ReviewAuthor {
   tierLabel?: string | null;
   to?: LinkTarget;
 }
+
+export interface ReviewGroupTag {
+  name: string;
+  to?: LinkTarget;
+}
+
+export type ReviewVisibility = 'public' | 'group' | 'private';
 
 export interface ReviewSubject {
   id: string;
@@ -36,21 +43,31 @@ const props = withDefaults(
     createdAt: string;
     edited?: boolean;
     likes: number;
-    dislikes: number;
-    comments: number;
-    reaction?: Reaction | null;
-    canReact?: boolean;
-    reactionPending?: boolean;
+    liked?: boolean;
+    canLike?: boolean;
+    likePending?: boolean;
     author: ReviewAuthor;
     item: ReviewSubject;
+    group?: ReviewGroupTag | null;
+    visibility?: ReviewVisibility;
     to?: LinkTarget;
     variant?: 'feed' | 'item' | 'full' | 'compact';
     highlight?: boolean;
   }>(),
-  { body: null, edited: false, reaction: null, canReact: false, reactionPending: false, variant: 'feed', highlight: false },
+  {
+    body: null,
+    edited: false,
+    liked: false,
+    canLike: false,
+    likePending: false,
+    group: null,
+    visibility: 'public',
+    variant: 'feed',
+    highlight: false,
+  },
 );
 
-const emit = defineEmits<{ react: [reaction: Reaction | null] }>();
+const emit = defineEmits<{ like: [liked: boolean] }>();
 
 const { t, locale } = useMixtapeText();
 const headingId = useId();
@@ -85,6 +102,17 @@ const ratingText = computed(() => formatRatingValue(props.rating, locale.value))
       </span>
     </header>
 
+    <div v-if="group || visibility !== 'public'" class="mx-review__tags">
+      <component :is="group?.to ? MxLink : 'span'" v-if="group" :to="group?.to" class="mx-review__tag mx-review__tag--group">
+        <VIcon icon="mdi-account-group" size="16" aria-hidden="true" />
+        {{ t('groupReview.tag', { group: group.name }) }}
+      </component>
+      <span v-if="visibility !== 'public'" class="mx-review__tag">
+        <VIcon icon="mdi-lock-outline" size="14" aria-hidden="true" />
+        {{ visibility === 'group' ? t('review.visibility.group') : t('review.visibility.private') }}
+      </span>
+    </div>
+
     <div class="mx-review__subject">
       <component :is="item.to && showItem ? MxLink : 'div'" v-if="showItem" :to="item.to" class="mx-review__item">
         <MxCover
@@ -114,16 +142,13 @@ const ratingText = computed(() => formatRatingValue(props.rating, locale.value))
     </div>
 
     <footer class="mx-review__footer">
-      <MxReactionBar
-        :likes="likes"
-        :dislikes="dislikes"
-        :reaction="reaction"
-        :interactive="canReact"
-        :pending="reactionPending"
-        :comments="comments"
-        :comments-to="to"
+      <MxLikeButton
+        :count="likes"
+        :liked="liked"
+        :interactive="canLike"
+        :pending="likePending"
         size="sm"
-        @react="emit('react', $event)"
+        @toggle="emit('like', $event)"
       />
       <span class="mx-review__actions">
         <MxLink v-if="to && variant !== 'full'" :to="to" class="mx-review__open">
@@ -194,6 +219,7 @@ a.mx-review__author:hover .mx-review__name {
 
 a.mx-review__author:focus-visible,
 a.mx-review__item:focus-visible,
+a.mx-review__tag:focus-visible,
 .mx-review__open:focus-visible,
 .mx-review__more:focus-visible {
   outline: 3px solid var(--mx-focus);
@@ -224,6 +250,35 @@ a.mx-review__item:focus-visible,
 
 .mx-review__date {
   flex-shrink: 0;
+}
+
+.mx-review__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.mx-review__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 26px;
+  padding: 0 10px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--mx-on-surface-muted);
+  text-decoration: none;
+  background: var(--mx-surface-variant);
+  border-radius: var(--mx-radius-pill);
+}
+
+.mx-review__tag--group {
+  color: var(--mx-on-cta);
+  background: var(--mx-cta);
+}
+
+a.mx-review__tag--group:hover {
+  text-decoration: underline;
 }
 
 .mx-review__subject {

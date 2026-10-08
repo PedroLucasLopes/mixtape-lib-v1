@@ -71,18 +71,28 @@
     "notoriety": "Notoriedade",
     "points": "ponto | pontos"
   },
-  "reactions": {
-    "likeCount": "Gostei ({formatted})",
-    "dislikeCount": "Não gostei ({formatted})",
-    "comments": "{formatted} comentário | {formatted} comentários"
+  "likes": {
+    "button": "Curtir ({formatted})",
+    "count": "{formatted} curtida | {formatted} curtidas"
   },
   "review": {
     "heading": "Avaliação de {'@'}{author} para {title}: {rating} de 5",
     "edited": "editada",
-    "open": "Abrir avaliação"
+    "open": "Abrir avaliação",
+    "visibility": {
+      "group": "Só a galera vê",
+      "private": "Só você vê"
+    }
   },
-  "comment": {
-    "delete": "Excluir"
+  "groupReview": {
+    "flag": "Review da galera",
+    "tag": "Review da galera · {group}",
+    "heading": "Review da galera {group} para {title}",
+    "average": "Média da galera",
+    "progress": "{count} de {members} já deu a nota | {count} de {members} já deram a nota",
+    "proposedBy": "Sugerida por {'@'}{username}",
+    "empty": "Ninguém deu a nota ainda.",
+    "open": "Abrir review da galera"
   },
   "user": {
     "openMenu": "Abrir o menu de {name}",

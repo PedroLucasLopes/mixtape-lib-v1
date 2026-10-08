@@ -1,17 +1,27 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { ref } from 'vue';
-import MxCommentItem from '../components/MxCommentItem.vue';
 import MxCover from '../components/MxCover.vue';
 import MxDescriptionList from '../components/MxDescriptionList.vue';
 import MxGrid from '../components/MxGrid.vue';
+import MxGroupReviewCard, { type GroupReviewEntry } from '../components/MxGroupReviewCard.vue';
 import MxImageCredit from '../components/MxImageCredit.vue';
 import MxItemCard from '../components/MxItemCard.vue';
+import MxLikeButton from '../components/MxLikeButton.vue';
 import MxMosaic from '../components/MxMosaic.vue';
 import MxRating from '../components/MxRating.vue';
 import MxRatingHistogram from '../components/MxRatingHistogram.vue';
 import MxReviewCard from '../components/MxReviewCard.vue';
 import MxTrackList from '../components/MxTrackList.vue';
-import { artistPhoto, coverArt, mockAlbums, mockDistribution, mockReviewBody, mockTracks, mockUsers } from '../mocks';
+import {
+  artistPhoto,
+  coverArt,
+  mockAlbums,
+  mockDistribution,
+  mockGroupReviewEntries,
+  mockReviewBody,
+  mockTracks,
+  mockUsers,
+} from '../mocks';
 
 const meta = { title: 'Música/Conteúdo' } satisfies Meta;
 
@@ -112,32 +122,70 @@ export const Faixas: Story = {
 };
 
 export const Avaliacoes: Story = {
-  name: 'Avaliações e comentários',
+  name: 'Avaliações e curtidas',
   render: () => ({
-    components: { MxReviewCard, MxCommentItem },
+    components: { MxReviewCard, MxLikeButton },
     setup: () => {
-      const reaction = ref<'LIKE' | 'DISLIKE' | null>(null);
+      const liked = ref(false);
       const likes = ref(41);
-      const react = (next: 'LIKE' | 'DISLIKE' | null) => {
-        if (reaction.value === 'LIKE') likes.value -= 1;
-        if (next === 'LIKE') likes.value += 1;
-        reaction.value = next;
+      const like = (next: boolean) => {
+        likes.value += next ? 1 : -1;
+        liked.value = next;
       };
-      return { reaction, likes, react, author: mockUsers[0], other: mockUsers[2], body: mockReviewBody, cover: coverArt('violet', 'circle') };
+      return { liked, likes, like, author: mockUsers[0], other: mockUsers[2], body: mockReviewBody, cover: coverArt('violet', 'circle') };
     },
     template: `
       <div style="display:grid;gap:20px;max-width:720px">
-        <MxReviewCard :rating="4.5" :body="body" created-at="2026-10-05T18:20:00Z" :likes="likes" :dislikes="3" :comments="7"
-          :reaction="reaction" can-react :author="{ ...author, to: '#' }" to="#" edited
-          :item="{ id: 'a1', kind: 'album', title: 'Neon na Garagem', artist: 'Banda Lúmen', year: '2019', cover, to: '#' }" @react="react" />
-        <MxReviewCard variant="compact" :rating="2" body="Esperava mais do refrão." created-at="2026-09-12T10:00:00Z" :likes="2" :dislikes="5" :comments="0"
-          :author="other" :item="{ id: 't2', kind: 'track', title: 'Fios Desencapados', artist: 'Banda Lúmen', cover }" />
-        <MxReviewCard variant="item" :rating="5" created-at="2026-10-01T09:00:00Z" :likes="0" :dislikes="0" :comments="0" :author="author"
+        <MxReviewCard :rating="4.5" :body="body" created-at="2026-10-05T18:20:00Z" :likes="likes" :liked="liked" can-like
+          :author="{ ...author, to: '#' }" to="#" edited
+          :item="{ id: 'a1', kind: 'album', title: 'Neon na Garagem', artist: 'Banda Lúmen', year: '2019', cover, to: '#' }" @like="like" />
+        <MxReviewCard variant="compact" :rating="2" body="Esperava mais do refrão." created-at="2026-09-12T10:00:00Z" :likes="2"
+          :author="other" :group="{ name: 'Clube do Vinil', to: '#' }" visibility="group"
+          :item="{ id: 't2', kind: 'track', title: 'Fios Desencapados', artist: 'Banda Lúmen', cover }" />
+        <MxReviewCard variant="item" :rating="5" created-at="2026-10-01T09:00:00Z" :likes="0" :author="author" visibility="private"
           :item="{ id: 'a1', kind: 'album', title: 'Neon na Garagem' }" />
-        <ul style="list-style:none;margin:0;padding:0;display:grid;gap:12px">
-          <MxCommentItem :author="other" body="Concordo demais com o lado B!" created-at="2026-10-05T19:00:00Z" :likes="4" :dislikes="0" can-react can-delete />
-          <MxCommentItem :author="author" body="O interlúdio cresce depois da terceira audição." created-at="2026-10-05T19:30:00Z" :likes="1" :dislikes="1" />
-        </ul>
+        <div style="display:flex;gap:10px;align-items:center">
+          <MxLikeButton :count="likes" :liked="liked" @toggle="like" />
+          <MxLikeButton :count="1280" liked :interactive="false" size="sm" />
+        </div>
+      </div>
+    `,
+  }),
+};
+
+export const ReviewDaGalera: Story = {
+  name: 'Review da galera',
+  render: () => ({
+    components: { MxGroupReviewCard },
+    setup: () => {
+      const entries = ref<GroupReviewEntry[]>(
+        mockGroupReviewEntries.map((entry) => ({
+          id: entry.id,
+          author: { ...mockUsers[entry.user], to: '#' },
+          rating: entry.rating,
+          body: entry.body,
+          createdAt: entry.createdAt,
+          likes: entry.likes,
+          liked: false,
+          canLike: entry.user !== 0,
+          to: '#',
+        })),
+      );
+      const like = (id: string, next: boolean) => {
+        entries.value = entries.value.map((entry) => (entry.id === id ? { ...entry, liked: next, likes: entry.likes + (next ? 1 : -1) } : entry));
+      };
+      const average = Math.round((mockGroupReviewEntries.reduce((sum, entry) => sum + entry.rating, 0) / mockGroupReviewEntries.length) * 100) / 100;
+      const item = { id: 'a1', kind: 'album' as const, title: 'Neon na Garagem', artist: 'Banda Lúmen', year: '2019', cover: coverArt('pink', 'blob'), to: '#' };
+      return { entries, like, average, item };
+    },
+    template: `
+      <div style="display:grid;gap:20px;max-width:720px">
+        <MxGroupReviewCard :group="{ name: 'Clube do Vinil', to: '#' }" :item="item" :rating="average" :entries="entries"
+          :members="5" proposer="brunolima" to="#" @like="like" />
+        <MxGroupReviewCard :group="{ name: 'Turma da Faculdade' }" visibility="group" :rating="null" :entries="[]" :members="4" proposer="eva"
+          :item="{ id: 't3', kind: 'track', title: 'Ondas Curtas', artist: 'Banda Lúmen', cover: item.cover }" />
+        <MxGroupReviewCard variant="full" :group="{ name: 'Clube do Vinil', to: '#' }" :item="item" :rating="average" :entries="entries"
+          :members="5" highlight-id="g2" @like="like" />
       </div>
     `,
   }),

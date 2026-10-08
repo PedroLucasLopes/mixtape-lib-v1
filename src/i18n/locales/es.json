@@ -71,18 +71,28 @@
     "notoriety": "Notoriedad",
     "points": "punto | puntos"
   },
-  "reactions": {
-    "likeCount": "Me gusta ({formatted})",
-    "dislikeCount": "No me gusta ({formatted})",
-    "comments": "{formatted} comentario | {formatted} comentarios"
+  "likes": {
+    "button": "Me gusta ({formatted})",
+    "count": "{formatted} me gusta | {formatted} me gusta"
   },
   "review": {
     "heading": "Reseña de {'@'}{author} sobre {title}: {rating} de 5",
     "edited": "editada",
-    "open": "Abrir reseña"
+    "open": "Abrir reseña",
+    "visibility": {
+      "group": "Solo la pandilla lo ve",
+      "private": "Solo tú lo ves"
+    }
   },
-  "comment": {
-    "delete": "Eliminar"
+  "groupReview": {
+    "flag": "Reseña de la pandilla",
+    "tag": "Reseña de la pandilla · {group}",
+    "heading": "Reseña de la pandilla {group} sobre {title}",
+    "average": "Media de la pandilla",
+    "progress": "{count} de {members} ya puntuó | {count} de {members} ya puntuaron",
+    "proposedBy": "Sugerida por {'@'}{username}",
+    "empty": "Nadie puntuó todavía.",
+    "open": "Abrir reseña de la pandilla"
   },
   "user": {
     "openMenu": "Abrir el menú de {name}",

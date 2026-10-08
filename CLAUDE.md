@@ -42,7 +42,8 @@ npm run sync:brand-icons   # regenera os ícones de marca a partir do simple-ico
   `app.provide(MIXTAPE_LINK_KEY, RouterLink)`. Não precisa de `@mdi/font`: `vuetifyOptions` já
   registra os ícones em SVG, e a aplicação soma os dela com `icons: mixtapeIcons(SEUS_ICONES)`. O
   subconjunto daqui também sai em `@pedrolucaslopes/mixtape-ui/icons` (só JS, sem CSS), para o script
-  de ícones da aplicação gerar apenas os que faltam.
+  de ícones da aplicação gerar apenas os que faltam. Ícone de fora do MDI (outra caixa, como os 512×512 do
+  Font Awesome) entra como `IconShape` (`{ path, viewBox }`); o crédito da licença dele fica com a aplicação.
 - **Só o que a página usa.** O CSS base (`dist/styles/base.css`) vem com o import do pacote; o CSS de
   cada componente vem com o componente. Como o pacote declara `"sideEffects": ["*.css"]`, componente
   que a aplicação não usa sai do bundle com o CSS dele, e o que ela usa só numa página vai para o
@@ -66,7 +67,11 @@ componente do Vuetify usado; o CSS do Vuetify fica com a aplicação. As declara
 que existe é `major`. **Enquanto a versão começar com `0.`**, o `^` do npm já trata a `minor` como
 incompatível (`^0.3.0` não aceita `0.4.0`): mudança que quebra sobe a `minor`, e o resto sobe a
 `patch`. A 0.4.0 renomeou `listens` para `listeners` no `MxItemCard` (e a chave `media.listens`
-para `media.listeners`).
+para `media.listeners`). A 0.5.0 seguiu a política nova do produto (avaliação alheia só recebe curtida):
+trocou o `MxReactionBar` (gostei/não gostei) pelo `MxLikeButton` (coração), tirou o `MxCommentItem`, trocou
+`dislikes`, `comments`, `reaction`, `canReact` e `reactionPending` do `MxReviewCard` por `liked`, `canLike`,
+`likePending` e o evento `like`, e criou o `MxGroupReviewCard` (review da galera). Na mesma versão, o conjunto
+de ícones passou a aceitar `IconShape` (caminho com a própria `viewBox`) ao lado dos caminhos do MDI.
 
 ---
 
@@ -167,7 +172,7 @@ vue-i18n da aplicação à mesma língua e mantém `<html lang>` em dia.
 | Mídia | `MxCover`, `MxAvatar`, `MxImageCredit`, `MxMosaic` | capa com `srcset` (250/500/1200), cor de superfície parada até carregar, arte de reserva no duotone do item, vinil que desliza para fora no hover e sombra ajustável por `--mx-cover-shadow` (no lugar de `filter: drop-shadow` num pai que anima); foto de artista com crédito de autor e licença |
 | Notas | `MxRating`, `MxRatingInput`, `MxRatingHistogram` | nota de 0 a 5 em **meio disco**; a entrada é um `slider` de verdade (setas, Home/End, PageUp/Down), com botão de **zero** separado (zero é nota válida) e rótulo por nota ("Obra-prima"); histograma com visão de tabela |
 | Gamificação | `MxStat`, `MxDiscTier`, `MxDiscProgress`, `MxBadge`, `MxPodium`, `MxRankRow`, `MxSplitBar`, `MxBarList` | o ícone de cada badge vem da aplicação (a biblioteca não conhece códigos de badge); badge bloqueado continua visível, tracejado, com o caminho até o primeiro nível |
-| Música | `MxItemCard`, `MxTrackList`, `MxReviewCard`, `MxReactionBar`, `MxCommentItem`, `MxStreamingLinks`, `MxTimeAgo`, `MxDescriptionList` | cartão inteiro clicável por **um** link (o do título), ações por cima; reação vira `aria-pressed`; texto longo recolhe com "Ler mais"; o número do cartão é de **ouvintes** (`listeners`: pessoas distintas no ListenBrainz), não de execuções |
+| Música | `MxItemCard`, `MxTrackList`, `MxReviewCard`, `MxGroupReviewCard`, `MxLikeButton`, `MxStreamingLinks`, `MxTimeAgo`, `MxDescriptionList` | cartão inteiro clicável por **um** link (o do título), ações por cima; texto longo recolhe com "Ler mais"; o número do cartão é de **ouvintes** (`listeners`: pessoas distintas no ListenBrainz), não de execuções. A curtida é um coração com `aria-pressed` (rosa do `secondary` quando curtido): não existe "não gostei" nem comentário em avaliação alheia. O `MxReviewCard` mostra o selo da review da galera (`group`) e um cadeado quando a avaliação não é pública (`visibility`: só a galera ou só o autor). O `MxGroupReviewCard` junta a parte de cada membro num balão (nota, texto, coração), com a média da galera e o progresso ("3 de 5 já deram a nota"), e avisa quando ninguém avaliou ainda |
 | Layout | `MxAppShell`, `MxTopBar`, `MxTabBar`, `MxUserMenu`, `MxFooter`, `MxSection`, `MxRail`, `MxGrid`, `MxPageHero`, `MxStoryCard`, `MxSegmented`, `MxSearchField`, `MxProgressBar` | barra de abas flutuante no celular que encolhe ao rolar para baixo (iOS); carrossel com rolagem por teclado e setas no desktop (a `MxSection` que tem um `MxRail` direto reserva o canto das setas, ao lado do "Ver tudo"); segmentado é `radiogroup` com indicador em mola; o menu do usuário cabe na tela (`min(320px, 100vw - 24px)`, coluna `minmax(0, 1fr)`) e rola por dentro quando a altura não dá |
 | Feedback | `MxToastHost` + `toast`, `MxDialog`, `MxConfirmDialog`, `MxSkeleton`, `MxLoader`, `MxEmptyState`, `MxErrorState`, `MxLoadMore` | erro não some sozinho e vai para `role="alert"`; o resto para `role="status"`; diálogo vira folha inferior no celular; falha de confirmação aparece **dentro** do diálogo |
 | Formulário | `MxTextField`, `MxTextarea`, `MxPasswordField`, `MxStepper`, `MxBalloonPicker` | a senha é sempre do usuário: o campo mostra as regras (vindas da aplicação, iguais às da API) e um medidor de força; nunca sugere nem gera senha. O `MxStepper` é um conjunto de **abas** (WAI-ARIA: setas, Home/End) com um painel por etapa em slot nomeado pela `key`; etapa adiante de `reachable` fica `aria-disabled`, a já feita ganha check, a troca é anunciada ("Etapa 2 de 4: …") e, quando o avanço vem de um botão do painel, o foco vai para o painel novo (o botão sumiu). O `MxBalloonPicker` é um grupo de botões `aria-pressed` em forma de balão, com até 3 capas dentro; cor (duotone) e tamanho saem do hash do valor, então cada estilo tem sempre o mesmo balão; com `max`, os outros ficam `aria-disabled` e o contador é `aria-live`; capa que não carrega sai do balão (nada de quadrado vazio). No celular, só a etapa ativa mostra o nome, sem cortar |

@@ -71,18 +71,28 @@
     "notoriety": "Notoriety",
     "points": "point | points"
   },
-  "reactions": {
-    "likeCount": "Like ({formatted})",
-    "dislikeCount": "Dislike ({formatted})",
-    "comments": "{formatted} comment | {formatted} comments"
+  "likes": {
+    "button": "Like ({formatted})",
+    "count": "{formatted} like | {formatted} likes"
   },
   "review": {
     "heading": "{'@'}{author}'s review of {title}: {rating} out of 5",
     "edited": "edited",
-    "open": "Open review"
+    "open": "Open review",
+    "visibility": {
+      "group": "Only the crew sees this",
+      "private": "Only you see this"
+    }
   },
-  "comment": {
-    "delete": "Delete"
+  "groupReview": {
+    "flag": "Crew review",
+    "tag": "Crew review · {group}",
+    "heading": "Crew review by {group} of {title}",
+    "average": "Crew average",
+    "progress": "{count} of {members} has rated | {count} of {members} have rated",
+    "proposedBy": "Suggested by {'@'}{username}",
+    "empty": "Nobody has rated it yet.",
+    "open": "Open crew review"
   },
   "user": {
     "openMenu": "Open {name}'s menu",

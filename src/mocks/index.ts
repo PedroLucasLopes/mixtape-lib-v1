@@ -54,6 +54,12 @@ export const mockReviewBody =
   '"Neon" tem seis minutos que passam voando, e a participação da Clara Sol em "Ondas Curtas" é o momento mais bonito do ano. ' +
   'Só o interlúdio parece sobra de estúdio. Voltei três vezes no mesmo dia, o que diz muito.';
 
+export const mockGroupReviewEntries = [
+  { id: 'g1', user: 0, rating: 4.5, likes: 12, body: 'O lado B salvou a noite: "Neon" tocou três vezes seguidas na casa da Eva.', createdAt: '2026-10-04T21:10:00Z' },
+  { id: 'g2', user: 1, rating: 4, likes: 3, body: 'Concordo com a nota, mas o interlúdio podia ter ficado na gaveta.', createdAt: '2026-10-05T09:42:00Z' },
+  { id: 'g3', user: 4, rating: 5, likes: 7, body: null, createdAt: '2026-10-05T18:05:00Z' },
+] as const;
+
 export const mockDistribution = [
   { rating: 0, count: 2 },
   { rating: 0.5, count: 1 },
