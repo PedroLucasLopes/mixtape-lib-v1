@@ -31,6 +31,13 @@ export const mockAlbums = [
   { id: 'a8', title: 'Dias de Sol', artist: 'Tom Rios', year: '2013', type: 'Álbum', cover: coverArt('burgundy', 'stripes'), rating: 4.5, listeners: 75_800, genres: ['samba'] },
 ];
 
+/** Discografia longa (fictícia) para a grade paginada: 30 lançamentos, do mais novo para o mais antigo. */
+export const mockDiscography = Array.from({ length: 30 }, (_, index) => {
+  const base = mockAlbums[index % mockAlbums.length]!;
+  const edition = ['', 'Vol. 2', 'Ao Vivo', 'Remixes'][Math.floor(index / mockAlbums.length)] ?? '';
+  return { ...base, id: `d${index + 1}`, title: `${base.title} ${edition}`.trim(), year: String(2024 - index) };
+});
+
 export const mockTracks = [
   { id: 't1', title: 'Luz de Garagem', number: '1', disc: 1, durationMs: 213_000, artistCredit: 'Banda Lúmen' },
   { id: 't2', title: 'Fios Desencapados', number: '2', disc: 1, durationMs: 247_500, artistCredit: 'Banda Lúmen' },

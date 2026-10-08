@@ -118,6 +118,13 @@
     "previous": "Anterior",
     "next": "Próximo"
   },
+  "pager": {
+    "label": "Páginas de {label}",
+    "page": "Página {page} de {total}",
+    "goTo": "Ir para a página {page}",
+    "previous": "Página anterior",
+    "next": "Próxima página"
+  },
   "error": {
     "title": "Algo desafinou por aqui"
   },

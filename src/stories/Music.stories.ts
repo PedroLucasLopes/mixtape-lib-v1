@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import { ref } from 'vue';
+import { type Component, ref } from 'vue';
 import MxCover from '../components/MxCover.vue';
 import MxDescriptionList from '../components/MxDescriptionList.vue';
 import MxGrid from '../components/MxGrid.vue';
@@ -8,6 +8,7 @@ import MxImageCredit from '../components/MxImageCredit.vue';
 import MxItemCard from '../components/MxItemCard.vue';
 import MxLikeButton from '../components/MxLikeButton.vue';
 import MxMosaic from '../components/MxMosaic.vue';
+import MxPagedGrid from '../components/MxPagedGrid.vue';
 import MxRating from '../components/MxRating.vue';
 import MxRatingHistogram from '../components/MxRatingHistogram.vue';
 import MxReviewCard from '../components/MxReviewCard.vue';
@@ -16,6 +17,7 @@ import {
   artistPhoto,
   coverArt,
   mockAlbums,
+  mockDiscography,
   mockDistribution,
   mockGroupReviewEntries,
   mockReviewBody,
@@ -116,6 +118,24 @@ export const Faixas: Story = {
       <div style="display:grid;gap:32px;max-width:720px">
         <MxTrackList :tracks="tracks" album-artist="Banda Lúmen" highlight-id="t3" label="Faixas" />
         <MxDescriptionList :items="facts" />
+      </div>
+    `,
+  }),
+};
+
+export const GradePaginada: Story = {
+  name: 'Grade paginada',
+  render: () => ({
+    components: { MxPagedGrid: MxPagedGrid as unknown as Component, MxItemCard },
+    setup: () => ({ albums: mockDiscography }),
+    template: `
+      <div style="display:grid;gap:12px">
+        <p style="margin:0;opacity:.75">Duas fileiras; as colunas acompanham a largura. Deslize para o lado ou use os números.</p>
+        <MxPagedGrid :items="albums" label="Discografia" :min-item-width="160">
+          <template #default="{ item }">
+            <MxItemCard :title="item.title" :subtitle="item.artist" :meta="item.year + ' · ' + item.type" :cover="item.cover" :seed="item.id" to="#" :rating="item.rating" />
+          </template>
+        </MxPagedGrid>
       </div>
     `,
   }),

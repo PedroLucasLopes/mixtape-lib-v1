@@ -118,6 +118,13 @@
     "previous": "Previous",
     "next": "Next"
   },
+  "pager": {
+    "label": "Pages of {label}",
+    "page": "Page {page} of {total}",
+    "goTo": "Go to page {page}",
+    "previous": "Previous page",
+    "next": "Next page"
+  },
   "error": {
     "title": "Something hit a wrong note"
   },

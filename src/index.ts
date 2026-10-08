@@ -132,6 +132,7 @@ export { default as MxStreamingLinks } from './components/MxStreamingLinks.vue';
 export { default as MxSection } from './components/MxSection.vue';
 export { default as MxRail } from './components/MxRail.vue';
 export { default as MxGrid } from './components/MxGrid.vue';
+export { default as MxPagedGrid } from './components/MxPagedGrid.vue';
 export { default as MxPageHero } from './components/MxPageHero.vue';
 export { default as MxStoryCard } from './components/MxStoryCard.vue';
 export { default as MxSegmented } from './components/MxSegmented.vue';
