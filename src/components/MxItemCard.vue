@@ -22,6 +22,7 @@ const props = withDefaults(
     to?: LinkTarget;
     rating?: number | null;
     listeners?: number | null;
+    listenersSource?: string | null;
     position?: number | null;
     badge?: string | null;
     layout?: 'tile' | 'row' | 'chart';
@@ -37,6 +38,7 @@ const props = withDefaults(
     sources: null,
     rating: null,
     listeners: null,
+    listenersSource: null,
     position: null,
     badge: null,
     layout: 'tile',
@@ -48,11 +50,11 @@ const props = withDefaults(
 const { t, locale } = useMixtapeText();
 
 const heading = computed(() => `h${props.headingLevel}`);
-const listenersText = computed(() =>
-  props.listeners === null
-    ? null
-    : t('media.listeners', { count: props.listeners, formatted: formatCompactNumber(props.listeners, locale.value) }),
-);
+const listenersText = computed(() => {
+  if (props.listeners === null) return null;
+  const params = { count: props.listeners, formatted: formatCompactNumber(props.listeners, locale.value) };
+  return props.listenersSource ? t('media.listenersOn', { ...params, source: props.listenersSource }) : t('media.listeners', params);
+});
 </script>
 
 <template>

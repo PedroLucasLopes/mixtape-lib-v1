@@ -26,6 +26,7 @@
     "license": "License: {license}",
     "source": "View source",
     "listeners": "{formatted} listener | {formatted} listeners",
+    "listenersOn": "{formatted} listener on {source} | {formatted} listeners on {source}",
     "disc": "Disc {number}",
     "duration": "Duration",
     "officialSite": "Official site",
@@ -130,6 +131,20 @@
     "play": "Resume auto-rotation",
     "slide": "{index} of {total}",
     "goTo": "Show item {index}"
+  },
+  "crate": {
+    "position": "{index} of {total}",
+    "status": "Record {index} of {total}: {title}",
+    "previous": "Previous record",
+    "next": "Next record",
+    "pull": "Pull record",
+    "putBack": "Put back in the crate",
+    "pulled": "Pulled record: {title}",
+    "current": "Record in front: {title}",
+    "hintBrowse": "Move the mouse up the stack to flip through and down to go back.",
+    "hintBrowseTouch": "Swipe sideways to flip through.",
+    "hint": "Move the mouse up the stack to flip through and down to go back. Click to pull out the record in front.",
+    "hintTouch": "Swipe sideways to flip through and tap to pull out the record in front."
   },
   "error": {
     "title": "Something hit a wrong note"

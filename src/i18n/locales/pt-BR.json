@@ -26,6 +26,7 @@
     "license": "Licença: {license}",
     "source": "Ver a fonte",
     "listeners": "{formatted} ouvinte | {formatted} ouvintes",
+    "listenersOn": "{formatted} ouvinte no {source} | {formatted} ouvintes no {source}",
     "disc": "Disco {number}",
     "duration": "Duração",
     "officialSite": "Site oficial",
@@ -130,6 +131,20 @@
     "play": "Retomar a troca automática",
     "slide": "{index} de {total}",
     "goTo": "Mostrar o item {index}"
+  },
+  "crate": {
+    "position": "{index} de {total}",
+    "status": "Disco {index} de {total}: {title}",
+    "previous": "Disco anterior",
+    "next": "Próximo disco",
+    "pull": "Puxar disco",
+    "putBack": "Devolver à caixa",
+    "pulled": "Disco puxado: {title}",
+    "current": "Disco da frente: {title}",
+    "hintBrowse": "Suba o mouse pela pilha para folhear e desça para voltar.",
+    "hintBrowseTouch": "Deslize para o lado para folhear.",
+    "hint": "Suba o mouse pela pilha para folhear e desça para voltar. Clique para puxar o disco da frente.",
+    "hintTouch": "Deslize para o lado para folhear e toque para puxar o disco da frente."
   },
   "error": {
     "title": "Algo desafinou por aqui"

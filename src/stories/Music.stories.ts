@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { type Component, ref } from 'vue';
+import MxButton from '../components/MxButton.vue';
 import MxCover from '../components/MxCover.vue';
+import MxCrate from '../components/MxCrate.vue';
 import MxDescriptionList from '../components/MxDescriptionList.vue';
 import MxGrid from '../components/MxGrid.vue';
 import MxGroupReviewCard, { type GroupReviewEntry } from '../components/MxGroupReviewCard.vue';
@@ -25,6 +27,7 @@ import {
   mockTracks,
   mockUsers,
 } from '../mocks';
+import { duotones } from '../theme/tokens';
 
 const meta = { title: 'Música/Conteúdo' } satisfies Meta;
 
@@ -137,6 +140,44 @@ export const GradePaginada: Story = {
             <MxItemCard :title="item.title" :subtitle="item.artist" :meta="item.year + ' · ' + item.type" :cover="item.cover" :seed="item.id" to="#" :rating="item.rating" />
           </template>
         </MxPagedGrid>
+      </div>
+    `,
+  }),
+};
+
+export const CaixaDeDiscos: Story = {
+  name: 'Caixa de discos',
+  render: () => ({
+    components: { MxCrate, MxButton, MxRating },
+    setup: () => {
+      const records = mockDiscography.map((item) => ({ key: item.id, title: item.title, subtitle: item.artist, cover: item.cover }));
+      const ratings = new Map(mockDiscography.map((item) => [item.id, item.rating]));
+      const current = ref(0);
+      const pulled = ref<string | null>(null);
+      const compactPulled = ref<string | null>(null);
+      return { records, ratings, current, pulled, compactPulled, violet: duotones.violet };
+    },
+    template: `
+      <div style="display:grid;gap:28px;max-width:880px">
+        <MxCrate v-model="current" v-model:pulled="pulled" :records="records" label="Coleção de indie rock">
+          <template #pulled="{ record, close }">
+            <p style="margin:0;font-weight:800;font-size:1.375rem">{{ record.title }}</p>
+            <p style="margin:0;opacity:.75">{{ record.subtitle }}</p>
+            <MxRating :value="ratings.get(record.key)" show-value />
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <MxButton label="Ver disco" icon="mdi-album" size="sm" to="#" />
+              <MxButton label="Ouvir depois" icon="mdi-bookmark-outline" size="sm" variant="glass" @click="close" />
+            </div>
+          </template>
+        </MxCrate>
+        <p style="margin:0;opacity:.75">Disco na frente: {{ current + 1 }} · puxado: {{ pulled ?? 'nenhum' }}</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px">
+          <div style="display:grid;gap:8px;padding:22px;border-radius:var(--mx-radius-lg)" :style="{ background: violet.background, color: violet.ink }">
+            <strong style="font-size:.75rem;letter-spacing:.14em;text-transform:uppercase">Descubra (compacta)</strong>
+            <MxCrate v-model:pulled="compactPulled" :records="records.slice(0, 10)" label="Descubra" :depth="6" compact />
+            <span style="font-size:.9375rem">Puxado: {{ compactPulled ?? 'nenhum' }}</span>
+          </div>
+        </div>
       </div>
     `,
   }),

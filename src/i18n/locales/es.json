@@ -26,6 +26,7 @@
     "license": "Licencia: {license}",
     "source": "Ver la fuente",
     "listeners": "{formatted} oyente | {formatted} oyentes",
+    "listenersOn": "{formatted} oyente en {source} | {formatted} oyentes en {source}",
     "disc": "Disco {number}",
     "duration": "Duración",
     "officialSite": "Sitio oficial",
@@ -130,6 +131,20 @@
     "play": "Reanudar el cambio automático",
     "slide": "{index} de {total}",
     "goTo": "Mostrar el elemento {index}"
+  },
+  "crate": {
+    "position": "{index} de {total}",
+    "status": "Disco {index} de {total}: {title}",
+    "previous": "Disco anterior",
+    "next": "Siguiente disco",
+    "pull": "Sacar disco",
+    "putBack": "Devolver a la caja",
+    "pulled": "Disco sacado: {title}",
+    "current": "Disco de adelante: {title}",
+    "hintBrowse": "Sube el ratón por la pila para hojear y bájalo para volver.",
+    "hintBrowseTouch": "Desliza hacia el lado para hojear.",
+    "hint": "Sube el ratón por la pila para hojear y bájalo para volver. Haz clic para sacar el disco de adelante.",
+    "hintTouch": "Desliza hacia el lado para hojear y toca para sacar el disco de adelante."
   },
   "error": {
     "title": "Algo desafinó por aquí"

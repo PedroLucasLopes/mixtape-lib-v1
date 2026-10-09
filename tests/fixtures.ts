@@ -116,6 +116,12 @@ export const FIXTURES: Record<string, Fixture> = {
   MxConfirmDialog: { props: { modelValue: true, title: 'Apagar avaliação?', message: 'Essa ação não pode ser desfeita.' } },
   MxConsentBanner: { props: { open: true, title: 'Cookies e anúncios', description: 'Os anúncios usam cookies.', policyTo: '/privacidade' } },
   MxCover: { props: { src: album.cover, title: album.title, seed: album.id } },
+  MxCrate: {
+    props: {
+      records: mockDiscography.slice(0, 12).map((item) => ({ key: item.id, title: item.title, subtitle: item.artist, cover: item.cover })),
+      label: 'Coleção de indie rock',
+    },
+  },
   MxDescriptionList: {
     props: {
       items: [
