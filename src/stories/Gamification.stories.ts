@@ -3,6 +3,7 @@ import MxBadge from '../components/MxBadge.vue';
 import MxBarList from '../components/MxBarList.vue';
 import MxDiscProgress from '../components/MxDiscProgress.vue';
 import MxDiscTier from '../components/MxDiscTier.vue';
+import MxPersonCard from '../components/MxPersonCard.vue';
 import MxPodium from '../components/MxPodium.vue';
 import MxRankRow from '../components/MxRankRow.vue';
 import MxSplitBar from '../components/MxSplitBar.vue';
@@ -37,6 +38,49 @@ export const Badges: Story = {
     template: `
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px">
         <MxBadge v-for="badge in badges" :key="badge.code" v-bind="badge" />
+      </div>
+    `,
+  }),
+};
+
+export const BadgesVistosPorOutraPessoa: Story = {
+  render: () => ({
+    components: { MxBadge },
+    setup: () => ({ badges: mockBadges.filter((badge) => badge.tier > 0) }),
+    template: `
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px">
+        <MxBadge
+          v-for="badge in badges"
+          :key="badge.code"
+          :name="badge.name"
+          :icon="badge.icon"
+          :description="badge.description"
+          :tier="badge.tier"
+          :tier-name="badge.tierName"
+          :earned-at="badge.earnedAt"
+          :show-progress="false"
+        />
+      </div>
+    `,
+  }),
+};
+
+export const Pessoas: Story = {
+  render: () => ({
+    components: { MxPersonCard },
+    setup: () => ({ users: mockUsers }),
+    template: `
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;max-width:820px">
+        <MxPersonCard
+          v-for="user in users"
+          :key="user.username"
+          :name="user.name"
+          :username="user.username"
+          :avatar-url="user.avatarUrl"
+          :tier="user.tier"
+          :tier-label="user.tierLabel"
+          :to="'/u/' + user.username"
+        />
       </div>
     `,
   }),

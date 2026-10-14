@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { nextTick } from 'vue';
 import MxBalloonPicker from '../../src/components/MxBalloonPicker.vue';
 import MxPasswordField from '../../src/components/MxPasswordField.vue';
 import MxRatingInput from '../../src/components/MxRatingInput.vue';
@@ -49,6 +50,38 @@ describe('MxSegmented', () => {
     await getByTestId('mx-segmented-option-week').trigger('keydown', { key: 'ArrowRight' });
     await getByTestId('mx-segmented-option-week').trigger('keydown', { key: 'End' });
     expect(wrapper.emitted('update:modelValue')).toEqual([['year'], ['month'], ['year']]);
+  });
+
+  describe('options wider than the room', () => {
+    const OPTION_WIDTH = 100;
+    const ROOM = 250;
+    const radios = (element: Element) => [...(element.parentElement?.children ?? [])].filter((child) => child.getAttribute('role') === 'radio');
+
+    afterEach(() => {
+      vi.restoreAllMocks();
+    });
+
+    it('brings the chosen option into view, now and when it changes', async () => {
+      vi.spyOn(HTMLElement.prototype, 'offsetLeft', 'get').mockImplementation(function (this: HTMLElement) {
+        return this.getAttribute('role') === 'radio' ? radios(this).indexOf(this) * OPTION_WIDTH : 0;
+      });
+      vi.spyOn(HTMLElement.prototype, 'offsetWidth', 'get').mockImplementation(function (this: HTMLElement) {
+        return this.getAttribute('role') === 'radio' ? OPTION_WIDTH : 0;
+      });
+      vi.spyOn(Element.prototype, 'clientWidth', 'get').mockImplementation(function (this: Element) {
+        return this.getAttribute('role') === 'radiogroup' ? ROOM : 0;
+      });
+      vi.spyOn(Element.prototype, 'scrollWidth', 'get').mockImplementation(function (this: Element) {
+        return this.getAttribute('role') === 'radiogroup' ? ranges.length * OPTION_WIDTH : 0;
+      });
+
+      const wrapper = mount(MxSegmented, { props: { modelValue: 'year', options: ranges, label: 'Período' }, ...attached });
+      await nextTick();
+      expect(getByTestId('mx-segmented').element.scrollLeft).toBe(ranges.length * OPTION_WIDTH - ROOM);
+      await wrapper.setProps({ modelValue: 'week' });
+      await nextTick();
+      expect(getByTestId('mx-segmented').element.scrollLeft).toBe(0);
+    });
   });
 });
 

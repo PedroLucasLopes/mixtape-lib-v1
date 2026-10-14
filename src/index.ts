@@ -108,6 +108,7 @@ export { default as MxStarburst } from './components/MxStarburst.vue';
 export { default as MxMarquee } from './components/MxMarquee.vue';
 export { default as MxCover } from './components/MxCover.vue';
 export { default as MxAvatar } from './components/MxAvatar.vue';
+export { default as MxPersonCard } from './components/MxPersonCard.vue';
 export { default as MxImageCredit } from './components/MxImageCredit.vue';
 export { default as MxMosaic } from './components/MxMosaic.vue';
 export { default as MxRating } from './components/MxRating.vue';

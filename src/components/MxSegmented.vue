@@ -19,6 +19,7 @@ const props = withDefaults(
   { size: 'md', block: false },
 );
 
+const root = ref<HTMLElement | null>(null);
 const buttons = ref<Array<HTMLButtonElement | undefined>>([]);
 
 const setButton = (element: unknown, index: number) => {
@@ -27,11 +28,20 @@ const setButton = (element: unknown, index: number) => {
 const indicator = ref({ left: 0, width: 0, ready: false });
 let observer: ResizeObserver | null = null;
 
+const reveal = (button: HTMLButtonElement) => {
+  const container = root.value;
+  if (!container || container.scrollWidth <= container.clientWidth) return;
+  const end = button.offsetLeft + button.offsetWidth;
+  if (button.offsetLeft < container.scrollLeft) container.scrollLeft = button.offsetLeft;
+  else if (end > container.scrollLeft + container.clientWidth) container.scrollLeft = end - container.clientWidth;
+};
+
 const measure = () => {
   const index = props.options.findIndex((option) => option.value === model.value);
   const button = buttons.value[index];
   if (!button) return;
   indicator.value = { left: button.offsetLeft, width: button.offsetWidth, ready: true };
+  reveal(button);
 };
 
 const select = (value: T) => {
@@ -66,7 +76,7 @@ onBeforeUnmount(() => observer?.disconnect());
 </script>
 
 <template>
-  <div data-testid="mx-segmented" class="mx-segmented" :class="[`mx-segmented--${size}`, { 'mx-segmented--block': block }]" role="radiogroup" :aria-label="label">
+  <div ref="root" data-testid="mx-segmented" class="mx-segmented" :class="[`mx-segmented--${size}`, { 'mx-segmented--block': block }]" role="radiogroup" :aria-label="label">
     <span
       class="mx-segmented__indicator"
       :class="{ 'mx-segmented__indicator--ready': indicator.ready }"

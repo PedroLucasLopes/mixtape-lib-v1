@@ -23,9 +23,10 @@ const props = withDefaults(
     next?: BadgeNextTier | null;
     progress?: number;
     earnedAt?: string | null;
+    showProgress?: boolean;
     size?: 'sm' | 'md' | 'lg';
   }>(),
-  { description: '', tierName: null, value: 0, next: null, progress: 0, earnedAt: null, size: 'md' },
+  { description: '', tierName: null, value: 0, next: null, progress: 0, earnedAt: null, showProgress: true, size: 'md' },
 );
 
 const { t, locale } = useMixtapeText();
@@ -57,7 +58,8 @@ const gradientId = `mx-badge-${useId()}`;
         </defs>
         <circle class="mx-badge__ring-track" cx="50" cy="50" r="46" />
         <circle
-          v-if="next"
+          v-if="next && showProgress"
+          data-testid="mx-badge-ring"
           class="mx-badge__ring"
           cx="50"
           cy="50"
@@ -76,17 +78,19 @@ const gradientId = `mx-badge-${useId()}`;
     </div>
     <div class="mx-badge__body">
       <h3 class="mx-badge__name">{{ name }}</h3>
-      <p v-if="tierName && !locked" class="mx-badge__tier">
+      <p v-if="tierName && !locked" data-testid="mx-badge-tier" class="mx-badge__tier">
         <span class="mx-badge__dot" :style="{ background: metal[1] }" />
         {{ tierName }}
       </p>
       <p v-else-if="locked" class="mx-badge__tier">{{ t('gamification.locked') }}</p>
       <p v-if="description" class="mx-badge__description">{{ description }}</p>
-      <p v-if="next" class="mx-badge__next">
-        {{ t('gamification.badgeNext', { value: formatNumber(value, locale), threshold: formatNumber(next.threshold, locale), next: next.tierName }) }}
-      </p>
-      <p v-else-if="!locked" class="mx-badge__next">{{ t('gamification.maxTier') }}</p>
-      <p v-if="earnedAt" class="mx-badge__earned">
+      <template v-if="showProgress">
+        <p v-if="next" data-testid="mx-badge-next" class="mx-badge__next">
+          {{ t('gamification.badgeNext', { value: formatNumber(value, locale), threshold: formatNumber(next.threshold, locale), next: next.tierName }) }}
+        </p>
+        <p v-else-if="!locked" data-testid="mx-badge-next" class="mx-badge__next">{{ t('gamification.maxTier') }}</p>
+      </template>
+      <p v-if="earnedAt" data-testid="mx-badge-earned" class="mx-badge__earned">
         {{ t('gamification.earnedOn', { date: formatDate(earnedAt, locale) }) }}
       </p>
     </div>

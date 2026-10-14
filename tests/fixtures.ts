@@ -191,6 +191,7 @@ export const FIXTURES: Record<string, Fixture> = {
   MxProgressBar: { props: { active: true } },
   MxQrCode: { props: { png: mockQrCode, svg: mockQrCode, alt: 'QR code da avaliação' } },
   MxRail: { props: { label: 'Lançamentos' }, slots: { default: '<li>Item</li>' } },
+  MxPersonCard: { props: author(ana) },
   MxRankRow: {
     props: { position: 1, name: ana.name, username: ana.username, tier: ana.tier, tierLabel: ana.tierLabel, total: 1840, participation: 1100, notoriety: 740, to: `/u/${ana.username}` },
   },
