@@ -132,25 +132,29 @@ describe('MxPasswordField', () => {
 });
 
 describe('MxSearchField', () => {
-  it('sends the trimmed query and ignores blanks', async () => {
+  it('sends the trimmed query; Enter on a blank field is a clear, not a search', async () => {
     const wrapper = mount(MxSearchField, { props: { modelValue: '  neon  ' }, ...attached });
     await getByTestId('mx-search-field').trigger('submit');
     expect(wrapper.emitted('submit')).toEqual([['neon']]);
+    expect(wrapper.emitted('clear')).toBeUndefined();
     await wrapper.setProps({ modelValue: '   ' });
     await getByTestId('mx-search-field').trigger('submit');
     expect(wrapper.emitted('submit')).toHaveLength(1);
+    expect(wrapper.emitted('clear')).toEqual([[]]);
   });
 
-  it('clears with the button', async () => {
+  it('clears with the button and says so', async () => {
     const wrapper = mount(MxSearchField, { props: { modelValue: 'neon' }, ...attached });
     await getByTestId('mx-search-field-clear').trigger('click');
     expect(wrapper.emitted('update:modelValue')).toEqual([['']]);
+    expect(wrapper.emitted('clear')).toEqual([[]]);
   });
 
   it('clears with Escape and hides the clear button when empty', async () => {
     const wrapper = mount(MxSearchField, { props: { modelValue: 'neon' }, ...attached });
     await getByTestId('mx-search-field-input').trigger('keydown', { key: 'Escape' });
     expect(wrapper.emitted('update:modelValue')).toEqual([['']]);
+    expect(wrapper.emitted('clear')).toEqual([[]]);
     await wrapper.setProps({ modelValue: '' });
     expect(queryByTestId('mx-search-field-clear')).toBeNull();
   });

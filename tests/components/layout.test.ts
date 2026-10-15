@@ -1,6 +1,8 @@
 import { flushPromises, mount } from '@vue/test-utils';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { defineComponent, h, ref } from 'vue';
 import MxBlobField from '../../src/components/MxBlobField.vue';
+import MxRail from '../../src/components/MxRail.vue';
 import MxShareSheet from '../../src/components/MxShareSheet.vue';
 import MxTabBar from '../../src/components/MxTabBar.vue';
 import MxUserMenu from '../../src/components/MxUserMenu.vue';
@@ -10,6 +12,27 @@ import { tabItems } from '../fixtures';
 
 afterEach(() => {
   Reflect.deleteProperty(navigator, 'clipboard');
+});
+
+describe('MxRail', () => {
+  it('turns the next arrow on when items arrive after it mounted (as with "more suggestions")', async () => {
+    const items = ref(['a', 'b', 'c']);
+    const Host = defineComponent({
+      setup: () => () => h(MxRail, { label: 'Sugestões' }, { default: () => items.value.map((item) => h('li', { key: item }, item)) }),
+    });
+    mount(Host, attached);
+    const track = getByTestId('mx-rail-track').element;
+    let scrollWidth = 300;
+    Object.defineProperty(track, 'clientWidth', { configurable: true, get: () => 300 });
+    Object.defineProperty(track, 'scrollWidth', { configurable: true, get: () => scrollWidth });
+    await flushPromises();
+    expect(getByTestId('mx-rail-next').attributes('disabled')).toBeDefined();
+
+    scrollWidth = 900;
+    items.value = [...items.value, 'd', 'e', 'f'];
+    await flushPromises();
+    expect(getByTestId('mx-rail-next').attributes('disabled')).toBeUndefined();
+  });
 });
 
 describe('MxTabBar', () => {

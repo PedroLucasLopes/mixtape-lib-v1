@@ -16,7 +16,11 @@ withDefaults(
   { size: 'md', loading: false, autofocus: false, maxlength: 200 },
 );
 
-const emit = defineEmits<{ submit: [query: string] }>();
+/**
+ * `submit` sai só com texto. `clear` sai quando a pessoa desfaz a busca: o botão de limpar, o Esc ou o Enter com o
+ * campo vazio. É a deixa para quem usa voltar ao estado sem busca.
+ */
+const emit = defineEmits<{ submit: [query: string]; clear: [] }>();
 
 const { t } = useMixtapeText();
 const input = ref<HTMLInputElement | null>(null);
@@ -25,11 +29,13 @@ const inputId = useId();
 const submit = () => {
   const query = model.value.trim();
   if (query) emit('submit', query);
+  else emit('clear');
 };
 
 const clear = () => {
   model.value = '';
   input.value?.focus();
+  emit('clear');
 };
 
 defineExpose({ focus: () => input.value?.focus() });

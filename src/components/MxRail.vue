@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
+import { nextTick, onBeforeUnmount, onMounted, onUpdated, ref } from 'vue';
 import { useMixtapeText } from '../i18n/useMixtapeText';
 import { prefersReducedMotion } from '../motion/reducedMotion';
 import MxIconButton from './MxIconButton.vue';
@@ -36,6 +36,10 @@ onMounted(async () => {
     observer.observe(track.value);
   }
 });
+
+// Itens que chegam depois (um "Mais sugestões", por exemplo) mudam a largura rolável sem mudar o tamanho do trilho:
+// o ResizeObserver não vê, e a seta de avançar ficaria apagada.
+onUpdated(update);
 
 onBeforeUnmount(() => observer?.disconnect());
 </script>
