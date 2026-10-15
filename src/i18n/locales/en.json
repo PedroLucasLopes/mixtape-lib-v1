@@ -143,6 +143,8 @@
     "current": "Record in front: {title}",
     "hintBrowse": "Move the mouse up the stack to flip through and down to go back.",
     "hintBrowseTouch": "Swipe sideways to flip through.",
+    "hintBrowsePick": "Move the mouse up the stack to flip through and down to go back. Click to open the record in front.",
+    "hintBrowsePickTouch": "Swipe sideways to flip through and tap to open the record in front.",
     "hint": "Move the mouse up the stack to flip through and down to go back. Click to pull out the record in front.",
     "hintTouch": "Swipe sideways to flip through and tap to pull out the record in front."
   },

@@ -143,6 +143,8 @@
     "current": "Disco de adelante: {title}",
     "hintBrowse": "Sube el ratón por la pila para hojear y bájalo para volver.",
     "hintBrowseTouch": "Desliza hacia el lado para hojear.",
+    "hintBrowsePick": "Sube el ratón por la pila para hojear y bájalo para volver. Haz clic para abrir el disco de adelante.",
+    "hintBrowsePickTouch": "Desliza hacia el lado para hojear y toca para abrir el disco de adelante.",
     "hint": "Sube el ratón por la pila para hojear y bájalo para volver. Haz clic para sacar el disco de adelante.",
     "hintTouch": "Desliza hacia el lado para hojear y toca para sacar el disco de adelante."
   },

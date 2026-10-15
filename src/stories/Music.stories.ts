@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { type Component, ref } from 'vue';
 import MxButton from '../components/MxButton.vue';
 import MxCover from '../components/MxCover.vue';
+import MxCoverStack from '../components/MxCoverStack.vue';
 import MxCrate from '../components/MxCrate.vue';
 import MxDescriptionList from '../components/MxDescriptionList.vue';
 import MxGrid from '../components/MxGrid.vue';
@@ -155,7 +156,8 @@ export const CaixaDeDiscos: Story = {
       const current = ref(0);
       const pulled = ref<string | null>(null);
       const compactPulled = ref<string | null>(null);
-      return { records, ratings, current, pulled, compactPulled, violet: duotones.violet };
+      const opened = ref<string | null>(null);
+      return { records, ratings, current, pulled, compactPulled, opened, violet: duotones.violet };
     },
     template: `
       <div style="display:grid;gap:28px;max-width:880px">
@@ -171,12 +173,62 @@ export const CaixaDeDiscos: Story = {
           </template>
         </MxCrate>
         <p style="margin:0;opacity:.75">Disco na frente: {{ current + 1 }} · puxado: {{ pulled ?? 'nenhum' }}</p>
+        <MxCrate :records="records.slice(0, 12)" label="Avaliados recentemente" open pickable @pick="(record) => (opened = record.title)">
+          <template #pulled="{ record }">
+            <p style="margin:0;font-weight:800;font-size:1.375rem">{{ record.title }}</p>
+            <MxRating :value="ratings.get(record.key)" show-value />
+            <p style="margin:0;opacity:.85">A resenha de quem avaliou aparece aqui, trocando enquanto o mouse folheia.</p>
+          </template>
+        </MxCrate>
+        <p style="margin:0;opacity:.75">Aberta e clicável · abriu: {{ opened ?? 'nada ainda' }}</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px">
           <div style="display:grid;gap:8px;padding:22px;border-radius:var(--mx-radius-lg)" :style="{ background: violet.background, color: violet.ink }">
             <strong style="font-size:.75rem;letter-spacing:.14em;text-transform:uppercase">Descubra (compacta)</strong>
             <MxCrate v-model:pulled="compactPulled" :records="records.slice(0, 10)" label="Descubra" :depth="6" compact />
             <span style="font-size:.9375rem">Puxado: {{ compactPulled ?? 'nenhum' }}</span>
           </div>
+        </div>
+      </div>
+    `,
+  }),
+};
+
+export const PilhaDeCapas: Story = {
+  name: 'Pilha de capas',
+  render: () => ({
+    components: { MxCoverStack, MxCover, MxGrid, MxRating },
+    setup: () => {
+      const [album, ...others] = mockAlbums;
+      const tracks = mockTracks.slice(0, 3).map((track, index) => ({ ...track, rating: [4.5, 5, 3.5][index] }));
+      return { album, others: others.slice(0, 5), tracks, expanded: ref(false) };
+    },
+    template: `
+      <div style="display:grid;gap:16px;max-width:880px">
+        <p style="margin:0;opacity:.75">O álbum e as músicas dele que a pessoa também avaliou numa pilha só: o clique espalha as músicas pela grade, logo depois do álbum, e o selo vira a seta de recolher.</p>
+        <MxGrid min="150px" label="Biblioteca">
+          <li style="display:grid;gap:8px;align-content:start">
+            <MxCoverStack v-model:expanded="expanded" :src="album.cover" :title="album.title" :seed="album.id" :count="tracks.length"
+              icon="mdi-music-note" :label="'As ' + tracks.length + ' músicas avaliadas de ' + album.title" />
+            <MxRating :value="album.rating" size="sm" show-value />
+            <strong>{{ album.title }}</strong>
+          </li>
+          <template v-if="expanded">
+            <li v-for="track in tracks" :key="track.id"
+              style="display:grid;gap:8px;align-content:start;padding:8px;border-radius:var(--mx-radius-md);background:color-mix(in srgb, var(--mx-primary) 12%, transparent)">
+              <MxCover :src="album.cover" :title="track.title" :seed="track.id" />
+              <MxRating :value="track.rating" size="sm" show-value />
+              <strong>{{ track.title }}</strong>
+            </li>
+          </template>
+          <li v-for="item in others" :key="item.id" style="display:grid;gap:8px;align-content:start">
+            <MxCover :src="item.cover" :title="item.title" :seed="item.id" vinyl />
+            <MxRating :value="item.rating" size="sm" show-value />
+            <strong>{{ item.title }}</strong>
+          </li>
+        </MxGrid>
+        <div style="display:flex;flex-wrap:wrap;gap:28px">
+          <div style="width:160px"><MxCoverStack :src="album.cover" :title="album.title" :seed="album.id" :count="1" label="Uma música avaliada" /></div>
+          <div style="width:160px"><MxCoverStack :src="null" title="Fita Cassete" seed="a5" :count="7" label="Sete músicas avaliadas" /></div>
         </div>
       </div>
     `,

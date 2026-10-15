@@ -1,6 +1,7 @@
 import { flushPromises, mount } from '@vue/test-utils';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { nextTick } from 'vue';
+import MxCoverStack from '../../src/components/MxCoverStack.vue';
 import MxCrate from '../../src/components/MxCrate.vue';
 import MxGroupReviewCard from '../../src/components/MxGroupReviewCard.vue';
 import MxItemCard from '../../src/components/MxItemCard.vue';
@@ -197,6 +198,26 @@ describe('MxCrate', () => {
     expect(getByTestId('mx-crate').text()).toContain('Suba o mouse pela pilha para folhear e desça para voltar.');
   });
 
+  it('open and pickable: a click or Enter on the stack opens the record in front (it is not pulled)', async () => {
+    const wrapper = mount(MxCrate, { props: { records, label: 'Avaliados recentemente', depth: 6, open: true, pickable: true }, slots, ...attached });
+    await pointer('pointerenter', 'mouse', 300);
+    await pointer('pointermove', 'mouse', 300 - 26);
+    await getByTestId('mx-crate-pile').trigger('click');
+    await getByTestId('mx-crate-pile').trigger('keydown', { key: 'Enter' });
+    expect(wrapper.emitted('pick')).toEqual([
+      [records[1], 1],
+      [records[1], 1],
+    ]);
+    expect(wrapper.emitted('update:pulled')).toBeUndefined();
+    expect(getByTestId('mx-crate').text()).toContain('Clique para abrir o disco da frente.');
+  });
+
+  it('open without pickable: clicking does not open anything', async () => {
+    const wrapper = mount(MxCrate, { props: { records, label: 'Minha biblioteca', depth: 6, open: true }, slots, ...attached });
+    await getByTestId('mx-crate-pile').trigger('click');
+    expect(wrapper.emitted('pick')).toBeUndefined();
+  });
+
   it('compact: only the stack, and the pulled record is left to the page to show', async () => {
     const wrapper = mount(MxCrate, { props: { records, label: 'Descubra', depth: 6, compact: true }, ...attached });
     expect(queryByTestId('mx-crate-next')).toBeNull();
@@ -217,6 +238,43 @@ describe('MxCrate', () => {
     await pointer('pointerdown', 'touch', 100, 100);
     await getByTestId('mx-crate-pile').trigger('click');
     expect(getByTestId('pulled-title').text()).toBe(records[1]!.title);
+  });
+});
+
+describe('MxCoverStack', () => {
+  const album = mockAlbums[0]!;
+  const show = (count: number, expanded = false) =>
+    mount(MxCoverStack, {
+      props: { src: album.cover, title: album.title, seed: album.id, count, label: `As músicas avaliadas de ${album.title}`, expanded },
+      ...attached,
+    });
+
+  it('is one button with a fixed name that opens and closes the stack, saying whether it is open', async () => {
+    const wrapper = show(3);
+    const button = getByTestId('mx-cover-stack');
+    expect(button.element.tagName).toBe('BUTTON');
+    expect(button.attributes('aria-label')).toBe(`As músicas avaliadas de ${album.title}`);
+    expect(button.attributes('aria-expanded')).toBe('false');
+    expect(getByTestId('mx-cover-stack-count').text()).toBe('3');
+
+    await button.trigger('click');
+    expect(wrapper.emitted('update:expanded')).toEqual([[true]]);
+    await wrapper.setProps({ expanded: true });
+    expect(button.attributes('aria-expanded')).toBe('true');
+    expect(button.attributes('aria-label')).toBe(`As músicas avaliadas de ${album.title}`);
+    expect(getByTestId('mx-cover-stack-count').text()).toBe('');
+
+    await button.trigger('click');
+    expect(wrapper.emitted('update:expanded')?.[1]).toEqual([false]);
+  });
+
+  it('shows up to two covers behind the front one', () => {
+    const one = show(1);
+    expect(allByTestId('mx-cover-stack-sleeve')).toHaveLength(1);
+    one.unmount();
+    show(5);
+    expect(allByTestId('mx-cover-stack-sleeve')).toHaveLength(2);
+    expect(getByTestId('mx-cover-stack-count').text()).toBe('5');
   });
 });
 

@@ -24,9 +24,12 @@ const props = withDefaults(
     depth?: number;
     compact?: boolean;
     open?: boolean;
+    pickable?: boolean;
   }>(),
-  { depth: 9, compact: false, open: false },
+  { depth: 9, compact: false, open: false, pickable: false },
 );
+
+const emit = defineEmits<{ pick: [record: CrateRecord, index: number] }>();
 
 const current = defineModel<number>({ default: 0 });
 const pulled = defineModel<string | null>('pulled', { default: null });
@@ -71,6 +74,7 @@ const visible = computed(() => {
 });
 
 const hint = computed(() => {
+  if (props.open && props.pickable) return coarse ? t('crate.hintBrowsePickTouch') : t('crate.hintBrowsePick');
   if (props.open) return coarse ? t('crate.hintBrowseTouch') : t('crate.hintBrowse');
   return coarse ? t('crate.hintTouch') : t('crate.hint');
 });
@@ -129,6 +133,12 @@ const pull = (index: number) => {
   });
 };
 
+const pick = () => {
+  const record = props.records[front.value];
+  if (!record || !props.open || !props.pickable) return;
+  emit('pick', record, front.value);
+};
+
 const close = () => {
   if (pulled.value === null) return;
   pulled.value = null;
@@ -179,7 +189,10 @@ const onClick = () => {
     swiped = false;
     return;
   }
-  if (props.open) return;
+  if (props.open) {
+    pick();
+    return;
+  }
   if (pulledRecord.value) close();
   else pull(front.value);
 };
@@ -194,8 +207,8 @@ const onKeydown = (event: KeyboardEvent) => {
     PageUp: () => move(-props.depth),
     Home: () => show(0),
     End: () => show(total.value - 1),
-    Enter: () => pull(front.value),
-    ' ': () => pull(front.value),
+    Enter: () => (props.open ? pick() : pull(front.value)),
+    ' ': () => (props.open ? pick() : pull(front.value)),
     Escape: () => close(),
   };
   const action = actions[event.key];
@@ -230,7 +243,7 @@ watch(
   <div
     data-testid="mx-crate"
     class="mx-crate"
-    :class="{ 'mx-crate--pulled': pulledRecord, 'mx-crate--panel': panelRecord, 'mx-crate--compact': compact }"
+    :class="{ 'mx-crate--pulled': pulledRecord, 'mx-crate--panel': panelRecord, 'mx-crate--compact': compact, 'mx-crate--still': open && !pickable }"
     :style="{ '--mx-crate-depth': depth }"
   >
     <div class="mx-crate__layout">
@@ -408,6 +421,10 @@ watch(
   border-radius: var(--mx-radius-lg);
   outline: none;
   touch-action: pan-y;
+}
+
+.mx-crate--still .mx-crate__pile {
+  cursor: default;
 }
 
 .mx-crate__pile:focus-visible {

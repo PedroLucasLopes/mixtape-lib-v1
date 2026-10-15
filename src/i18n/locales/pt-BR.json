@@ -143,6 +143,8 @@
     "current": "Disco da frente: {title}",
     "hintBrowse": "Suba o mouse pela pilha para folhear e desça para voltar.",
     "hintBrowseTouch": "Deslize para o lado para folhear.",
+    "hintBrowsePick": "Suba o mouse pela pilha para folhear e desça para voltar. Clique para abrir o disco da frente.",
+    "hintBrowsePickTouch": "Deslize para o lado para folhear e toque para abrir o disco da frente.",
     "hint": "Suba o mouse pela pilha para folhear e desça para voltar. Clique para puxar o disco da frente.",
     "hintTouch": "Deslize para o lado para folhear e toque para puxar o disco da frente."
   },

@@ -37,6 +37,7 @@ const INTERACTIVE_TAGS = new Set([
   'MxBalloonPicker',
   'MxButton',
   'MxConfirmDialog',
+  'MxCoverStack',
   'MxDialog',
   'MxIconButton',
   'MxImageCredit',
