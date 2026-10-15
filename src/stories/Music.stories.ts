@@ -157,7 +157,7 @@ export const CaixaDeDiscos: Story = {
       const pulled = ref<string | null>(null);
       const compactPulled = ref<string | null>(null);
       const opened = ref<string | null>(null);
-      return { records, ratings, current, pulled, compactPulled, opened, violet: duotones.violet };
+      return { records, ratings, current, pulled, compactPulled, opened, violet: duotones.violet, body: mockReviewBody };
     },
     template: `
       <div style="display:grid;gap:28px;max-width:880px">
@@ -173,14 +173,14 @@ export const CaixaDeDiscos: Story = {
           </template>
         </MxCrate>
         <p style="margin:0;opacity:.75">Disco na frente: {{ current + 1 }} · puxado: {{ pulled ?? 'nenhum' }}</p>
-        <MxCrate :records="records.slice(0, 12)" label="Avaliados recentemente" open pickable @pick="(record) => (opened = record.title)">
+        <MxCrate :records="records.slice(0, 12)" label="Avaliados recentemente" open pickable wide-panel @pick="(record) => (opened = record.title)">
           <template #pulled="{ record }">
             <p style="margin:0;font-weight:800;font-size:1.375rem">{{ record.title }}</p>
             <MxRating :value="ratings.get(record.key)" show-value />
-            <p style="margin:0;opacity:.85">A resenha de quem avaliou aparece aqui, trocando enquanto o mouse folheia.</p>
+            <p style="margin:0;opacity:.85">{{ body }}</p>
           </template>
         </MxCrate>
-        <p style="margin:0;opacity:.75">Aberta e clicável · abriu: {{ opened ?? 'nada ainda' }}</p>
+        <p style="margin:0;opacity:.75">Aberta, clicável e com o painel largo (2/3, para a resenha) · abriu: {{ opened ?? 'nada ainda' }}</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px">
           <div style="display:grid;gap:8px;padding:22px;border-radius:var(--mx-radius-lg)" :style="{ background: violet.background, color: violet.ink }">
             <strong style="font-size:.75rem;letter-spacing:.14em;text-transform:uppercase">Descubra (compacta)</strong>

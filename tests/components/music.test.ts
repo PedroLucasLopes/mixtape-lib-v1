@@ -212,6 +212,12 @@ describe('MxCrate', () => {
     expect(getByTestId('mx-crate').text()).toContain('Clique para abrir o disco da frente.');
   });
 
+  it('widePanel gives the panel two thirds of the width (the layout reads it from the class)', () => {
+    mount(MxCrate, { props: { records, label: 'Avaliados recentemente', depth: 6, open: true, widePanel: true }, slots, ...attached });
+    expect(getByTestId('mx-crate').classes()).toContain('mx-crate--wide-panel');
+    expect(getByTestId('mx-crate').classes()).toContain('mx-crate--panel');
+  });
+
   it('open without pickable: clicking does not open anything', async () => {
     const wrapper = mount(MxCrate, { props: { records, label: 'Minha biblioteca', depth: 6, open: true }, slots, ...attached });
     await getByTestId('mx-crate-pile').trigger('click');
