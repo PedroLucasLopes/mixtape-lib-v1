@@ -1,5 +1,3 @@
-/* O Storybook desenha cada story num iframe próprio: estes ajustes deixam o palco igual à aplicação
-   (mesma fonte, mesmo fundo, mesma folga). */
 .mx-preview {
   min-height: 100vh;
   padding: 32px clamp(16px, 4vw, 40px);

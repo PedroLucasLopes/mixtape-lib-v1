@@ -6,9 +6,7 @@ import MxCover, { type CoverSources } from './MxCover.vue';
 
 const props = withDefaults(
   defineProps<{
-    /** Quantos itens estão debaixo da capa da frente: o número do selo e as capas de trás (até 2). */
     count: number;
-    /** Nome do botão para leitor de tela, fixo nos dois estados (o `aria-expanded` diz se está aberta). */
     label: string;
     src?: string | null;
     sources?: CoverSources | null;
@@ -16,7 +14,6 @@ const props = withDefaults(
     seed?: string;
     sizes?: string;
     priority?: boolean;
-    /** Ícone do selo com a pilha fechada; aberta, o selo vira a seta de recolher. */
     icon?: string;
   }>(),
   {
@@ -68,11 +65,6 @@ const sleeves = computed(() =>
 </template>
 
 <style scoped>
-/*
- * A pilha ocupa o mesmo quadrado de uma capa: a da frente encolhe para o canto de baixo à esquerda e as de trás
- * sobem na diagonal, então a grade continua alinhada. Aberta, a da frente volta ao tamanho cheio e as de trás
- * se escondem atrás dela, como se tivessem sido espalhadas pela grade.
- */
 .mx-cover-stack {
   --mx-cover-stack-front: 0.88;
   --mx-cover-stack-step: 6%;

@@ -25,7 +25,6 @@ const props = withDefaults(
     compact?: boolean;
     open?: boolean;
     pickable?: boolean;
-    /** Painel ao lado com 2/3 da largura e a pilha com 1/3: para texto longo no painel, como uma resenha. */
     widePanel?: boolean;
   }>(),
   { depth: 9, compact: false, open: false, pickable: false, widePanel: false },
@@ -393,10 +392,6 @@ watch(
     align-items: center;
   }
 
-  /*
-   * Painel largo: 2/3 para o painel e 1/3 para a pilha. O disco encolhe para caber no terço (com folga para a
-   * inclinação e o deslocamento de cada um); o valor fica no layout porque o contêiner é a própria raiz.
-   */
   .mx-crate--wide-panel.mx-crate--panel .mx-crate__layout {
     --mx-crate-size: min(248px, calc((100cqi - var(--mx-crate-layout-gap)) / 3 - 24px));
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);

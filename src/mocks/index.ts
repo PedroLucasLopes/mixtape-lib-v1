@@ -31,7 +31,6 @@ export const mockAlbums = [
   { id: 'a8', title: 'Dias de Sol', artist: 'Tom Rios', year: '2013', type: 'Álbum', cover: coverArt('burgundy', 'stripes'), rating: 4.5, listeners: 75_800, genres: ['samba'] },
 ];
 
-/** Discografia longa (fictícia) para a grade paginada: 30 lançamentos, do mais novo para o mais antigo. */
 export const mockDiscography = Array.from({ length: 30 }, (_, index) => {
   const base = mockAlbums[index % mockAlbums.length]!;
   const edition = ['', 'Vol. 2', 'Ao Vivo', 'Remixes'][Math.floor(index / mockAlbums.length)] ?? '';
@@ -128,8 +127,8 @@ export const mockQrCode = svg(
       const x = index % 29;
       const y = Math.floor(index / 29);
       const finder = (x < 7 && y < 7) || (x > 21 && y < 7) || (x < 7 && y > 21);
-      const on = finder ? x % 6 === 0 || y % 6 === 0 || (x % 22 > 1 && x % 22 < 5 && y % 22 > 1 && y % 22 < 5) : (x * 7 + y * 13 + x * y) % 3 === 0;
-      return on ? `<rect x="${x}" y="${y}" width="1" height="1" fill="#111"/>` : '';
+      const filled = finder ? x % 6 === 0 || y % 6 === 0 || (x % 22 > 1 && x % 22 < 5 && y % 22 > 1 && y % 22 < 5) : (x * 7 + y * 13 + x * y) % 3 === 0;
+      return filled ? `<rect x="${x}" y="${y}" width="1" height="1" fill="#111"/>` : '';
     },
   ).join('')}</svg>`,
 );

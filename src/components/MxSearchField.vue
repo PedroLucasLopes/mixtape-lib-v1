@@ -16,10 +16,6 @@ withDefaults(
   { size: 'md', loading: false, autofocus: false, maxlength: 200 },
 );
 
-/**
- * `submit` sai só com texto. `clear` sai quando a pessoa desfaz a busca: o botão de limpar, o Esc ou o Enter com o
- * campo vazio. É a deixa para quem usa voltar ao estado sem busca.
- */
 const emit = defineEmits<{ submit: [query: string]; clear: [] }>();
 
 const { t } = useMixtapeText();

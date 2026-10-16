@@ -6,13 +6,6 @@ import Vuetify from 'vite-plugin-vuetify';
 
 const EMPTY_CSS_PLACEHOLDER = /\/\* empty css\s*\*\//g;
 
-/**
- * Cada módulo do pacote passa a importar o próprio CSS. O Vite de biblioteca extrai o CSS e troca o
- * import por um comentário `/* empty css *\/`: sem a referência, a aplicação teria de importar tudo de
- * uma vez. Aqui o comentário volta a ser import, no mesmo lugar e na mesma linha (o source map continua
- * certo e o CSS do componente segue depois do CSS do Vuetify que ele usa). Com a referência, o bundler
- * da aplicação leva para cada página só o CSS dos componentes que ela usa.
- */
 function restoreCssImports(): Plugin {
   return {
     name: 'mixtape-restore-css-imports',
@@ -39,11 +32,6 @@ function restoreCssImports(): Plugin {
 const PREFIXED_ONLY = /-webkit-backdrop-filter:/;
 const STANDARD = /(^|[^-])backdrop-filter:/;
 
-/**
- * O Lightning CSS trata `backdrop-filter` e `-webkit-backdrop-filter` como a mesma propriedade e fica
- * com a última: escrever as duas (padrão antes) deixava só a prefixada, que o Chrome ignora. O código
- * escreve só a padrão (o prefixo sai sozinho); este plugin falha o build se a regressão voltar.
- */
 function assertStandardBackdrop(): Plugin {
   return {
     name: 'mixtape-assert-standard-backdrop',
@@ -61,18 +49,6 @@ function assertStandardBackdrop(): Plugin {
   };
 }
 
-/**
- * Build da biblioteca: é o que o `npm publish` empacota.
- *
- * O nome não é `vite.config.ts` de propósito: o Storybook carrega sozinho o `vite.config.*` da raiz e
- * mesclaria um `build.lib`, transformando o `build-storybook` em build de pacote.
- *
- * Um arquivo por módulo (`preserveModules`) e CSS por componente: o bundler da aplicação descarta o
- * que ela não usa e divide o resto entre as páginas. Vue, Vuetify e vue-i18n ficam de fora
- * (peerDependencies): duas cópias do Vue na mesma página quebram `inject`, que é por onde tema, língua
- * e o componente de link chegam. O `vite-plugin-vuetify` escreve o import de cada componente do
- * Vuetify usado; o CSS do Vuetify fica com a aplicação.
- */
 export default defineConfig({
   plugins: [Vue(), Vuetify({ autoImport: true, styles: 'none' }), restoreCssImports(), assertStandardBackdrop()],
   build: {

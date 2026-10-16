@@ -37,8 +37,6 @@ onMounted(async () => {
   }
 });
 
-// Itens que chegam depois (um "Mais sugestões", por exemplo) mudam a largura rolável sem mudar o tamanho do trilho:
-// o ResizeObserver não vê, e a seta de avançar ficaria apagada.
 onUpdated(update);
 
 onBeforeUnmount(() => observer?.disconnect());

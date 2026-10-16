@@ -42,12 +42,12 @@ export const vReveal: Directive<HTMLElement, RevealValue> = {
     element.classList.add('mx-reveal', `mx-reveal--${variant}`);
     element.style.setProperty('--mx-reveal-delay', `${delay}ms`);
 
-    const io = getObserver();
-    if (!io || prefersReducedMotion()) {
+    const revealObserver = getObserver();
+    if (!revealObserver || prefersReducedMotion()) {
       element.classList.add(VISIBLE);
       return;
     }
-    io.observe(element);
+    revealObserver.observe(element);
   },
   unmounted(element) {
     observer?.unobserve(element);

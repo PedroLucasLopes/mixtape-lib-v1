@@ -2,7 +2,7 @@
   "name": "@pedrolucaslopes/mixtape-ui",
   "version": "0.7.4",
   "type": "module",
-  "description": "Componentes Vue e Vuetify, tema, movimento e Storybook do Mixtape.",
+  "description": "The design system of Mixtape, your music diary: Vue and Vuetify components, theme, motion and Storybook.",
   "license": "UNLICENSED",
   "repository": {
     "type": "git",

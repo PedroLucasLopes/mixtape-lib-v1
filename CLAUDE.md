@@ -3,7 +3,7 @@
 Componentes Vue/Vuetify, tokens de design, primitivas de movimento e Storybook do Mixtape, o
 seu diário musical. É o contrato de **interface** do front, do mesmo jeito que a
 `@pedrolucaslopes/dotlog-ui` é no ecossistema do rent_dashboard: repositório próprio
-(`mixtape-lib-v1`), publicado no GitHub Packages e instalado **pelo npm** no `mixtape-web-v1`. Nenhum
+(`mixtape-lib-v1`), publicado no GitHub Packages e instalado **pelo npm** no front (`plataforma_mixtape-v1`). Nenhum
 front importa `../ui/src`, nem por alias, nem por `paths`, nem por link de pasta.
 
 ```bash
@@ -44,9 +44,9 @@ como no CI de publicação). Nenhum deles pula com `--no-verify` sem motivo dito
 - **Instalar:** `.npmrc` com `@pedrolucaslopes:registry=https://npm.pkg.github.com` e
   `//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}`. O token (clássico, `read:packages`) vem do
   ambiente; no Docker, como secret do BuildKit.
-- **Antes da primeira publicação:** o `mixtape-web-v1` instala o pacote de `vendor/` (um `npm pack`
-  desta pasta). Ver o `CLAUDE.md` do web. Testar mudança antes de publicar segue o mesmo caminho:
-  `npm run build`, `npm pack`, e o `.tgz` vai para o `vendor/` do web.
+- **Testar antes de publicar:** `npm run build` e `npm pack --pack-destination <pasta temporária>` aqui, e
+  `npm install --no-save <tgz>` no front. O `package.json` do front nunca aponta para arquivo (o Docker e o CI não têm
+  o `.tgz`).
 - **Consumir:** `vue`, `vuetify` (e `vue-i18n`, opcional) são `peerDependencies`. A aplicação importa
   **só** `vuetify/styles/core` (o `vuetify/styles` inteiro traz 235 KB de utilitários e 40 KB de
   cores que nenhum componente usa), carrega as fontes **Bricolage Grotesque Variable** (com eixo de

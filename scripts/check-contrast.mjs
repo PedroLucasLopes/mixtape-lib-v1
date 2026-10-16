@@ -10,24 +10,25 @@ const parse = (color) => {
 };
 
 const over = (top, bottom) => {
-  const a = parse(top);
-  const b = parse(bottom);
-  const mix = (x, y) => Math.round(x * a.a + y * (1 - a.a));
-  return `#${[mix(a.r, b.r), mix(a.g, b.g), mix(a.b, b.b)].map((v) => v.toString(16).padStart(2, '0')).join('')}`;
+  const upper = parse(top);
+  const lower = parse(bottom);
+  const blend = (upperChannel, lowerChannel) => Math.round(upperChannel * upper.a + lowerChannel * (1 - upper.a));
+  const channels = [blend(upper.r, lower.r), blend(upper.g, lower.g), blend(upper.b, lower.b)];
+  return `#${channels.map((channel) => channel.toString(16).padStart(2, '0')).join('')}`;
 };
 
 const luminance = (color) => {
   const { r, g, b } = parse(color);
-  const channel = (v) => {
-    const c = v / 255;
-    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  const linear = (channel) => {
+    const normalized = channel / 255;
+    return normalized <= 0.03928 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
   };
-  return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b);
+  return 0.2126 * linear(r) + 0.7152 * linear(g) + 0.0722 * linear(b);
 };
 
-const ratio = (a, b) => {
-  const [x, y] = [luminance(a), luminance(b)].sort((p, q) => q - p);
-  return (x + 0.05) / (y + 0.05);
+const ratio = (foreground, background) => {
+  const [lighter, darker] = [luminance(foreground), luminance(background)].sort((first, second) => second - first);
+  return (lighter + 0.05) / (darker + 0.05);
 };
 
 const TEXT = 4.5;
